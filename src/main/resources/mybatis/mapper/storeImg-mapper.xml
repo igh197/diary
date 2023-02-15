@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.codepresso3.mirrymurry.mapper.StoreImgMapper">
+    <insert id="saveStoreImg">
+        INSERT INTO storeImg(storeImg.imgName, storeImg.oriImgName, storeImg.imgUrl, storeImg.repImgYn, storeImg.img_store_id)
+        VALUES (#{storeImg.imgName}, #{storeImg.oriImgName}, #{storeImg.imgUrl}, #{storeImg.repImgYn}, #{storeImg.img_store_id})
+    </insert>
+
+    <select id="getStoreImgList" resultType="com.codepresso3.mirrymurry.vo.StoreImg">
+        SELECT *
+        FROM storeImg
+        WHERE img_store_id = #{img_store_id}
+    </select>
+</mapper>

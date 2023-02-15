@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="~{layouts/layout1}">
+
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        $(document).ready(function(){
+            var mapOptions = {
+                    center: new naver.maps.LatLng($('#lat').val(), $('#lng').val()),
+                    zoom: 15
+            };
+            var map = new naver.maps.Map('map', mapOptions);
+            var marker = new naver.maps.Marker({
+            position: new naver.maps.LatLng($('#lat').val(), $('#lng').val()),
+            map: map
+            });
+           var infowindow = new naver.maps.InfoWindow({
+            content: $('#storeName').val(),
+            });
+            naver.maps.Event.addListener(marker, "click", function(e) {
+                if (infowindow.getMap()) {
+                    infowindow.close();
+                } else {
+                    infowindow.open(map, marker);
+                }
+            });
+
+            $('.datepicker').datepicker();
+
+            $.datepicker.setDefaults({
+              dateFormat: 'yy-mm-dd',
+              prevText: '이전 달',
+              nextText: '다음 달',
+              monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+              monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+              dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+              dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+              dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+              showMonthAfterYear: true,
+              yearSuffix: '년',
+              currentText: '오늘 날짜',
+              closeText: '닫기',
+              maxDate: 28,
+              minDate: 0
+            });
+
+            $(".datepicker").on("change",function(){
+                $("input[name='time']").prop('checked', false);
+                $("input[name='time']").attr('disabled', false);
+
+                var token = $("meta[name='_csrf']").attr("content");
+                var header = $("meta[name='_csrf_header']").attr("content");
+                var selected = $(this).val();
+                var store_id = $("#store_id").val();
+                $.ajax({
+                    method:"POST",
+                    url: "/books/bookDate",
+                    data : JSON.stringify({
+                        "book_date": selected,
+                        "store_id": store_id
+                    }),
+                    contentType: "application/json",
+                    beforeSend : function(xhr){
+                    /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+                    xhr.setRequestHeader(header, token);
+                    }
+                })
+                .done(function(response){
+                    if(response.length > 0) {
+                        for(var timeList of response) {
+                            $("#time"+timeList).attr("disabled",true);
+                        }
+                    }
+                });
+            });
+
+
+            $(":input:radio[name=time]" ).checkboxradio({
+              icon: false
+            });
+        });
+
+        function addWish(){
+
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+
+            var member_id = $("#member_id").val();
+            var store_id = $("#store_id").val();
+
+            $.ajax({
+                method:"POST",
+                url: "/wish",
+                data : JSON.stringify({
+                    "member_id": member_id,
+                    "store_id": store_id
+                }),
+                contentType : "application/json",
+                beforeSend : function(xhr){
+                    /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+                    xhr.setRequestHeader(header, token);
+                },
+                error : function(jqXHR, status, error){
+                    if(jqXHR.status == '401'){
+                        alert('로그인 후 이용해주세요');
+                        location.href='/members/login';
+                    } else{
+                        alert(jqXHR.responseText);
+                    }
+                }
+            })
+            .done(function(response) {
+                alert('미용실 찜 목록에 추가되었습니다.');
+                location.reload();
+            });
+        }
+
+        function deleteWish(){
+
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+
+            var member_id = $("#member_id").val();
+            var store_id = $("#store_id").val();
+
+            $.ajax({
+                method:"DELETE",
+                url: "/unWish",
+                data : JSON.stringify({
+                    "member_id": member_id,
+                    "store_id": store_id
+                }),
+                contentType : "application/json",
+                beforeSend : function(xhr){
+                    /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+                    xhr.setRequestHeader(header, token);
+                },
+                error : function(jqXHR, status, error){
+                    if(jqXHR.status == '401'){
+                        alert('로그인 후 이용해주세요');
+                        location.href='/members/login';
+                    } else{
+                        alert(jqXHR.responseText);
+                    }
+                }
+            })
+            .done(function(response) {
+                alert('미용실 찜 목록에서 삭제되었습니다.');
+                location.reload();
+            });
+        }
+
+
+
+        function changeSelect(){
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+            var selectList = document.getElementById("menu");
+            var menu_id = selectList.options[selectList.selectedIndex].value;
+
+            $.ajax({
+                method:"POST",
+                url: "/menu/price",
+                data : {"menu_id" : menu_id},
+                dataType: "text",
+                beforeSend : function(xhr){
+                    /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+                    xhr.setRequestHeader(header, token);
+                }
+            }).done(function(response) {
+                $("#price").text(Number(response).toLocaleString() + ' 원');
+            });
+        }
+
+        function booking(){
+
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+
+            var store_id = $("#store_id").val();
+            var menu_id = $("select[name=menu]").val();
+            var book_date = $(".datepicker").val();
+            var book_time = $(":input:radio[name=time]:checked").val();
+
+            if(book_date==''){
+                alert("날짜를 선택해주세요")
+                return false;
+            }
+            if(book_time==null){
+                alert("시간을 선택해주세요")
+                return false;
+            }
+            if(menu_id==null){
+                alert("메뉴를 선택해주세요")
+                return false;
+            }
+
+          $.ajax({
+                method:"POST",
+                url: "/books/new",
+                data : JSON.stringify({
+                    "book_date": book_date,
+                    "book_time": book_time,
+                    "book_menu_id": menu_id,
+                    "book_store_id": store_id
+                }),
+                contentType : "application/json",
+                beforeSend : function(xhr){
+                    /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+                    xhr.setRequestHeader(header, token);
+                },
+                error : function(jqXHR, status, error){
+                    if(jqXHR.status == '401'){
+                        alert('로그인 후 이용해주세요');
+                        location.href='/members/login';
+                    } else{
+                        alert(jqXHR.responseText);
+                    }
+                }
+            })
+            .done(function(response) {
+                alert('예약이 완료되었습니다.');
+                location.reload();
+            });
+        }
+
+
+    </script>
+
+</th:block>
+<script>
+
+</script>
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    <style>
+        .h3{
+            font-weight: 600;
+        }
+        .h5{
+            font-weight: 600;
+        }
+        .mgb-15{
+            margin-bottom:15px;
+        }
+        .mgt-30{
+            margin-top:30px;
+        }
+        .mgt-50{
+            margin-top:50px;
+        }
+        .mgt-70{
+            margin-top:70px;
+        }
+        .repImgDiv{
+            margin-right:15px;
+            height:auto;
+            width:50%;
+        }
+        .repImg{
+            width:100%;
+            height:100%;
+        }
+        .wd50{
+            height:auto;
+            width:50%;
+        }
+        .btn{
+            border: solid black 1px;
+            margin-bottom: 1px;
+        }
+
+        input[type=radio] + label{
+            border: 1px solid #ccc;
+        }
+        input[type=radio]:disabled + label{
+            background-color: red;
+            color:#fff;
+        }
+        input[type=radio]:checked + label{
+            background: #007bff; color: #fff;
+        }
+        input[type=radio]:enabled:hover + label{
+            background-color: #007bff;
+            border: 1px solid #ccc;
+        }
+
+        .bi{
+            font-size: 30px;
+        }
+
+        .m_set_red {
+            color: red;
+        }
+
+        .m_set_pointer {
+            cursor: pointer;
+            float: right;
+        }
+
+        .m_set_black {
+            color: black;
+        }
+
+        .star-ratings {
+          color: #aaa9a9;
+          font-size: 25px;
+          position: relative;
+          unicode-bidi: bidi-override;
+          width: max-content;
+          -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+          -webkit-text-stroke-width: 1.3px;
+          -webkit-text-stroke-color: #2b2a29;
+        }
+
+        .star-ratings-fill {
+          color: #fff58c;
+          padding: 0;
+          position: absolute;
+          z-index: 1;
+          display: flex;
+          top: 0;
+          left: 0;
+          overflow: hidden;
+          -webkit-text-fill-color: gold;
+        }
+
+        .star-ratings-base {
+          z-index: 0;
+          padding: 0;
+        }
+
+        .jumbotron {
+          padding-top: 2rem;
+        }
+
+        #navbar {
+          position:-webkit-sticky;
+          position:sticky;
+          top:0;
+        }
+
+         .contentCol {
+             text-overflow: ellipsis;
+             white-space: nowrap;
+             max-width: 20px;
+             overflow: hidden;
+         }
+
+         .ui-widget-header { border: 0px solid #dddddd; background: #fff; }
+
+         .ui-datepicker-calendar>thead>tr>th { font-size: 14px !important; }
+
+         .ui-datepicker .ui-datepicker-header { position: relative; padding: 10px 0; }
+
+         .ui-state-default,
+         .ui-widget-content .ui-state-default,
+         .ui-widget-header .ui-state-default,
+         .ui-button,
+         html .ui-button.ui-state-disabled:hover,
+         html .ui-button.ui-state-disabled:active { border: 0px solid #c5c5c5; background-color: transparent; font-weight: normal; color: #454545; text-align: center; }
+
+         .ui-datepicker .ui-datepicker-title { margin: 0 0em; line-height: 16px; text-align: center; font-size: 14px; padding: 0px; font-weight: bold; }
+
+         .ui-datepicker { display: none; background-color: #fff; border-radius: 4px; margin-top: 10px; margin-left: 0px; margin-right: 0px; padding: 20px; padding-bottom: 10px; width: 300px; box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.1); }
+
+         .ui-widget.ui-widget-content { border: 1px solid #eee; }
+
+         #datepicker:focus>.ui-datepicker { display: block; }
+
+         .ui-datepicker-prev,
+         .ui-datepicker-next { cursor: pointer; }
+
+         .ui-datepicker-next { float: right; }
+
+         .ui-state-disabled { cursor: auto; color: hsla(0, 0%, 80%, 1); }
+
+         .ui-datepicker-title { text-align: center; padding: 10px; font-weight: 100; font-size: 20px; }
+
+         .ui-datepicker-calendar { width: 100%; }
+
+         .ui-datepicker-calendar>thead>tr>th { padding: 5px; font-size: 20px; font-weight: 400; }
+
+         .ui-datepicker-calendar>tbody>tr>td>a { color: #000; font-size: 12px !important; font-weight: bold !important; text-decoration: none;}
+
+         .ui-datepicker-calendar>tbody>tr>.ui-state-disabled:hover { cursor: auto; background-color: #fff; }
+
+         .ui-datepicker-calendar>tbody>tr>td { border-radius: 100%; width: 44px; height: 30px; cursor: pointer; padding: 5px; font-weight: 100; text-align: center; font-size: 12px; }
+
+         .ui-datepicker-calendar>tbody>tr>td:hover { background-color: transparent; opacity: 0.6; }
+
+         .ui-state-hover,
+         .ui-widget-content .ui-state-hover,
+         .ui-widget-header .ui-state-hover,
+         .ui-state-focus,
+         .ui-widget-content .ui-state-focus,
+         .ui-widget-header .ui-state-focus,
+         .ui-button:hover,
+         .ui-button:focus { border: 0px solid #cccccc; background-color: transparent; font-weight: normal; color: #2b2b2b; }
+
+         .ui-widget-header .ui-icon { background-image: url('/img/btns.png'); }
+
+         .ui-icon-circle-triangle-e { background-position: -20px 0px; background-size: 36px; }
+
+         .ui-icon-circle-triangle-w { background-position: -0px -0px; background-size: 36px; }
+
+         .ui-datepicker-calendar>tbody>tr>td:first-child a { color: red !important; }
+
+         .ui-datepicker-calendar>tbody>tr>td:last-child a { color: #0099ff !important; }
+
+         .ui-datepicker-calendar>thead>tr>th:first-child { color: red !important; }
+
+         .ui-datepicker-calendar>thead>tr>th:last-child { color: #0099ff !important; }
+
+         .ui-state-highlight,
+         .ui-widget-content .ui-state-highlight,
+         .ui-widget-header .ui-state-highlight { border: 0px; background: #f1f1f1; border-radius: 50%; padding-top: 10px; padding-bottom: 10px; }
+
+         .inp { padding: 10px 10px; background-color: #f1f1f1; border-radius: 4px; border: 0px; }
+
+         .inp:focus { outline: none; background-color: #eee; }
+
+         .ui-menu { width: 200px; }
+         .ui-widget-header { padding: 0.5em; font-size: 18px}
+         .ui-selected { background: #007bff; color: #fff; }
+    </style>
+</th:block>
+
+<div layout:fragment="content" class="content-mg">
+    <input type="hidden" sec:authorize="hasAnyAuthority('ROLE_USER')" id="member_id" th:value="${currentMember.id}">
+    <input type="hidden" id="store_id" th:value="${store.id}">
+
+    <div class="d-flex">
+        <div class="repImgDiv">
+            <img margin-bottom="20px" id="imgUrl" th:src="${store.storeImgList[0].imgUrl}" class = "rounded repImg" th:alt="${member.user_name}">
+        </div>
+        <div class="wd50">
+            <div>
+                <span class="h3" id="storeNm" th:text="${member.user_name}" style="font-weight:600"></span>
+                <input type="hidden" id="storeName" th:value="${member.user_name}">
+                <span sec:authorize="isAnonymous()">
+                    <i class="bi bi-heart m_set_pointer m_set_black" onclick="location.href='/members/login';"></i>
+                </span>
+                <span sec:authorize="isAuthenticated()">
+                <span sec:authorize="hasAnyAuthority('ROLE_USER')">
+                    <i th:if="${wishStatus} == true" class="bi bi-heart-fill m_set_pointer m_set_red" onclick="deleteWish()"></i>
+                    <i th:unless="${wishStatus} == true" class="bi bi-heart m_set_pointer m_set_black" id="unWish" onclick="addWish()"></i>
+                </span>
+                </span>
+            </div>
+            <hr class="my-3">
+                <br>
+            <div class="text-center">
+                <div class="h5">예약 날짜</div>
+                <input class="datepicker">
+            </div>
+
+            <div class="text-center">
+            <div class="h5 text-center mgt-30">예약 시간 선택</div>
+            <div class="badge badge-danger mgb-15">예약 불가능</div>
+            <fieldset>
+                <div>
+                    <input type="radio" name="time" id="time10" value="10">
+                    <label for="time10">10:00</label>
+                    <input type="radio" name="time" id="time11" value="11">
+                    <label for="time11">11:00</label>
+                    <input type="radio" name="time" id="time12" value="12">
+                    <label for="time12">12:00</label>
+                    <input type="radio" name="time" id="time13" value="13">
+                    <label for="time13">13:00</label>
+                    <input type="radio" name="time" id="time14" value="14">
+                    <label for="time14">14:00</label>
+                </div>
+                <div>
+                    <input type="radio" name="time" id="time15" value="15">
+                    <label for="time15">15:00</label>
+                    <input type="radio" name="time" id="time16" value="16">
+                    <label for="time16">16:00</label>
+                    <input type="radio" name="time" id="time17" value="17">
+                    <label for="time17">17:00</label>
+                    <input type="radio" name="time" id="time18" value="18">
+                    <label for="time18">18:00</label>
+                    <input type="radio" name="time" id="time19" value="19">
+                    <label for="time19">19:00</label>
+                </div>
+            </fieldset>
+            </div>
+
+            <div class="text-center mgt-30">
+                <div class="h5">메뉴</div>
+                <select name="menu" onchange="changeSelect()" id="menu">
+                    <option selected disabled>시술 받을 메뉴를 선택해주세요</option>
+                    <optgroup label="남자">
+                        <option th:each="manMenuItem : ${manMenu}"
+                                th:value="${manMenuItem.menu_id}"
+                                th:text="${manMenuItem.category} + ' ' + ${manMenuItem.menu_name}"></option>
+                    </optgroup>
+                    <optgroup label="여자">
+                        <option th:each="womanMenuItem : ${womanMenu}"
+                                th:value="${womanMenuItem.menu_id}"
+                                th:text="${womanMenuItem.category} + ' ' + ${womanMenuItem.menu_name}"></option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <hr class="my-2">
+
+            <div class="text-right" style="margin-right: 10%">
+                <div class="h5">결제 예정 금액</div>
+                <h4 name="price" id="price" class="font-weight-bold">0 원</h4>
+            </div>
+            <div class="text-center">
+                <span sec:authorize="isAnonymous()">
+                    <button type="button" class="btn btn-primary btn-lg" onclick="location.href='/members/login';">로그인 후 예약하기</button>
+                </span>
+                <span sec:authorize="isAuthenticated()">
+                <button sec:authorize="hasAnyAuthority('ROLE_USER')" type="button" class="btn btn-primary btn-lg" onclick="booking()">예약하기</button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <hr class="my-2">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark" id="navbar" style="z-index:999;">
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="#storeDtl">미용실 소개</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#review">리뷰(
+<!--                        <span th:text="${review.count}" ></span>-->
+                        )</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#qna">문의(
+<!--                        <span th:text="${qnaCount}" ></span>-->
+                        )</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#info">미용실 위치</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <hr class="my-1" id="storeDtl">
+            <h4 class="display-5 mgt-70">미용실 소개</h4>
+            <p class="lead" id="store_info" th:text="${store.store_info}"></p>
+            <h4 class="display-5 mgt-70">전화번호</h4>
+            <p class="lead" id="phone_number" th:text="${member.phone_number}"></p>
+            <div th:each="storeImg : ${store.storeImgList}" class="text-center">
+                <img th:if="${not #strings.isEmpty(storeImg.imgUrl)}" th:src="${storeImg.imgUrl}" class="rounded mgb-15" width="100%">
+            </div>
+
+        </div>
+        <div class="container">
+            <hr class="my-2">
+            <h4 class="display-5 mgt-30" id="review">리뷰(
+<!--                <span th:text="${review.count}" ></span>-->
+                )</h4>
+<!--            <input type="hidden" id="rate" th:value="${review.rate}">-->
+            <div class="star-ratings">
+                <div id="star" class="star-ratings-fill space-x-2 text-lg">
+                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                </div>
+                <div class="star-ratings-base space-x-2 text-lg">
+                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                </div>
+            </div>
+            (
+<!--            <span th:text="${review.rate}"></span>-->
+            )
+            <div>
+                <table id="reviewTable" class="table text-center align-middle">
+                    <colgroup>
+                        <col width="20%"/>
+                        <col width="15%"/>
+                        <col width="35%"/>
+                        <col width="15%"/>
+                        <col width="15%"/>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>별점</th>
+                        <th>사이즈</th>
+                        <th>리뷰</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                    </tr>
+                    </thead>
+<!--                    <tbody>-->
+<!--                    <tr th:each="reviewItem : ${reviewItems}">-->
+<!--                        <td th:block th:switch="${reviewItem.rate}">-->
+<!--                            <span th:case="1">★☆☆☆☆</span>-->
+<!--                            <span th:case="2">★★☆☆☆</span>-->
+<!--                            <span th:case="3">★★★☆☆</span>-->
+<!--                            <span th:case="4">★★★★☆</span>-->
+<!--                            <span th:case="5">★★★★★</span>-->
+<!--                            </td:block>-->
+<!--                        </td>-->
+<!--                        <td th:text="${reviewItem.size}"></td>-->
+<!--                        <td th:text="${reviewItem.content}" class="contentCol" style="cursor: pointer"></td>-->
+<!--                        <td>-->
+<!--                            <div th:if="${member?.role == T(kr.co.shoebox.constant.Role).ADMIN} or ${member?.email} == ${reviewItem.createdBy}">-->
+<!--                                <span th:text="${reviewItem.createdBy}" class="align-self-center mr-2"></span>-->
+<!--                            </div>-->
+<!--                            <div th:unless="${member?.role == T(kr.co.shoebox.constant.Role).ADMIN} or ${member?.email} == ${reviewItem.createdBy}">-->
+<!--                                <span th:text="${#strings.substring(reviewItem.createdBy, 0, 3)+'*******'}" class="align-self-center mr-2"></span>-->
+<!--                            </div>-->
+<!--                        </td>-->
+<!--                        <td th:text="${reviewItem.regTime}"></td>-->
+<!--                    </tr>-->
+<!--                    </tbody>-->
+                </table>
+            </div>
+        </div>
+        <div class="container">
+            <hr class="my-2">
+            <h4 class="display-5 mgt-30" id="qna">문의(
+<!--                <span th:text="${qnaCount}" ></span>-->
+                )</h4>
+            <div>
+                <div sec:authorize="hasAnyAuthority('ROLE_USER')">
+                    <a class="btn btn-primary" th:href="@{'/qna/question/new/' + ${store.id}}" sec:authorize="isAuthenticated()">문의하기</a>
+                    <span sec:authorize="isAnonymous()">
+                        <a class="btn btn-primary" th:href="@{'/members/login'}">로그인</a>
+                        문의 작성은 로그인 후 가능합니다.
+                    </span>
+                </div>
+                <table id="qnaTable" class="table text-center align-middle">
+                    <colgroup>
+                        <col width="20%"/>
+                        <col width="40%"/>
+                        <col width="20%"/>
+                        <col width="20%"/>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>답변여부</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                    </tr>
+                    </thead>
+
+<!--                    <tbody>-->
+<!--                    <tr th:each="qna : ${qnaList}">-->
+<!--                        <td>-->
+<!--                            <span th:if="${qna.answer} == null">답변대기</span>-->
+<!--                            <span th:unless="${qna.answer} == null">답변완료</span>-->
+<!--                        </td>-->
+
+<!--                        <td class="contentCol" style="cursor: pointer">-->
+<!--                            <span th:if="${qna.qnASecret == T(kr.co.shoebox.constant.QnASecret).PUBLIC}"></span>-->
+<!--                            <span th:unless="${qna.qnASecret == T(kr.co.shoebox.constant.QnASecret).PUBLIC}" class="bi bi-lock" style="font-size: 16px"></span>-->
+<!--                            <span th:text="${qna.title}" class="align-self-center mr-2"></span>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <div th:if="${member?.role == T(kr.co.shoebox.constant.Role).ADMIN} or ${member?.email} == ${qna.createdBy}">-->
+<!--                                <span th:text="${qna.createdBy}" class="align-self-center mr-2"></span>-->
+<!--                            </div>-->
+<!--                            <div th:unless="${member?.role == T(kr.co.shoebox.constant.Role).ADMIN} or ${member?.email} == ${qna.createdBy}">-->
+<!--                                <span th:text="${#strings.substring(qna.createdBy, 0, 3)+'*******'}" class="align-self-center mr-2"></span>-->
+<!--                            </div>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <span th:text="${qna.regTime}" class="align-self-center mr-2"></span>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <div th:if="${qna.qnASecret == T(kr.co.shoebox.constant.QnASecret).PUBLIC}">-->
+<!--                                <div th:if="${qna.answer} == null">Q:-->
+<!--                                    <span th:text="${qna.question}"></span>-->
+<!--                                </div>-->
+<!--                                <div th:unless="${qna.answer} == null">Q:-->
+<!--                                    <span th:text="${qna.question}"></span><br>-->
+<!--                                    A: <span th:text="${qna.answer}"></span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div th:unless="${qna.qnASecret == T(kr.co.shoebox.constant.QnASecret).PUBLIC}">-->
+<!--                                <div th:if="${member?.role == T(kr.co.shoebox.constant.Role).ADMIN} or ${member?.email} == ${qna.createdBy}">-->
+<!--                                    <div th:if="${qna.answer} == null">Q:-->
+<!--                                        <span th:text="${qna.question}"></span>-->
+<!--                                    </div>-->
+<!--                                    <div th:unless="${qna.answer} == null">Q:-->
+<!--                                        <span th:text="${qna.question}"></span><br>-->
+<!--                                        A: <span th:text="${qna.answer}"></span>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div th:unless="${member?.role == T(kr.co.shoebox.constant.Role).ADMIN} or ${member?.email} == ${qna.createdBy}">-->
+<!--                                    비밀글입니다.-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    </tbody>-->
+                </table>
+            </div>
+        </div>
+        <div class="container">
+            <hr class="my-2">
+            <h4 class="display-5 mgt-30" style="margin-bottom:30px; font-weight: 600;">미용실 위치</h4>
+            <span class="h5">주소: </span>
+            <span class="h5" th:text="${member.road_address}"> </span>
+            <span class="h5" th:text="${member.detail_address}"></span>
+            <div id="map" style="width:100%;height:400px;"></div>
+            <input type="hidden" id="lng" th:value="${member.longitude}">
+            <input type="hidden" id="lat" th:value="${member.latitude}">
+        </div>
+
+    </div>
+</div>
+</html>

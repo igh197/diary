@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.codepresso3.mirrymurry.mapper.StoreMapper">
+    <select id="findById" resultType="com.codepresso3.mirrymurry.vo.Store">
+        SELECT *
+        FROM store
+        WHERE store_id = #{store_id}
+    </select>
+    <insert id="createStore">
+        INSERT INTO store(store_info, store_member_id)
+        VALUES (#{store.store_info}, #{store.member_id})
+    </insert>
+    <select id="findByMemberId" resultType="com.codepresso3.mirrymurry.vo.Store">
+        SELECT *
+        FROM store
+        WHERE store_member_id = #{member_id}
+    </select>
+</mapper>

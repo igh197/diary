@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.codepresso3.mirrymurry.mapper.MenuMapper">
+    <select id="menuList" resultType="com.codepresso3.mirrymurry.vo.Menu">
+        SELECT *
+        FROM menu
+        WHERE menu_store_id = #{store_id}
+    </select>
+    <select id="manMenuList" resultType="com.codepresso3.mirrymurry.vo.Menu">
+        SELECT *
+        FROM menu
+        WHERE menu_store_id = #{store_id}
+        AND category = '남자'
+    </select>
+    <select id="womanMenuList" resultType="com.codepresso3.mirrymurry.vo.Menu">
+        SELECT *
+        FROM menu
+        WHERE menu_store_id = #{store_id}
+        AND category = '여자'
+    </select>
+
+    <insert id="addMenu">
+        INSERT INTO menu(price, menu_name, category, menu_store_id)
+        VALUES (#{menu.price}, #{menu.menu_name}, #{menu.category}, #{menu.menu_store_id} )
+    </insert>
+
+    <select id="getMenu" resultType="com.codepresso3.mirrymurry.vo.Menu">
+        SELECT *
+        FROM menu
+        WHERE menu_id = #{menu_id}
+    </select>
+
+    <update id="updateMenu">
+        UPDATE menu
+        SET price=#{menu.price}, menu_name=#{menu.menu_name}, category=#{menu.category}
+        WHERE menu_id = #{menu.menu_id}
+    </update>
+
+    <delete id="deleteMenu">
+        DELETE FROM menu
+        WHERE menu_id = #{menu_id}
+    </delete>
+
+    <select id="getPrice" resultType="Integer">
+        SELECT price
+        FROM menu
+        WHERE menu_id = #{menu_id}
+    </select>
+</mapper>
