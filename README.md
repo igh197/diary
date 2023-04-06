@@ -1,6 +1,5 @@
 # diary
 ----
-  Returns json data about my favorite restaurants in Seoul.
  <br>**Diarys**
 | METHOD | URL                                       |
 |--------|-------------------------------------------|
@@ -56,6 +55,13 @@ User Class:
 | deletedAt | LocalDateTime | deleted date and time of user |
 | List<Diary> | diaryList | One to Many relation with Diary class |
 
-
+Image Class: 
+| Parameter Name | Data Type | Description| 
+| -------------- |-----------|---------------------------------|
+| id | Long int | primary key of Image class |
+| originalFileName | String | original file name |
+| storedFilePath | String | stored file path |
+| fileSize | Long | size of file |
+| diary | Diary | one to one relation with diary class |
 
 
