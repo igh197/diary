@@ -8,7 +8,7 @@
 | GET    | https://127.0.0.1:8080/diary/{id}         |
 | PUT    | https://127.0.0.1:8080/diary/{id}         |
 | DELETE | https://127.0.0.1:8080/diary/{id}         |
-
+| GET    | https://127.0.0.1:8080/bookmarks          |
 **Users**
 | METHOD | URL                                |
 | ------ | :--------------------------------- |
@@ -39,6 +39,7 @@ Diary Class:
 | createdAt | LocalDateTime | created date and time of diary |
 | updatedAt | LocalDateTime | updated date and time of diary |
 | deletedAt | LocalDateTime | deleted date and time of diary |
+| bookmark | boolean | whether it is bookmarked |
 | User | user | Foreign key of Many to One relation with User class |
 
 User Class: 
