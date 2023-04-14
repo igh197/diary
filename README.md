@@ -9,7 +9,7 @@
 | PUT    | https://127.0.0.1:8080/diary/{id}         |
 | DELETE | https://127.0.0.1:8080/diary/{id}         |
 | GET    | https://127.0.0.1:8080/bookmarks          |
-**Users**
+<br>**Users**
 | METHOD | URL                                |
 | ------ | :--------------------------------- |
 | POST   | https://127.0.0.1:8080/user/new    |
