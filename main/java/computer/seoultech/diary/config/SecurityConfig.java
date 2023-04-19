@@ -22,9 +22,21 @@ public class SecurityConfig {  //WebSecurityAdapter class는 더이상 권장되
             Exception {
         http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET).permitAll()
-                .requestMatchers(HttpMethod.POST).permitAll()
-                .requestMatchers(HttpMethod.PATCH).permitAll()
+                //get request
+                .requestMatchers(HttpMethod.GET,"/diarys").permitAll()
+                .requestMatchers(HttpMethod.GET,"/diary/{id}","/diary/bookmarks").hasAuthority("ROLE_USER")
+                .requestMatchers(HttpMethod.GET,"/user/{id}","/users").hasAuthority("ROLE_ADMIN")
+                //post request
+                .requestMatchers(HttpMethod.POST,"/user/new").permitAll()
+                .requestMatchers(HttpMethod.POST,"/diary/new","/image/new").hasAuthority("ROLE_USER")
+                //put request
+                .requestMatchers(HttpMethod.PUT,"/diary/{id}").hasAuthority("ROLE_USER")
+                .requestMatchers(HttpMethod.PUT,"/user/{id}").hasAuthority("ROLE_USER")
+                //delete request
+                .requestMatchers(HttpMethod.DELETE,"/diary/{id}").hasAuthority("ROLE_USER")
+                .requestMatchers(HttpMethod.DELETE,"/user/{id}").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.DELETE,"/image/{id}").hasAuthority("ROLE_USER")
+
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -32,10 +44,10 @@ public class SecurityConfig {  //WebSecurityAdapter class는 더이상 권장되
                 .usernameParameter("account") // 계정 ID
                 .passwordParameter("password") //비밀번호
                 .loginProcessingUrl("/login") //스프링 시큐리티가 제공하는 로그인 인증 기능
-                .defaultSuccessUrl("/diarys")
+                .defaultSuccessUrl("/diary/bookmarks")
                 .and()
                 .exceptionHandling()
-                .accessDeniedPage("")
+                .accessDeniedPage("/diarys")
         ;
 
         return http.build();
