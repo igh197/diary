@@ -22,8 +22,9 @@ public class SecurityConfig {  //WebSecurityAdapter class는 더이상 권장되
             Exception {
         http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET).permitAll()
-                .requestMatchers(HttpMethod.POST).permitAll()
+                .requestMatchers(HttpMethod.GET,"/diarys").permitAll()  //diarys만 전체공개
+                .requestMatchers(HttpMethod.GET,"/diarys/{id}","/diary/bookmarks").hasAuthority("ROLE_USER") // 북마크된 일기는 사용자에게만
+                .requestMatchers(HttpMethod.POST,"/diary/new","/image/new","/user/new").hasAuthority("ROLE_USER") // 생성기능은 사용자에게만
                 .requestMatchers(HttpMethod.PATCH).permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -32,10 +33,10 @@ public class SecurityConfig {  //WebSecurityAdapter class는 더이상 권장되
                 .usernameParameter("account") // 계정 ID
                 .passwordParameter("password") //비밀번호
                 .loginProcessingUrl("/login") //스프링 시큐리티가 제공하는 로그인 인증 기능
-                .defaultSuccessUrl("/diarys")
+                .defaultSuccessUrl("/diarys/bookmarks") //로그인 성공시 bookmark페이지
                 .and()
                 .exceptionHandling()
-                .accessDeniedPage("")
+                .accessDeniedPage("/diarys") //실패시 원래 페이지
         ;
 
         return http.build();
