@@ -24,11 +24,11 @@ public class SecurityConfig {  //WebSecurityAdapter class는 더이상 권장되
                 .authorizeHttpRequests()
                 //get request
                 .requestMatchers(HttpMethod.GET,"/diarys").permitAll()
-                .requestMatchers(HttpMethod.GET,"/diary/{id}","/diary/bookmarks").hasAuthority("ROLE_USER")
+                .requestMatchers(HttpMethod.GET,"/diary/{id}","/diary/bookmarks","/diaryfiles","/diaryfile/{id}").hasAuthority("ROLE_USER")
                 .requestMatchers(HttpMethod.GET,"/user/{id}","/users").hasAuthority("ROLE_ADMIN")
                 //post request
                 .requestMatchers(HttpMethod.POST,"/user/new").permitAll()
-                .requestMatchers(HttpMethod.POST,"/diary/new","/image/new").hasAuthority("ROLE_USER")
+                .requestMatchers(HttpMethod.POST,"/diary/new","/image/new","/diaryfile/{id}").hasAuthority("ROLE_USER")
                 //put request
                 .requestMatchers(HttpMethod.PUT,"/diary/{id}").hasAuthority("ROLE_USER")
                 .requestMatchers(HttpMethod.PUT,"/user/{id}").hasAuthority("ROLE_USER")
