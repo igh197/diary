@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.codepresso3.mirrymurry.mapper.BookMapper">
+    <select id="getTimeList" resultType="Integer">
+        SELECT book_time
+        FROM book
+        WHERE book_date = #{book_date}
+        AND book_store_id = #{store_id}
+    </select>
+    <insert id="createBook">
+        INSERT INTO book(book_date, book_time, book_menu_id, book_store_id, book_member_id)
+        VALUES (#{book.book_date}, #{book.book_time}, #{book.book_menu_id}, #{book.book_store_id}, #{book.book_member_id})
+    </insert>
+    <select id="bookMngList" resultType="com.codepresso3.mirrymurry.vo.BookMng">
+        SELECT book_id, book_member_id, email, user_name, phone_number, book_id, book_time
+        FROM book
+        JOIN member ON book_member_id = member_id
+        WHERE book_store_id = #{store_id} AND book_date = #{book_date}
+    </select>
+
+    <delete id="bookCancel">
+        DELETE FROM book WHERE book_id = #{book_id}
+    </delete>
+</mapper>

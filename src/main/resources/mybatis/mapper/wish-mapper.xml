@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.codepresso3.mirrymurry.mapper.WishMapper">
+    <select id="wishStatus" resultType="com.codepresso3.mirrymurry.vo.Wish">
+        SELECT *
+        FROM wish
+        WHERE wish_member_id = #{member_id}
+        AND wish_store_id = #{store_id}
+    </select>
+    <insert id="wishStore">
+        INSERT INTO wish(wish_member_id, wish_store_id)
+        VALUES (#{wish.member_id}, #{wish.store_id})
+    </insert>
+    <delete id="unWishStore">
+        DELETE FROM wish
+        WHERE wish_member_id = #{wish.member_id}
+        AND wish_store_id = #{wish.store_id}
+    </delete>
+</mapper>

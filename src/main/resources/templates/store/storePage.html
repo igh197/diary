@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    <style>
+
+    </style>
+</th:block>
+
+<div layout:fragment="content">
+
+    <h2>사업자 페이지</h2>
+    <ul>
+        <li><a href="#">미용실 정보 수정</a></li>
+        <li><a href="/books/bookMng">예약 관리</a></li>
+        <li><a href="/menu/addMenu">메뉴 등록</a></li>
+        <li><a href="/menu/menuMng">메뉴 관리</a></li>
+    </ul>
+</div>

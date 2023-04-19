@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.codepresso3.mirrymurry.mapper.QnAMapper">
+    <select id="findByStoreId" resultType="com.codepresso3.mirrymurry.vo.QnA">
+        SELECT *
+        FROM qna
+        WHERE qna_store_id =#{store_id}
+    </select>
+
+</mapper>
