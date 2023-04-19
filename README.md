@@ -19,14 +19,14 @@
 | PUT    | https://127.0.0.1:8080/user/{id}   |
 | DELETE | https://127.0.0.1:8080/user/{id}   |
 
-**Images**
+<br>**Images**
 | METHOD | URL                                |
 | ------ | :--------------------------------- |
 | POST   | https://127.0.0.1:8080/image/new   |
 | PUT    | https://127.0.0.1:8080/image/{id}  |
 | DELETE | https://127.0.0.1:8080/image/{id}  |
 
-**DiaryFiles**
+<br>**DiaryFiles**
 | METHOD | URL                                |
 | ------ | :--------------------------------- |
 | GET    | https://127.0.0.1:8080/diaryfiles  |
@@ -65,6 +65,7 @@ User Class:
 | deletedAt | LocalDateTime | deleted date and time of user |
 | List<Diary> | diaryList | One to Many relation with Diary class |
 | List<DiaryFile> | diaryFileList | One to Many relation with DiaryFile class |
+ 
 Image Class: 
 | Parameter Name | Data Type | Description| 
 | -------------- |-----------|---------------------------------|
