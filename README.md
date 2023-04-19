@@ -24,7 +24,7 @@
 | ------ | :--------------------------------- |
 | POST   | https://127.0.0.1:8080/image/new   |
 | PUT    | https://127.0.0.1:8080/image/{id}  |
-
+| DELETE | https://127.0.0.1:8080/image/{id}  |
 *  **URL Params**
 
    **Required:**
