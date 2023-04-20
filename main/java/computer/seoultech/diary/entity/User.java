@@ -22,36 +22,36 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-public class User implements UserDetails {
+public class User implements UserDetails {   //UserDetails 인터페이스를 구현하는 방식으로 사용자 클래스를 생성해야함
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  //mysql 사용
+    private Long id; //primary key
 
-    private String account;
+    private String account;  //계정 아이디
 
-    private String password;
+    private String password; //암호화된 비밀번호
 
-    private String name;
+    private String name;  //사용자 이름
 
-    private String email;
+    private String email; //사용자 이메일
 
-    private String auth;
+    private String auth; //사용자 권한
 
     @CreatedDate
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt; //가입 시기
 
     @UpdateTimestamp
-    private LocalDateTime updatedAt;
+    private LocalDateTime updatedAt; //회원 내용 수정
 
-    private LocalDateTime deletedAt;
+    private LocalDateTime deletedAt;  //회원 탈퇴
     @OneToMany
     private List<Diary> diaryList;
     @OneToMany
     private List<DiaryFile> diaryFileList;
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection<? extends GrantedAuthority> getAuthorities() {  //권한 저장 및 호출 함수
         Set<GrantedAuthority> roles = new HashSet<>();
         for (String role : auth.split(",")) {
             roles.add(new SimpleGrantedAuthority(role));
@@ -61,13 +61,13 @@ public class User implements UserDetails {
     @Override
     public String getPassword(){
         return password;
-    }
+    }   //비밀번호 호출 getter
 
 
     @Override
     public String getUsername() {
         return account;
-    }
+    } //계정 호출
 
     @Override
     public boolean isAccountNonExpired() {

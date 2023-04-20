@@ -19,21 +19,21 @@ import java.util.List;
 @Entity
 public class Diary {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //mysql 사용
+    private Long id;   //primary key
 
-    private String title;
+    private String title;  //일기 제목
 
-    private String content;
+    private String content; //일기 내용
 
-    private Boolean bookmark;
+    private Boolean bookmark; //북마크 설정여부
     @CreatedDate
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt; // 생성 시간
 
     @UpdateTimestamp
-    private LocalDateTime updatedAt;
+    private LocalDateTime updatedAt; //수정 시간
 
-    private LocalDateTime deletedAt;
+    private LocalDateTime deletedAt; //삭제 시간
     @ManyToOne
     private User user;
     @OneToMany
