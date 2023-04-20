@@ -23,8 +23,7 @@ public class SecurityConfig {  //WebSecurityAdapter class는 더이상 권장되
         http.csrf().disable()
                 .authorizeHttpRequests()
                 //get request
-                .requestMatchers(HttpMethod.GET,"/diarys").permitAll()
-                .requestMatchers(HttpMethod.GET,"/diary/{id}","/diary/bookmarks","/diaryfiles","/diaryfile/{id}").hasAuthority("ROLE_USER")
+                .requestMatchers(HttpMethod.GET,"/diarys","/diary/{id}","/diary/bookmarks","/diaryfiles","/diaryfile/{id}").hasAuthority("ROLE_USER")
                 .requestMatchers(HttpMethod.GET,"/user/{id}","/users").hasAuthority("ROLE_ADMIN")
                 //post request
                 .requestMatchers(HttpMethod.POST,"/user/new").permitAll()
