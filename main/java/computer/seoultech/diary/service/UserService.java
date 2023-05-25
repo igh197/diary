@@ -28,7 +28,7 @@ public class UserService  implements UserDetailsService {  //spring security는 
     private final PasswordEncoder passwordEncoder; //비밀번호 암호화를 위한 클래스
     @Override
     public User loadUserByUsername(String account) throws UsernameNotFoundException {
-        return  userRepository.findByAccount(account)
+        return  userRepository.findUserByAccount(account)
                 .orElseThrow(() -> new UsernameNotFoundException((account)));
         //계정으로 사용자 정보 검색
     }
@@ -72,14 +72,14 @@ public class UserService  implements UserDetailsService {  //spring security는 
         return userResponse;
     }
 
-    public Header<UserResponse> myPage(String account) {   //계정으로 내 페이지 찾기
-        Optional<User> userOptional = userRepository.findByAccount(account);
+    public Header<UserResponse> myPage(Long id) {   //계정으로 내 페이지 찾기
+        Optional<User> userOptional = userRepository.findUserById(id);
         //없을 수도 있는 경우를 대비해 Optional class로 생성
         return Header.OK(userOptional.map(user -> response(user)).orElseThrow());
     }
 
-    public void update(String account,UserRequest userRequest) {
-        Optional<User> userOptional = userRepository.findByAccount(account);
+    public void update(Long id,UserRequest userRequest) {
+        Optional<User> userOptional = userRepository.findUserById(id);  //
         User nUser = User.builder()
                 .account(userRequest.getAccount())
                 .password(passwordEncoder.encode(userRequest.getPassword()))
