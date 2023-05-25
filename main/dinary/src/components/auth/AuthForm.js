@@ -56,6 +56,7 @@ const Footer = styled.div`
 	}
 `;
 
+
 const ButtonWithMarginTop = styled(Button)`
 margin-top: 2rem;
 `;
@@ -65,16 +66,18 @@ const textMap = {
   register: 'Join',
 };
 
-const AuthForm = ({type}) => {
+const AuthForm = ({type, form, onChange, onSubmit}) => {
   const text = textMap[type];
 
 	return (
 		<AuthFormBlock>
-			<form>
+			<form onSubmit={onSubmit}>
 				<StyledInput
-					autoComplete="username"
-					name="username"
+					autoComplete="account"
+					name="account"
 					placeholder="ID"
+					onChange={onChange}
+					value={form.account}
 				/>
  
 				<StyledInput
@@ -82,6 +85,8 @@ const AuthForm = ({type}) => {
 					name="password"
 					placeholder="Password"
 					type="password"
+					onChange={onChange}
+			value={form.password}
 				/>
         {type === 'register' && (
           <StyledInput
@@ -89,6 +94,8 @@ const AuthForm = ({type}) => {
             name="passwordConfirm"
             placeholder="Confirm Password"
             type="password"
+			onChange={onChange}
+			value={form.passwordConfirm}
           />)}
 				<ButtonWithMarginTop pink fullWidth>
 					{text}

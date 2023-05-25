@@ -8,6 +8,7 @@ import Button from '../common/Button';
 
 /* 화면 전체를 채움 */
 const AuthTemplateBlock = styled.div`
+    font-family: 'javanese-text-regular', sans-serif;
     position: absolute;
     left: 0;
     top: 0;
@@ -53,7 +54,8 @@ const AuthTemplate = ({children}) => {
                 </div>
                 {children}
             </WhiteBox>
-            <Link to="/"><Button x>X</Button></Link>
+            {/*불 값 수정*/}
+            <Link to="/"><Button x = "true">X</Button></Link>
         </AuthTemplateBlock>
     );
 };

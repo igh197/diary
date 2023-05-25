@@ -16,6 +16,7 @@ const StyledButton = styled.button`
   &:hover {
     background: ${palette.gray[6]};
   }
+
   ${(props) =>
     props.fullWidth &&
     css`

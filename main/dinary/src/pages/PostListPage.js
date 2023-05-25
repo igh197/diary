@@ -1,11 +1,11 @@
 import React from 'react';
-import Button from '../components/common/Button';
-import { Link } from '../../node_modules/react-router-dom/dist/index';
+// import { Link } from '../../node_modules/react-router-dom/dist/index';
+import Header from '../components/base/Header';
 
 const PostListPage = () => {
   return (
     <div>
-      <Link to={"/login"}><Button>Login</Button></Link>
+      <Header />
     </div>
   );
 };

@@ -2,22 +2,27 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import * as ServiceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import rootReducer from './modules';
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools/extension';
+import createSagaMiddleware from 'redux-saga';
+import rootReducer, { rootSaga } from './modules';
 
-const store = createStore(rootReducer, composeWithDevTools());
-const rootNode = document.getElementById('root');
-const root = createRoot(rootNode);
-
-root.render(
-  <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </Provider>,
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
 
-reportWebVitals();
+sagaMiddleware.run(rootSaga);
+
+createRoot(document.getElementById('root')).render(
+  <Provider store={store}>
+    <React.Fragment>
+      <App />
+    </React.Fragment>
+  </Provider>
+);
+
+ServiceWorker.unregister();
