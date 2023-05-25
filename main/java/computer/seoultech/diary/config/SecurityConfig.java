@@ -31,7 +31,7 @@ public class SecurityConfig {  //WebSecurityConfigurerAdapter class는 더이상
                 .authorizeHttpRequests()
                 //post request
                 .requestMatchers(HttpMethod.POST,"/user/new").permitAll()
-                .requestMatchers(HttpMethod.POST,"/diary/new","/image/new","/diaryfile/{id}").hasRole("ROLE_USER")
+                .requestMatchers(HttpMethod.POST,"/diary/new","/image/new","/diaryfile/{id}").permitAll()
                 //get request
                 .requestMatchers(HttpMethod.GET,"/login.html").permitAll()
                 .requestMatchers(HttpMethod.GET,"/diarys","/diary/{id}","/diary/bookmarks","/diaryfiles","/diaryfile/{id}").hasRole("USER")
