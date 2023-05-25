@@ -10,5 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 public interface UserRepository extends JpaRepository<User,Long> {  //jpa를 이용하여 db에 접근하기 위한 인터페이스
-    Optional<User> findByAccount(String account);
+    Optional<User> findUserByAccount(String account);
+    Optional<User> findUserById(Long id);
 }
