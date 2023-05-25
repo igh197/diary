@@ -19,11 +19,19 @@
 | PUT    | https://127.0.0.1:8080/user/{id}   |
 | DELETE | https://127.0.0.1:8080/user/{id}   |
 
-**Images**
+<br>**Images**
 | METHOD | URL                                |
 | ------ | :--------------------------------- |
 | POST   | https://127.0.0.1:8080/image/new   |
 | PUT    | https://127.0.0.1:8080/image/{id}  |
+| DELETE | https://127.0.0.1:8080/image/{id}  |
+
+<br>**DiaryFiles**
+| METHOD | URL                                |
+| ------ | :--------------------------------- |
+| GET    | https://127.0.0.1:8080/diaryfiles  |
+| POST   | https://127.0.0.1:8080/diaryfile/{id}|
+| GET    | https://127.0.0.1:8080/diaryfile/{id}|
 
 *  **URL Params**
 
@@ -56,7 +64,8 @@ User Class:
 | updatedAt | LocalDateTime | updated date and time of user |
 | deletedAt | LocalDateTime | deleted date and time of user |
 | List<Diary> | diaryList | One to Many relation with Diary class |
-
+| List<DiaryFile> | diaryFileList | One to Many relation with DiaryFile class |
+ 
 Image Class: 
 | Parameter Name | Data Type | Description| 
 | -------------- |-----------|---------------------------------|
@@ -66,4 +75,12 @@ Image Class:
 | fileSize | Long | size of file |
 | diary | Diary | one to one relation with diary class |
 
-
+DiaryFile class:
+| Parameter Name | Data Type | Description| 
+| -------------- |-----------|---------------------------------|
+| id | Long int | primary key of Diaryfile class |
+| diarylFileName | String | diary file name |
+| storedFilePath | String | stored file path |
+| fileSize | Long | size of diary file |
+| diary | Diary | one to one relation with diary class |
+| User | User | one to many relation with diaryfile class |
