@@ -39,7 +39,13 @@ public class DiaryService {
     }
     private DiaryResponse response(Diary diary) {   //user 객체를 UserResponse 객체로 바꾸어 주는 함수
         DiaryResponse diaryResponse =DiaryResponse.builder()
-
+                .title(diary.getTitle())
+                .bookmark(diary.getBookmark())
+                .content(diary.getContent())
+                .createdAt(diary.getCreatedAt())
+                .updatedAt(diary.getUpdatedAt())
+                .deletedAt(diary.getDeletedAt())
+                .image(diary.getImageList().get(diary.getId().intValue()))
                 .build();
 
         return diaryResponse;
