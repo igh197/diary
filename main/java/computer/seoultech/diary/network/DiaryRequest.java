@@ -1,6 +1,6 @@
 package computer.seoultech.diary.network;
 
-
+import computer.seoultech.diary.entity.Image;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,21 +8,25 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserResponse{  //민감한 정보는 숨기기위해 이 클래스를 만듦
-    private String account;  //계정 아이디
+public class DiaryRequest {  //사용자가 입력해야할 정보
 
-    private String email; //사용자 이메일
+    private String title;  //일기 제목
 
+    private String content; //일기 내용
 
+    private Boolean bookmark; //북마크 설정여부
 
+    private LocalDateTime createdAt; // 생성 시간
+
+    private LocalDateTime updatedAt;
 
 }

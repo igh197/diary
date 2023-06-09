@@ -27,4 +27,13 @@ public class Header<T>{  //meta data를 Header class에 모아둠
                 .pagination(pagination)
                 .build();
     }
+    public static <T> Header<T> OK(T data){
+        return (Header<T>)Header
+                .builder()
+                .transactionTime(LocalDateTime.now())
+                .resultCode("OK")
+                .description("OK")
+                .data(data)
+                .build();
+    }
 }
