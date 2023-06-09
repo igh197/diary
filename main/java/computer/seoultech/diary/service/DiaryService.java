@@ -6,9 +6,11 @@ import computer.seoultech.diary.entity.User;
 import computer.seoultech.diary.network.*;
 import computer.seoultech.diary.repository.DiaryRepository;
 import computer.seoultech.diary.repository.ImageRepository;
+import computer.seoultech.diary.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,7 +23,9 @@ import java.util.stream.Collectors;
 public class DiaryService {
     private final DiaryRepository diaryRepository;
     private final ImageRepository imageRepository;
+    private final UserRepository userRepository;
     public void save(DiaryRequest diaryRequest) {   //회원가입을 위한 실질적인 기능을 하는 함수
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         diaryRepository.save(Diary.builder()  //save는 JpaRepository가 내장한 함수, chain 기능 사용
                 .title(diaryRequest.getTitle()) //계정 입력
                 .content(diaryRequest.getContent()) //대부분의 사용자는 ROLE_USER이기 때문
@@ -29,12 +33,9 @@ public class DiaryService {
 
                 .updatedAt(LocalDateTime.now()) //update 시간은 default로 지금
                 .bookmark(diaryRequest.getBookmark())
+                .user(userRepository.findUserByAccount(((User) principal).getAccount()).orElseThrow())
+                .build());
 
-                .build());
-        imageRepository.save(Image.builder()
-                .originalFileName(diaryRequest.getImage().getOriginalFileName())
-                .storedFilePath("diary/src/main/resources/templates/img/")
-                .build());
 
     }
     private DiaryResponse response(Diary diary) {   //user 객체를 UserResponse 객체로 바꾸어 주는 함수
@@ -76,9 +77,8 @@ public class DiaryService {
                 .content(diaryRequest.getContent())
                 .bookmark(diaryRequest.getBookmark())
                 .updatedAt(LocalDateTime.now())
-                .imageList(diaryRequest.getImage().getDiary().getImageList())
                 .build();
-        diaryOptional.map(user -> response(nDiary)).orElseThrow();
+        diaryOptional.map(diary -> response(nDiary)).orElseThrow();
         return Header.OK(response(nDiary));
     }
     public void delete(Long id) {
