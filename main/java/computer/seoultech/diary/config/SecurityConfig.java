@@ -31,17 +31,17 @@ public class SecurityConfig {  //WebSecurityConfigurerAdapter class는 더이상
                 .authorizeHttpRequests()
                 //post request
                 .requestMatchers(HttpMethod.POST,"/user/new").permitAll()
-                .requestMatchers(HttpMethod.POST,"/diary/new","/image/new","/diaryfile/{id}").permitAll()
+                .requestMatchers(HttpMethod.POST,"/diary/new","/image/new","/diaryfile/{id}").hasRole("USER")
                 //get request
                 .requestMatchers(HttpMethod.GET,"/login.html").permitAll()
                 .requestMatchers(HttpMethod.GET,"/diarys","/diary/{id}","/diary/bookmarks","/diaryfiles","/diaryfile/{id}").hasRole("USER")
-                .requestMatchers(HttpMethod.GET,"/user/{id}","/users").hasRole("USER")
+                .requestMatchers(HttpMethod.GET,"/user/{id}","/users").hasRole("ADMIN")
                 //put request
                 .requestMatchers(HttpMethod.PUT,"/diary/{id}").hasRole("USER")
-                .requestMatchers(HttpMethod.PUT,"/user/{id}").hasRole("USER")
+                .requestMatchers(HttpMethod.PUT,"/user/{id}").hasRole("ADMIN")
                 //delete request
                 .requestMatchers(HttpMethod.DELETE,"/diary/{id}").hasRole("USER")
-                .requestMatchers(HttpMethod.DELETE,"/user/{id}").hasRole("USER")
+                .requestMatchers(HttpMethod.DELETE,"/user/{id}").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE,"/image/{id}").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
