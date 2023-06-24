@@ -22,8 +22,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DiaryService {
     private final DiaryRepository diaryRepository;
-    private final ImageRepository imageRepository;
+    private final UserService userService;
     private final UserRepository userRepository;
+
     public void save(DiaryRequest diaryRequest) {   //회원가입을 위한 실질적인 기능을 하는 함수
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         diaryRepository.save(Diary.builder()  //save는 JpaRepository가 내장한 함수, chain 기능 사용
@@ -46,15 +47,15 @@ public class DiaryService {
                 .createdAt(diary.getCreatedAt())
                 .updatedAt(diary.getUpdatedAt())
                 .deletedAt(diary.getDeletedAt())
-                .image(diary.getImageList().get(diary.getId().intValue()))
                 .build();
 
         return diaryResponse;
     }
     public Header<List<DiaryResponse>> findAll(Pageable pageable) {    //diary 목록 반환 함수
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Page<Diary> diarys = diaryRepository.findAll(pageable);
-        List<DiaryResponse> diaryResponseList = diarys.stream()  //stream 함수를 통한 반복문 대체
-                .map(diary->response(diary))  // 람다 함수를 이용한 반복문 대체
+        List<DiaryResponse> diaryResponseList = diarys.stream().filter(d->d.getUser().getAccount()==((User)principal).getAccount())
+                .map(diary->response(diary))// 람다 함수를 이용한 반복문 대체
                 .collect(Collectors.toList());
 
         Pagination pagination = Pagination.builder()  //user 목록 정보
@@ -85,4 +86,26 @@ public class DiaryService {
         diaryRepository.deleteById(id);
     }
 
+    public Header<List<DiaryResponse>> bookmarks(Pageable pageable) {
+        Object principal2 = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Page<Diary> bookmarks = diaryRepository.findDiariesByBookmarkIsTrue(pageable);
+        List<DiaryResponse> bookmarkList = bookmarks.stream().filter(p->p.getUser().getAccount()==((User)principal2).getAccount())  //stream 함수를 통한 반복문 대체
+                .map(bookmark->response(bookmark))  // 람다 함수를 이용한 반복문 대체
+                .collect(Collectors.toList());
+
+        Pagination pagination = Pagination.builder()  //bookmark 목록 정보
+                .totalPages(bookmarks.getTotalPages())   //전체 페이지 수
+                .totalElements(bookmarks.getTotalElements())  //전체 bookmark객체 수
+                .currentPage(bookmarks.getNumber())           //현재 페이지 번호
+                .currentElements(bookmarks.getNumberOfElements()) //현재 페이지의 bookmark 객체 수
+                .build();
+
+        return Header.OK(bookmarkList,pagination);  //반환값
+    }
+
+    public Header<DiaryResponse> diaryDetail(Long id) {
+
+        Optional<Diary> diary = diaryRepository.findDiaryById(id);
+        return Header.OK(diary.map(this::response).orElseThrow());
+    }
 }
