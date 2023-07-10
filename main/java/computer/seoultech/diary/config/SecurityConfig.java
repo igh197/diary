@@ -30,29 +30,29 @@ public class SecurityConfig {  //WebSecurityConfigurerAdapter class는 더이상
         http.csrf().disable()
                 .authorizeHttpRequests()
                 //post request
-                .requestMatchers(HttpMethod.POST,"/user/new").permitAll()
-                .requestMatchers(HttpMethod.POST,"/diary/new","/image/new","/diaryfile/{id}").hasRole("USER")
+                .requestMatchers(HttpMethod.POST,"/register").permitAll()
+                .requestMatchers(HttpMethod.POST,"/diary/new","/image/new","/diaryfile/{id}").hasAnyRole("USER","ADMIN")
                 //get request
-                .requestMatchers(HttpMethod.GET,"/login.html").permitAll()
-                .requestMatchers(HttpMethod.GET,"/diarys","/diary/{id}","/diary/bookmarks","/diaryfiles","/diaryfile/{id}").hasRole("USER")
+                .requestMatchers(HttpMethod.GET,"http://localhost:3000/login").permitAll()
+                .requestMatchers(HttpMethod.GET,"/diarys","/diary/{id}","/diary/bookmarks","/diaryfiles","/diaryfile/{id}").hasAnyRole("USER","ADMIN")
                 .requestMatchers(HttpMethod.GET,"/user/{id}","/users").hasRole("ADMIN")
                 //put request
-                .requestMatchers(HttpMethod.PUT,"/diary/{id}").hasRole("USER")
+                .requestMatchers(HttpMethod.PUT,"/diary/{id}").hasAnyRole("USER","ADMIN")
                 .requestMatchers(HttpMethod.PUT,"/user/{id}").hasRole("ADMIN")
                 //delete request
-                .requestMatchers(HttpMethod.DELETE,"/diary/{id}").hasRole("USER")
+                .requestMatchers(HttpMethod.DELETE,"/diary/{id}").hasAnyRole("USER","ADMIN")
                 .requestMatchers(HttpMethod.DELETE,"/user/{id}").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE,"/image/{id}").hasRole("USER")
+                .requestMatchers(HttpMethod.DELETE,"/image/{id}").hasAnyRole("USER","ADMIN")
                 .anyRequest().authenticated()
                 .and()
 
                 .formLogin()
-                .loginPage("/login.html")
+                .loginPage("http://localhost:3000/login")
                 .usernameParameter("account") // 계정 ID
                 .passwordParameter("password") //비밀번호
                 .loginProcessingUrl("/login") //스프링 시큐리티가 제공하는 로그인 인증 기능
                 .defaultSuccessUrl("/diary/bookmarks")
-                .and().logout().invalidateHttpSession(true).logoutSuccessUrl("/")
+                .and().logout().invalidateHttpSession(true).logoutSuccessUrl("/login.html")
                 ;
 
 
