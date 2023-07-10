@@ -17,12 +17,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin("http://localhost:3000")
 @RequestMapping("/")
 public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
-    @PostMapping("/user/new")
-    public void userRegister(@ModelAttribute UserRequest userRequest){  //회원가입 controller
+    @PostMapping("/register")
+    public void userRegister(@RequestBody UserRequest userRequest){  //회원가입 controller
         userService.save(userRequest);  //userService class에서 구현됨
 
     }
@@ -36,7 +37,7 @@ public class UserController {
         return userService.myPage(id); //userService class에 구현되어 있음
     }
     @PutMapping("/user/{id}")
-    public void update(@PathVariable Long id,@ModelAttribute UserRequest userRequest){
+    public void update(@PathVariable Long id,@RequestBody UserRequest userRequest){
         userService.update(id,userRequest);
     }
     @DeleteMapping("/user/{id}")

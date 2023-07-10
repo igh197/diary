@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin("http://localhost:3000")
 @RequestMapping("/")
 public class ImageController {
     private final ImageService imageService;
