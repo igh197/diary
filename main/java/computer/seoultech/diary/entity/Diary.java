@@ -36,7 +36,13 @@ public class Diary {
     private LocalDateTime deletedAt; //삭제 시간
     @ManyToOne
     private User user;
-    @OneToMany
-    private List<Image> imageList;
 
+    public Diary(String title,String content,Boolean bookmark,LocalDateTime createdAt,LocalDateTime updatedAt,User user){
+        this.title =title;
+        this.content=content;
+        this.bookmark=bookmark;
+        this.createdAt=createdAt;
+        this.updatedAt=updatedAt;
+        this.user=user;
+    }
 }

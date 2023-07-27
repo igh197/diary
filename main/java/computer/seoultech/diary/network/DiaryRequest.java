@@ -1,6 +1,7 @@
 package computer.seoultech.diary.network;
 
 import computer.seoultech.diary.entity.Image;
+import computer.seoultech.diary.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,5 +29,5 @@ public class DiaryRequest {  //사용자가 입력해야할 정보
     private LocalDateTime createdAt; // 생성 시간
 
     private LocalDateTime updatedAt;
-
+    private User user;
 }

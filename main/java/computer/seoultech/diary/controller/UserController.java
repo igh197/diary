@@ -13,15 +13,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/")
 public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
+
     @PostMapping("/register")
     public void userRegister(@RequestBody UserRequest userRequest){  //회원가입 controller
         userService.save(userRequest);  //userService class에서 구현됨

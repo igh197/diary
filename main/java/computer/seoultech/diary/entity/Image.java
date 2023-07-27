@@ -18,7 +18,7 @@ public class Image {
 
     private String originalFileName;  // 원래 파일명
 
-    private String storedFilePath; //이미지 저장 경로
+    private String storedFilePath="../templates/img/"; //이미지 저장 경로
 
     private Long fileSize;  //이미지 파일 사이즈
 

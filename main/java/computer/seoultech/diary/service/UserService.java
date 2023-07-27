@@ -28,15 +28,15 @@ public class UserService  implements UserDetailsService {  //spring security는 
     private final PasswordEncoder passwordEncoder; //비밀번호 암호화를 위한 클래스
     @Override
     public User loadUserByUsername(String account) throws UsernameNotFoundException {
-        return  userRepository.findUserByAccount(account)
+        return userRepository.findUserByAccount(account)
                 .orElseThrow(() -> new UsernameNotFoundException((account)));
-        //계정으로 사용자 정보 검색
+        //계정으로 사용자 정보 검사
     }
 
     public void save(UserRequest userRequest) {   //회원가입을 위한 실질적인 기능을 하는 함수
             userRepository.save(User.builder()  //save는 JpaRepository가 내장한 함수, chain 기능 사용
                 .account(userRequest.getAccount()) //계정 입력
-                           .auth(userRequest.getAuth()) //대부분의 사용자는 ROLE_USER이기 때문
+                           .auth("ROLE_USER") //대부분의 사용자는 ROLE_USER이기 때문
                            .createdAt(LocalDateTime.now())  //계정 생성 시간
 
                            .updatedAt(LocalDateTime.now()) //update 시간은 default로 지금
@@ -79,10 +79,10 @@ public class UserService  implements UserDetailsService {  //spring security는 
     }
 
     public void update(Long id,UserRequest userRequest) {
-        Optional<User> userOptional = userRepository.findUserById(id);  //
+        Optional<User> userOptional = userRepository.findUserById(id);  //내용 수정할 사용자 찾기
         User nUser = User.builder()
                 .account(userRequest.getAccount())
-                .password(passwordEncoder.encode(userRequest.getPassword()))
+                .password(passwordEncoder.encode(userRequest.getPassword())) //찾아서 내용 수정
                 .name(userRequest.getName())
                 .email(userRequest.getEmail())
                 .build();
@@ -92,6 +92,6 @@ public class UserService  implements UserDetailsService {  //spring security는 
 
     public void delete(Long id) {
         userRepository.deleteById(id);
-    }
+    }  //사용자 탈퇴 및 개인정보 삭제
 
 }

@@ -22,12 +22,12 @@ public class ImageService {
     private final DiaryRepository diaryRepository;
 
     public void save(ImageRequest imageRequest) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal(); //해당 사용자 기억
         imageRepository.save(Image.builder()
                         .originalFileName(imageRequest.getOriginalFileName())
                         .storedFilePath(imageRequest.getStoredFilePath())
                         .fileSize(imageRequest.getFileSize())
-                .diary(diaryRepository.findDiaryById(((Diary) principal).getId()).orElseThrow())
+                .diary(diaryRepository.findDiaryById(((Diary) principal).getId()).orElseThrow())  //이미지 내용 저장
                 .build());
     }
 
