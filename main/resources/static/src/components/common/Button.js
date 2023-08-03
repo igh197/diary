@@ -1,8 +1,9 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import palette from '../../lib/styles/palette';
+import { Link } from 'react-router-dom';
 
-const StyledButton = styled.button`
+const buttonStyle = css`
   border: none;
   border-radius: 4px;
   font-size: 1rem;
@@ -20,46 +21,45 @@ const StyledButton = styled.button`
   ${(props) =>
     props.fullWidth &&
     css`
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-    width: 100%;
-    font-size: 1.125rem;
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+      width: 100%;
+      font-size: 1.125rem;
     `}
 
   ${(props) =>
     props.pink &&
     css`
-    height: 4rem;
-    font-size: 1.5rem;
-    border-bottom: 2px solid ${palette.gray[5]};
-    background: ${palette.pink[1]};
-    color: #ffffff;
-    text-shadow: 1px 1px 1px ${palette.pink[3]};
-    &:hover {
-      background: ${palette.pink[3]};
-    }
-    `}
-
-    ${(props) =>
-      props.x &&
-      css`
-      position: relative;
-      top: 5rem;
-      left: 65rem;
-      padding: 1rem 1.5rem;
-      height: 5rem;
-      weight: 5rem;
-      font-size: 2rem;
-      border-radius: 50%;
-      background: #ffffff;
-      color: ${palette.pink[4]};
-      border-bottom: 1px solid ${palette.gray[5]};
+      height: 4rem;
+      font-size: 1.5rem;
+      border-bottom: 2px solid ${palette.gray[5]};
+      background: ${palette.pink[1]};
+      color: #ffffff;
+      text-shadow: 1px 1px 1px ${palette.pink[3]};
       &:hover {
-        background: ${palette.gray[4]};
+        background: ${palette.pink[3]};
       }
     `}
 `;
 
-const Button = (props) => <StyledButton {...props} />;
+const StyledButton = styled.button`
+  ${buttonStyle}
+`;
+
+const StyledLink = styled(Link)`
+  ${buttonStyle}
+`;
+
+const Button = (props) => {
+  return props.to ? (
+    <StyledLink
+      {...props}
+      cyan={props.cyan ? 1 : 0}
+      pink={props.pink ? 1 : 0}
+    />
+  ) : (
+    <StyledButton {...props} />
+  );
+};
 
 export default Button;
