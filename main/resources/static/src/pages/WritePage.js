@@ -1,6 +1,6 @@
 import React from 'react';
 import Resposive from '../components/common/Responsive';
-import Header from '../components/base/Header';
+import Header from '../components/common/Header';
 import EditorContainer from '../containers/write/EditorContainer';
 import TagBoxContainer from '../containers/write/TagBoxContainer';
 import WriteActionButtonContainer from '../containers/write/WriteActionButtonsContainer';
