@@ -1,27 +1,27 @@
-import React from 'react';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Button from '../common/Button';
 
 /* 회원가입/로그인 페이지의 레이아웃을 담당하는 컴포넌트입니다. */
 
 /* 화면 전체를 채움 */
 const AuthTemplateBlock = styled.div`
-    font-family: 'javanese-text-regular', sans-serif;
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    // backgroud: ${palette.gray[1]};
-    background: #ffffff;
-    /* flex로 내부 내용 중앙 정렬 */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    `;
+  font-family: 'Playfair Display', serif;
+  letter-spacing: 2px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  // backgroud: ${palette.gray[1]};
+  background: #ffffff;
+  /* flex로 내부 내용 중앙 정렬 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 /* 흰색 박스 */
 const WhiteBox = styled.div`
@@ -30,9 +30,7 @@ const WhiteBox = styled.div`
         padding-bottom: 2rem;
         text-align: center;
         font-weight: bold;
-        letter-spacing: 2px;
         font-size: 3rem;
-        // font-family: 'Rajdhani'; 나중에 바꾸기
         color: ${palette.pink[2]}};
         text-shadow: 1px 1px 1px ${palette.pink[3]};
         opacity: 0.8;
@@ -45,19 +43,18 @@ const WhiteBox = styled.div`
     border-radius: 5px;
     `;
 
-const AuthTemplate = ({children}) => {
-    return(
-        <AuthTemplateBlock>
-            <WhiteBox>
-                <div className="logo-area">
-                    <Link to="/">Dinary</Link>
-                </div>
-                {children}
-            </WhiteBox>
-            {/*불 값 수정*/}
-            <Link to="/"><Button x = "true">X</Button></Link>
-        </AuthTemplateBlock>
-    );
+const AuthTemplate = ({ children }) => {
+  return (
+    <AuthTemplateBlock>
+      <WhiteBox>
+        <div className="logo-area">
+          <Link to="/">Dinary</Link>
+        </div>
+        {children}
+      </WhiteBox>
+      {/*불 값 수정*/}
+    </AuthTemplateBlock>
+  );
 };
 
 export default AuthTemplate;

@@ -1,6 +1,5 @@
 // src/components/auth/AuthForm.js
 
-import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import palette from '../../lib/styles/palette';
@@ -25,7 +24,6 @@ const StyledInput = styled.input`
 	width: 100%;
 	height: 4rem;
 	border-bottom: 2px solid ${palette.gray[5]};
-	// padding-bottom: 0.5rem;
 	outline: none;
 	color: ${palette.pink[2]}
 	text-shadow: 1px 1px 1px ${palette.pink[3]};
@@ -56,10 +54,6 @@ const Footer = styled.div`
   }
 `;
 
-const ButtonWithMarginTop = styled(Button)`
-  margin-top: 2rem;
-`;
-
 const textMap = {
   login: 'Login',
   register: 'Join',
@@ -82,7 +76,7 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
         <StyledInput
           autoComplete="account"
           name="account"
-          placeholder="ID"
+          placeholder="👤"
           onChange={onChange}
           value={form.account}
         />
@@ -90,7 +84,7 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
         <StyledInput
           autoComplete="new-password"
           name="password"
-          placeholder="Password"
+          placeholder="🔒"
           type="password"
           onChange={onChange}
           value={form.password}
@@ -99,16 +93,16 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
           <StyledInput
             autoComplete="new-password"
             name="passwordConfirm"
-            placeholder="Confirm Password"
+            placeholder="🔐"
             type="password"
             onChange={onChange}
             value={form.passwordConfirm}
           />
         )}
         {error && <ErrorMessage>{error}</ErrorMessage>}
-        <ButtonWithMarginTop pink fullWidth>
+        <Button $pink="true" $fullWidth="true" style={{ marginTop: '2rem' }}>
           {text}
-        </ButtonWithMarginTop>
+        </Button>
       </form>
 
       <Footer>
