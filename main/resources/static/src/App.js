@@ -1,4 +1,3 @@
-import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PostListPage from './pages/PostListPage';
 import LoginPage from './pages/LoginPage';
@@ -6,12 +5,15 @@ import RegisterPage from './pages/RegisterPage';
 import WritePage from './pages/WritePage';
 import PostPage from './pages/PostPage';
 import SettingsPage from './pages/SettingsPage';
+import './App.css';
+import LobbyPage from './pages/LobbyPage';
 
 const App = () => {
   return (
     <>
       <Router>
         <Routes>
+          <Route element={<LobbyPage />} path="/" />
           <Route element={<PostListPage />} path="/@:account" exact />
           <Route element={<PostListPage />} path="/" exact />
           <Route element={<LoginPage />} path="/login" />
