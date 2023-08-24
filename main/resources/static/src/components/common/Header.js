@@ -4,10 +4,8 @@ import Button from './Button';
 import { Link } from 'react-router-dom';
 
 const HeaderBlock = styled.div`
-  position: fixed;
   width: 100%;
   background: white;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
 `;
 
 /**
@@ -15,19 +13,12 @@ const HeaderBlock = styled.div`
  */
 
 const Wrapper = styled(Responsive)`
-  height: 4rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* 자식 엘리먼트 사이의 여백을 최대로 설정 */
-  /* 위쪽과 아래쪽 여백을 1rem 설정 */
-  .logo {
-    font-size: 1.125rem;
-    font-weight: 800;
-    letter-spacing: 2px;
-  }
-  .right {
-    display: flex;
-    align-items: center;
+  margin-top: 2rem;
+  text-align: right;
+  margin-right: 2rem;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  font-weight: bold;
   }
 `;
 
@@ -49,19 +40,22 @@ const Header = ({ user, onLogout }) => {
     <>
       <HeaderBlock>
         <Wrapper>
-          <Link to="/" className="logo">
+          <div>
+            {user ? (
+              <div>
+                <UserInfo>{user.account}</UserInfo>
+                <Button onClick={onLogout}>Logout</Button>
+              </div>
+            ) : (
+              <div>
+                <Button to="/login">Sign in</Button>
+                <Button to="/settings">Settings</Button>
+              </div>
+            )}
+          </div>
+          <Button to="/" $header="true">
             Dinary
-          </Link>
-          {user ? (
-            <div className="right">
-              <UserInfo>{user.account}</UserInfo>
-              <Button onClick={onLogout}>Logout</Button>
-            </div>
-          ) : (
-            <div className="right">
-              <Button to="/login">Sign in</Button>
-            </div>
-          )}
+          </Button>
         </Wrapper>
       </HeaderBlock>
       <Spacer />

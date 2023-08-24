@@ -1,25 +1,27 @@
-import React from 'react';
 import styled, { css } from 'styled-components';
 import palette from '../../lib/styles/palette';
 import { Link } from 'react-router-dom';
 
 const buttonStyle = css`
+font-family: 'Playfair Display', serif;
   border: none;
   border-radius: 4px;
   font-size: 1rem;
   font-weight: bold;
-  padding: 0.25rem 1rem;
-  color: white;
+  padding: 0rem;
+  color: black;
   outline: none;
   cursor: pointer;
+  background: none;
+  letter-spacing: 2px;
+  margin-left: 1rem;
 
-  background: ${palette.gray[8]};
   &:hover {
-    background: ${palette.gray[6]};
+    color: ${palette.gray[6]};
   }
 
   ${(props) =>
-    props.fullWidth &&
+    props.$fullWidth &&
     css`
       padding-top: 0.75rem;
       padding-bottom: 0.75rem;
@@ -28,7 +30,7 @@ const buttonStyle = css`
     `}
 
   ${(props) =>
-    props.pink &&
+    props.$pink &&
     css`
       height: 4rem;
       font-size: 1.5rem;
@@ -40,6 +42,55 @@ const buttonStyle = css`
         background: ${palette.pink[3]};
       }
     `}
+
+  ${(props) =>
+    props.$header &&
+    css`
+      margin-right: 5rem;
+      margin-left: 7rem;
+      font-size: 5rem;
+      font-weight: bold;
+      color: ${palette.pink[2]};
+      text-shadow: -1px 0 ${palette.pink[3]}, 0 1px ${palette.pink[3]},
+        1px 0 ${palette.pink[3]}, 0 -1px ${palette.pink[3]};
+      display: block;
+      &:hover {
+        color: ${palette.pink[2]};
+      }
+    `}
+
+  ${(props) =>
+    props.$circle &&
+    css`
+      position: fixed;
+      top: 60%;
+      height: 70px;
+      width: 70px;
+      text-align: center;
+      border-radius: 100px;
+      border-bottom: 2px solid ${palette.gray[5]};
+      color: ${palette.pink[2]};
+      font-size: 3rem;
+    `}
+
+  ${(props) =>
+    props.$left &&
+    css`
+      left: 10%;
+    `}
+
+    ${(props) =>
+      props.$right &&
+      css`
+        right: 10%;
+      `}
+
+      ${(props) =>
+        props.$cancle &&
+        css`
+          top: 40%;
+          right: 10%;
+        `}
 
     &:disabled {
       background: ${palette.gray[3]};
@@ -57,15 +108,7 @@ const StyledLink = styled(Link)`
 `;
 
 const Button = (props) => {
-  return props.to ? (
-    <StyledLink
-      {...props}
-      cyan={props.cyan ? 1 : 0}
-      pink={props.pink ? 1 : 0}
-    />
-  ) : (
-    <StyledButton {...props} />
-  );
+  return props.to ? <StyledLink {...props} /> : <StyledButton {...props} />;
 };
 
 export default Button;
