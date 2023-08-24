@@ -6,6 +6,7 @@ import palette from '../../lib/styles/palette';
 import Responsive from '../common/Responsive';
 import Button from '../common/Button';
 import { Link } from 'react-router-dom';
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 const EditorBlock = styled(Responsive)`
   /* 페이지 위아래 여백 지정 */
@@ -22,7 +23,7 @@ const TitleInput = styled.input`
   border-bottom: 1px solid ${palette.gray[4]};
   margin-bottom: 2rem;
   width: 100%;
-  height: 10rem;
+  height: 20rem;
   background-color: ${palette.gray[0]};
 `;
 
@@ -85,9 +86,11 @@ const Editor = ({ title, body, onChangeField }) => {
 
   return (
     <>
-      <Link to="/">
-        <Button x="true">X</Button>
-      </Link>
+      <div>
+        <Button $circle="true" $left="true">
+          <FiChevronLeft />
+        </Button>
+      </div>
       <EditorBlock>
         <TitleInput
           placeholder="제목을 입력하세요"
@@ -98,6 +101,11 @@ const Editor = ({ title, body, onChangeField }) => {
           <div ref={quillElement} />
         </QuillWrapper>
       </EditorBlock>
+      <div>
+        <Button $circle="true" $right="true">
+          <FiChevronRight />
+        </Button>
+      </div>
     </>
   );
 };
