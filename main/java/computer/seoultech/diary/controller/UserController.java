@@ -40,11 +40,11 @@ public class UserController {
     }
     @PutMapping("/user/{id}")
     public void update(@PathVariable Long id,@RequestBody UserRequest userRequest){
-        userService.update(id,userRequest);
+        userService.update(id,userRequest);   //사용자 정보 수정
     }
     @DeleteMapping("/user/{id}")
     public void delete(@PathVariable Long id){
         userService.delete(id);
-    }
+    } //회원 탈퇴
 
 }

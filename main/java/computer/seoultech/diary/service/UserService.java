@@ -27,7 +27,7 @@ public class UserService  implements UserDetailsService {  //spring security는 
     private final UserRepository userRepository;  //db접근 class인 userRepository class 
     private final PasswordEncoder passwordEncoder; //비밀번호 암호화를 위한 클래스
     @Override
-    public User loadUserByUsername(String account) throws UsernameNotFoundException {
+    public User loadUserByUsername(String account) throws UsernameNotFoundException {  //spring security 사용자 검색 함수
         return userRepository.findUserByAccount(account)
                 .orElseThrow(() -> new UsernameNotFoundException((account)));
         //계정으로 사용자 정보 검사
@@ -42,7 +42,7 @@ public class UserService  implements UserDetailsService {  //spring security는 
                            .updatedAt(LocalDateTime.now()) //update 시간은 default로 지금
                            .name(userRequest.getName())  //사용자 이름
                            .email(userRequest.getEmail()) //사용자 이메일
-                           .password(passwordEncoder.encode(userRequest.getPassword()))
+                           .password(passwordEncoder.encode(userRequest.getPassword())) //비밀번호 암호화
                             //사용자 비밀번호를 암호화해서 저장
                    .build());
     }

@@ -54,7 +54,7 @@ public class DiaryService {
     public Header<List<DiaryResponse>> findAll(Pageable pageable) {    //diary 목록 반환 함수
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Page<Diary> diarys = diaryRepository.findAll(pageable);
-        List<DiaryResponse> diaryResponseList = diarys.stream().filter(d->d.getUser().getId()==((User)principal).getId())
+        List<DiaryResponse> diaryResponseList = diarys.stream().filter(d->d.getUser().getId()==((User)principal).getId())//사용자 자신의 일기장만 볼 수 있음
                 .map(diary->response(diary))// 람다 함수를 이용한 반복문 대체
                 .collect(Collectors.toList());
 
@@ -72,7 +72,7 @@ public class DiaryService {
 
 
     public Header<DiaryResponse> update(Long id,DiaryRequest diaryRequest) {
-        Optional<Diary> diaryOptional = diaryRepository.findDiaryById(id);  //
+        Optional<Diary> diaryOptional = diaryRepository.findDiaryById(id);  //업데이트 함수
         Diary nDiary = Diary.builder()
                 .title(diaryRequest.getTitle())
                 .content(diaryRequest.getContent())

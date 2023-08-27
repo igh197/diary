@@ -44,7 +44,7 @@ public class DiaryController {
     public Header<DiaryResponse> update(@RequestBody DiaryRequest diaryRequest,@PathVariable Long id) { //다이어리 수정
         return diaryService.update(id,diaryRequest);
     }
-    @GetMapping("/diary/bookmarks")
+    @GetMapping("")
     public Header<List<DiaryResponse>> bookmarks(@PageableDefault Pageable pageable){  //북마크 표시한 다이어리
         return diaryService.bookmarks(pageable);
     }

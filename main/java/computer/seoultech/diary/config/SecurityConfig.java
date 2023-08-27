@@ -66,7 +66,7 @@ public class SecurityConfig implements WebMvcConfigurer {  //WebSecurityConfigur
                 .requestMatchers(HttpMethod.POST,"/register","/login").permitAll()
                 .requestMatchers(HttpMethod.POST,"/diary/new","/image/new","/diaryfile/{id}").hasAnyRole("USER","ADMIN")
                 //get request
-                .requestMatchers(HttpMethod.GET,"/diarys","/diary/{id}","/diary/bookmarks","/diaryfiles","/diaryfile/{id}").hasAnyRole("USER","ADMIN")
+                .requestMatchers(HttpMethod.GET,"/diarys","/diary/{id}","/","/diaryfiles","/diaryfile/{id}").hasAnyRole("USER","ADMIN")
                 .requestMatchers(HttpMethod.GET,"/login").permitAll()
                 .requestMatchers(HttpMethod.GET,"/user/{id}","/users").hasRole("ADMIN")
                 //put request
@@ -81,11 +81,10 @@ public class SecurityConfig implements WebMvcConfigurer {  //WebSecurityConfigur
                 .and()
 
                 .formLogin()
-                .loginPage("/login.html")
                 .usernameParameter("account") // 계정 ID
                 .passwordParameter("password") //비밀번호
                 .loginProcessingUrl("/login") //스프링 시큐리티가 제공하는 로그인 인증 기능
-                .defaultSuccessUrl("/diary/bookmarks")
+                .defaultSuccessUrl("/")
                 .permitAll()
                 ;
 
