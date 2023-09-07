@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import palette from '../lib/styles/palette';
 import Responsive from '../components/common/Responsive';
 import Button from '../components/common/Button';
@@ -7,37 +7,30 @@ const LobbyBlock = styled(Responsive)`
   height: 100vh;
   width: 100vw;
   background: ${palette.pink[1]};
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; // 가로 정렬
+  align-items: center; // 세로 정렬
   div + div {
-    margin-bottom: 15rem;
+    margin-bottom: 1rem;
   }
 `;
 
 const Header = styled.div`
-  position: relative;
-  top: 30%;
-  font-family: 'Playfair Display', serif;
   color: white;
   text-shadow: 1px 1px 1px ${palette.pink[3]};
+  font-weight: 600;
+  letter-spacing: 2px;
 
-  ${(props) =>
-    props.$logo &&
-    css`
-      font-size: 7rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-    `}
+  &.logo {
+    font-size: 7rem;
+  }
 
-  ${(props) =>
-    props.$text &&
-    css`
-      postion: relative;
-      top: 30%;
-      left: 2%;
-      font-size: 1.5rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-    `}
+  &.text {
+    position: relative;
+    bottom: 1rem;
+    font-size: 1.5rem;
+  }
 `;
 
 const StyledButton = styled(Button)`
@@ -50,8 +43,8 @@ const StyledButton = styled(Button)`
 const LobbyPage = () => {
   return (
     <LobbyBlock>
-      <Header $logo="true">Dinary</Header>
-      <Header $text="true">Find your feelings</Header>
+      <Header className="logo">Dinary</Header>
+      <Header className="text">Find your feelings</Header>
       <div>
         <StyledButton to="/login">Sign in</StyledButton>
         <StyledButton>|</StyledButton>

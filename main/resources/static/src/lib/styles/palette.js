@@ -13,6 +13,7 @@ const palette = {
     '#495057',
     '#343a40',
     '#212529',
+    '#BABABA',
   ],
   cyan: [
     '#e3fafc',
@@ -33,6 +34,7 @@ const palette = {
     '#985F5F', // 글자 배경색
     '#E4A9A9', // 버튼 글자색
     '#FFE5E5', // 포스트 배경색
+    '#C18383', // Profile 글자색
   ],
   purple: [
     '#FCF4FF', //연보라
