@@ -46,14 +46,12 @@ font-family: 'Playfair Display', serif;
   ${(props) =>
     props.$header &&
     css`
-      margin-right: 5rem;
-      margin-left: 7rem;
+      padding-right: 5rem;
       font-size: 5rem;
       font-weight: bold;
       color: ${palette.pink[2]};
       text-shadow: -1px 0 ${palette.pink[3]}, 0 1px ${palette.pink[3]},
         1px 0 ${palette.pink[3]}, 0 -1px ${palette.pink[3]};
-      display: block;
       &:hover {
         color: ${palette.pink[2]};
       }
