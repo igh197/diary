@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Responsive from './Responsive';
 import Button from './Button';
-import { Link } from 'react-router-dom';
+import palette from '../../lib/styles/palette';
 
 const HeaderBlock = styled.div`
   width: 100%;
@@ -35,7 +35,15 @@ const UserInfo = styled.div`
   margin-right: 1rem;
 `;
 
-const Header = ({ user, onLogout }) => {
+const UserImg = styled(Button)`
+  height: 50px;
+  weight: 50px;
+  display: inline-block;
+  border-radius: 5rem;
+  background: ${palette.gray[2]};
+`;
+
+const Header = ({ user, onLogout, userImg }) => {
   return (
     <>
       <HeaderBlock>
@@ -43,19 +51,29 @@ const Header = ({ user, onLogout }) => {
           <div>
             {user ? (
               <div>
-                <UserInfo>{user.account}</UserInfo>
+                <UserInfo to="/settings">{user.account}</UserInfo>
                 <Button onClick={onLogout}>Logout</Button>
               </div>
             ) : (
               <div>
                 <Button to="/login">Sign in</Button>
                 <Button to="/settings">Settings</Button>
+                {/* 지울것 */}
               </div>
             )}
           </div>
-          <Button to="/" $header="true">
-            Dinary
-          </Button>
+          <div>
+            <UserImg to="/settings" $circle="true"></UserImg>
+            {user ? (
+              <Button to="/" $header="true">
+                's Dinary
+              </Button>
+            ) : (
+              <Button to="/" $header="true">
+                Dinary
+              </Button>
+            )}
+          </div>
         </Wrapper>
       </HeaderBlock>
       <Spacer />

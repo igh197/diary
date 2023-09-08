@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 import { Link } from 'react-router-dom';
-import Button from '../common/Button';
 
 /* 회원가입/로그인 페이지의 레이아웃을 담당하는 컴포넌트입니다. */
 
@@ -24,7 +23,7 @@ const AuthTemplateBlock = styled.div`
 `;
 
 /* 흰색 박스 */
-const WhiteBox = styled.div`
+const PinkBox = styled.div`
     .logo-area{
         display: block;
         padding-bottom: 2rem;
@@ -46,12 +45,12 @@ const WhiteBox = styled.div`
 const AuthTemplate = ({ children }) => {
   return (
     <AuthTemplateBlock>
-      <WhiteBox>
+      <PinkBox>
         <div className="logo-area">
           <Link to="/">Dinary</Link>
         </div>
         {children}
-      </WhiteBox>
+      </PinkBox>
       {/*불 값 수정*/}
     </AuthTemplateBlock>
   );
