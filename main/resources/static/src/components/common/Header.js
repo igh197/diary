@@ -40,7 +40,7 @@ const UserImg = styled(Button)`
   weight: 50px;
   display: inline-block;
   border-radius: 5rem;
-  background: ${palette.gray[2]};
+  background: ${palette.gray[0]};
 `;
 
 const Header = ({ user, onLogout, userImg }) => {

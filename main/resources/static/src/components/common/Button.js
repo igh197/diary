@@ -3,7 +3,7 @@ import palette from '../../lib/styles/palette';
 import { Link } from 'react-router-dom';
 
 const buttonStyle = css`
-font-family: 'Playfair Display', serif;
+font-family: ${(props) => props.theme.fontFamily};
   border: none;
   border-radius: 4px;
   font-size: 1rem;
@@ -17,7 +17,7 @@ font-family: 'Playfair Display', serif;
   margin-left: 1rem;
 
   &:hover {
-    color: ${palette.gray[6]};
+    color: ${palette.gray[0]};
   }
 
   ${(props) =>
@@ -30,16 +30,16 @@ font-family: 'Playfair Display', serif;
     `}
 
   ${(props) =>
-    props.$pink &&
+    props.$authButton &&
     css`
       height: 4rem;
       font-size: 1.5rem;
-      border-bottom: 2px solid ${palette.gray[5]};
-      background: ${palette.pink[1]};
+      border-bottom: 2px solid ${palette.gray[0]};
+      background: ${(props) => props.theme.button};
       color: #ffffff;
-      text-shadow: 1px 1px 1px ${palette.pink[3]};
+      text-shadow: 1px 1px 1px ${palette.gray[0]};
       &:hover {
-        background: ${palette.pink[3]};
+        background: ${palette.gray[0]};
       }
     `}
 
@@ -49,11 +49,11 @@ font-family: 'Playfair Display', serif;
       padding-right: 5rem;
       font-size: 5rem;
       font-weight: bold;
-      color: ${palette.pink[2]};
-      text-shadow: -1px 0 ${palette.pink[3]}, 0 1px ${palette.pink[3]},
-        1px 0 ${palette.pink[3]}, 0 -1px ${palette.pink[3]};
+      color: ${(props) => props.theme.text};
+      text-shadow: -1px 0 ${palette.gray[0]}, 0 1px ${palette.gray[0]},
+        1px 0 ${palette.gray[0]}, 0 -1px ${palette.gray[0]};
       &:hover {
-        color: ${palette.pink[2]};
+        color: ${palette.gray[0]};
       }
     `}
 
@@ -66,8 +66,8 @@ font-family: 'Playfair Display', serif;
       width: 70px;
       text-align: center;
       border-radius: 100px;
-      border-bottom: 2px solid ${palette.gray[5]};
-      color: ${palette.pink[2]};
+      border-bottom: 2px solid ${palette.gray[0]};
+      color: ${(props) => props.theme.text};
       font-size: 3rem;
     `}
 
@@ -91,8 +91,8 @@ font-family: 'Playfair Display', serif;
         `}
 
     &:disabled {
-      background: ${palette.gray[3]};
-      color: ${palette.gray[5]};
+      background: ${palette.gray[0]};
+      color: ${palette.gray[0]};
       cursor: not-allowed;
 
 `;
