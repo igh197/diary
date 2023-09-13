@@ -1,11 +1,12 @@
 package computer.seoultech.diary.config;
 
+import computer.seoultech.diary.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.metrics.MetricsProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
+
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,11 +27,13 @@ import java.util.Arrays;
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
-public class SecurityConfig implements WebMvcConfigurer {  //WebSecurityConfigurerAdapter class는 더이상 권장되지 않아 사용하지 않았음
+public class SecurityConfig implements WebMvcConfigurer {
+    private final UserRepository userRepository;  //WebSecurityConfigurerAdapter class는 더이상 권장되지 않아 사용하지 않았음
+
     @Override
     public void addCorsMappings(CorsRegistry registry){
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000/*","http://localhost:8080/*")
+                .allowedOrigins("http://localhost:3000","http://localhost:8080/*")
                 .allowedMethods("POST","GET","PUT","DELETE","OPTION")
                 .allowCredentials(true);
     }
@@ -38,7 +41,7 @@ public class SecurityConfig implements WebMvcConfigurer {  //WebSecurityConfigur
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.addAllowedOrigin("*");
+        configuration.addAllowedOriginPattern("*");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);
@@ -66,9 +69,9 @@ public class SecurityConfig implements WebMvcConfigurer {  //WebSecurityConfigur
                 .requestMatchers(HttpMethod.POST,"/register","/login").permitAll()
                 .requestMatchers(HttpMethod.POST,"/diary/new","/image/new","/diaryfile/{id}").hasAnyRole("USER","ADMIN")
                 //get request
-                .requestMatchers(HttpMethod.GET,"/diarys","/diary/{id}","/","/diaryfiles","/diaryfile/{id}").hasAnyRole("USER","ADMIN")
+                .requestMatchers(HttpMethod.GET,"/user/{id}","/diarys","/diary/{id}","/","/diaryfiles","/diaryfile/{id}").hasAnyRole("USER","ADMIN")
                 .requestMatchers(HttpMethod.GET,"/login").permitAll()
-                .requestMatchers(HttpMethod.GET,"/user/{id}","/users").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET,"/users").hasAnyRole("ADMIN","USER")
                 //put request
                 .requestMatchers(HttpMethod.PUT,"/diary/{id}").hasAnyRole("USER","ADMIN")
                 .requestMatchers(HttpMethod.PUT,"/user/{id}").hasRole("ADMIN")
@@ -83,8 +86,8 @@ public class SecurityConfig implements WebMvcConfigurer {  //WebSecurityConfigur
                 .formLogin()
                 .usernameParameter("account") // 계정 ID
                 .passwordParameter("password") //비밀번호
-                .loginProcessingUrl("/login") //스프링 시큐리티가 제공하는 로그인 인증 기능
-                .defaultSuccessUrl("/")
+                .loginProcessingUrl("/loginProc") //스프링 시큐리티가 제공하는 로그인 인증 기능
+                .defaultSuccessUrl("http://localhost:8080")
                 .permitAll()
                 ;
 
