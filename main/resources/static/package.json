@@ -21,7 +21,8 @@
     "redux-actions": "^3.0.0",
     "redux-devtools-extension": "^2.13.9",
     "redux-saga": "^1.2.3",
-    "styled-components": "^5.3.10",
+    "styled-components": "^5.3.11",
+    "styled-reset": "^4.5.1",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
@@ -48,5 +49,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:8080"
+  "proxy": "http://10.50.46.73:8080"
 }
