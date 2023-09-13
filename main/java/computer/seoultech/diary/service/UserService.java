@@ -94,4 +94,9 @@ public class UserService  implements UserDetailsService {  //spring security는 
         userRepository.deleteById(id);
     }  //사용자 탈퇴 및 개인정보 삭제
 
+    public User login(UserRequest userRequest) {
+        User user = userRepository.findUserByAccount(userRequest.getAccount()).orElseThrow();
+        return user;
+
+    }
 }
