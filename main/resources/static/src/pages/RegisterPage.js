@@ -2,12 +2,10 @@ import React from 'react';
 import AuthTemplate from '../components/auth/AuthTemplate';
 import RegisterForm from '../containers/auth/RegisterForm';
 
-const RegisterPage = () => {
+export default function RegisterPage() {
   return (
     <AuthTemplate>
       <RegisterForm />
     </AuthTemplate>
   );
-};
-
-export default RegisterPage;
+}

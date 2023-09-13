@@ -13,7 +13,7 @@ const AuthTemplateBlock = styled.div`
   top: 0;
   bottom: 0;
   right: 0;
-  // backgroud: ${palette.gray[1]};
+  // backgroud: ${palette.gray[0]};
   background: #ffffff;
   /* flex로 내부 내용 중앙 정렬 */
   display: flex;
@@ -24,23 +24,23 @@ const AuthTemplateBlock = styled.div`
 
 /* 흰색 박스 */
 const PinkBox = styled.div`
-    .logo-area{
-        display: block;
-        padding-bottom: 2rem;
-        text-align: center;
-        font-weight: bold;
-        font-size: 3rem;
-        color: ${palette.pink[2]}};
-        text-shadow: 1px 1px 1px ${palette.pink[3]};
-        opacity: 0.8;
-    }
-    box-shadow: 0 0 10px rgba(0,0,0,0.025);
-    padding: 2rem;
-    width: 500px;
-    height: 550px;
-    background-color: ${palette.pink[0]};
-    border-radius: 5px;
-    `;
+  .logo-area {
+    display: block;
+    padding-bottom: 2rem;
+    text-align: center;
+    font-weight: bold;
+    font-size: 3rem;
+    color: ${(props) => props.theme.text};
+    text-shadow: 1px 1px 1px ${palette.gray[0]};
+    opacity: 0.8;
+  }
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.025);
+  padding: 2rem;
+  width: 500px;
+  height: 550px;
+  background-color: ${(props) => props.theme.content};
+  border-radius: 5px;
+`;
 
 const AuthTemplate = ({ children }) => {
   return (

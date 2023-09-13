@@ -14,7 +14,7 @@ import { useState } from 'react';
 const AuthFormBlock = styled.div`
   h3 {
     margin: 0;
-    color: ${palette.gray[8]};
+    color: ${palette.gray[0]};
     margin-bottom: 1rem;
     font-size: 1.5rem;
   }
@@ -23,7 +23,7 @@ const AuthFormBlock = styled.div`
 const InputDiv = styled.div`
   background: white;
   padding-left: 1rem;
-  border-bottom: 2px solid ${palette.gray[5]};
+  border-bottom: 2px solid ${palette.gray[0]};
   height: 4rem;
   display: flex;
   justify-content: left;
@@ -36,13 +36,13 @@ const InputDiv = styled.div`
   }
 
   &:hover {
-    background: ${palette.gray[2]};
+    background: ${palette.gray[0]};
   }
 
   ${(props) =>
     props.select &&
     css`
-      border: 2px solid ${palette.gray[7]};
+      border: 2px solid ${palette.gray[0]};
     `}
 `;
 
@@ -56,8 +56,8 @@ const StyledInput = styled.input`
   overflow: auto;
 	
 	outline: none;
-	color: ${palette.pink[2]}
-	text-shadow: 1px 1px 1px ${palette.pink[3]};
+	color: ${(props) => props.theme.button}
+	text-shadow: 1px 1px 1px ${palette.gray[0]};
     opacity: 0.8;
 
     
@@ -74,10 +74,10 @@ const Footer = styled.div`
   text-align: right;
   font-size: 1.5rem;
   a {
-    color: ${palette.pink[1]};
+    color: ${(props) => props.theme.text};
     text-decoration: underline;
     &:hover {
-      color: ${palette.gray[3]};
+      color: ${palette.gray[0]};
     }
   }
 `;
@@ -141,7 +141,11 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
           </InputDiv>
         )}
         {error && <ErrorMessage>{error}</ErrorMessage>}
-        <Button $pink="true" $fullWidth="true" style={{ marginTop: '2rem' }}>
+        <Button
+          $authButton="true"
+          $fullWidth="true"
+          style={{ marginTop: '2rem' }}
+        >
           {text}
         </Button>
       </form>
