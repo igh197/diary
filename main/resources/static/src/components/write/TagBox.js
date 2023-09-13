@@ -4,11 +4,11 @@ import palette from '../../lib/styles/palette';
 
 const TagBoxBlock = styled.div`
   width: 100%;
-  border-top: 1px solid ${palette.gray[2]};
+  border-top: 1px solid ${palette.gray[0]};
   padding-top: 2rem;
 
   h4 {
-    color: ${palette.gray[8]};
+    color: ${palette.gray[0]};
     margin-top: 0;
     margin-bottom: 0.5rem;
   }
@@ -19,7 +19,7 @@ const TagForm = styled.form`
   overflow: hidden;
   display: flex;
   width: 256px;
-  border: 1px solid ${palette.gray[9]}; /* 스타일 초기화 */
+  border: 1px solid ${palette.gray[0]}; /* 스타일 초기화 */
   input,
   button {
     outline: none;
@@ -38,18 +38,18 @@ const TagForm = styled.form`
     padding-right: 1rem;
     padding-left: 1rem;
     border: none;
-    background: ${palette.gray[8]};
+    background: ${palette.gray[0]};
     color: white;
     font-weight: bold;
     &:hover {
-      background: ${palette.gray[6]};
+      background: ${palette.gray[0]};
     }
   }
 `;
 
 const Tag = styled.div`
   margin-right: 0.5rem;
-  color: ${palette.gray[6]};
+  color: ${palette.gray[0]};
   cursor: pointer;
   &:hover {
     opacity: 0.5;

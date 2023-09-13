@@ -24,7 +24,7 @@ const PostItemBlock = styled.div`
     padding-top: 0;
   }
   & + & {
-    border-top: 1px solid ${palette.gray[2]};
+    border-top: 1px solid ${palette.gray[0]};
   }
 
   h2 {
@@ -32,7 +32,7 @@ const PostItemBlock = styled.div`
     margin-bottom: 0;
     margin-top: 0;
     &:hover {
-      color: ${palette.gray[6]};
+      color: ${palette.gray[0]};
     }
   }
 

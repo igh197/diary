@@ -3,7 +3,7 @@ import HeaderContainer from '../components/common/HeaderContainer';
 import PostListContainer from '../containers/posts/PostListContainer';
 import PaginationContainer from '../containers/posts/PaginationContainer';
 
-const PostListPage = () => {
+export default function PostListPage() {
   return (
     <>
       <HeaderContainer />
@@ -11,6 +11,4 @@ const PostListPage = () => {
       <PaginationContainer />
     </>
   );
-};
-
-export default PostListPage;
+}

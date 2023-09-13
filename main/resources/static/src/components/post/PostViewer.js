@@ -9,7 +9,7 @@ const PostViewerBlock = styled(Responsive)`
 `;
 
 const PostHead = styled.div`
-  border-bottom: 1px solid ${palette.gray[2]};
+  border-bottom: 1px solid ${palette.gray[0]};
   padding-bottom: 3rem;
   margin-bottom: 3rem;
   h1 {
@@ -21,7 +21,7 @@ const PostHead = styled.div`
 
 const PostContent = styled.div`
   font-size: 1.3125rem;
-  color: ${palette.gray[8]};
+  color: ${palette.gray[0]};
 `;
 
 const PostViewer = ({ post, error, loading, actionButtons }) => {

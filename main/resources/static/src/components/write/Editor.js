@@ -20,7 +20,7 @@ const TitleInput = styled.input`
   outline: none;
   padding-bottom: 0.5rem;
   border: none;
-  border-bottom: 1px solid ${palette.gray[4]};
+  border-bottom: 1px solid ${palette.gray[0]};
   margin-bottom: 2rem;
   width: 100%;
   height: 20rem;
