@@ -1,12 +1,19 @@
 import palette from '../../lib/styles/palette';
 import styled from 'styled-components';
 import Button from '../common/Button';
+import { useState } from 'react';
 
 const ThemeBlock = styled.div`
   width: 100%;
   margin: 2rem auto;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
+const ThemeRadioBox = styled.div`
+  display: inline-block;
+  justify-content: row;
   input {
     vertical-align: middle;
     appearance: none;
@@ -27,8 +34,12 @@ const ThemeBlock = styled.div`
   }
 `;
 
-const ImagePut = styled(ThemeBlock)`
+const ImageBlock = styled.div`
   display: inline-block;
+  justify-content: row;
+`;
+
+const ImagePut = styled(ImageBlock)`
   width: 10rem;
   height: 15rem;
   margin-left: 1.5rem;
@@ -43,39 +54,42 @@ const Save = styled(Button)`
   border-radius: 5px;
   box-shadow: 0 3px 2px ${palette.gray[0]};
   background: white;
+  color: black;
 `;
 
 export default function Theme({ onChange, currentTheme }) {
-  const handleTheme = (newTheme) => {
-    onChange(newTheme);
+  const [tempTheme, setTempTheme] = useState(currentTheme);
+
+  const handleTempTheme = (newTheme) => {
+    setTempTheme(newTheme);
   };
+
+  const handleTheme = () => {
+    onChange(tempTheme);
+  };
+
+  const themesInput = ['pinkTheme', 'purpleTheme', 'darkTheme'];
 
   return (
     <ThemeBlock>
       <form>
-        <input
-          type="radio"
-          name="theme"
-          value="pinkTheme"
-          onChange={() => handleTheme('pinkTheme')}
-        />
-        <input
-          type="radio"
-          name="theme"
-          value="purpleTheme"
-          onChange={() => handleTheme('purpleTheme')}
-        />
-        <input
-          type="radio"
-          name="theme"
-          value="darkTheme"
-          onChange={() => handleTheme('darkTheme')}
-        />
+        {themesInput.map((theme, index) => (
+          <ThemeRadioBox key={index}>
+            <input
+              type="radio"
+              name="theme"
+              value={theme}
+              onChange={() => handleTempTheme(theme)}
+            />
+          </ThemeRadioBox>
+        ))}
       </form>
-      <ImagePut />
-      <ImagePut />
-      <ImagePut />
-      <Save>Save</Save>
+      <ImageBlock>
+        <ImagePut />
+        <ImagePut />
+        <ImagePut />
+      </ImageBlock>
+      <Save onClick={() => handleTheme(tempTheme)}>Save</Save>
     </ThemeBlock>
   );
 }

@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Theme from '../../components/theme/Theme';
 
 const SettingsPageBlock = styled(Responsive)`
+background: ${(props) => props.theme.background}};
   width: 100%;
   display: flex;
   justify-content: center;
@@ -15,18 +16,17 @@ const SettingsPageBlock = styled(Responsive)`
 const ProfileBlock = styled.div`
   width: 50%;
   height: 100%;
+  padding-top: 3rem;
   background: ${(props) => props.theme.content};
   display: flex;
   align-items: center;
   flex-direction: column;
   box-shadow: 0 3px 2px ${palette.gray[0]};
-  margin-bottom: 2rem;
 
   a {
     width: 80%;
     text-align: right;
     font-size: 1rem;
-    margin-top: 1rem;
     color: ${(props) => props.theme.text2};
     &:hover {
       color: ${palette.gray[0]};
@@ -34,7 +34,6 @@ const ProfileBlock = styled.div`
   }
 
   .pink {
-    margin-top: 2rem;
     width: 80%;
     text-align: left;
     color: ${(props) => props.theme.text2};
@@ -68,6 +67,7 @@ const ProfileContent = styled.div`
   margin-top: 4rem;
   text-align: left;
   font-size: 1.5rem;
+  color: ${(props) => props.theme.text3};
 
   span {
     display: inline-block;
@@ -111,7 +111,6 @@ export default function SettingContainer({ onChangeTheme, currentTheme }) {
           <div className="pink">Profile</div>
           <div className="content">
             <ProfileContent>
-              {/* 수정: 이거 왜 위치가 안 맞지? */}
               ID : <span>account</span>
             </ProfileContent>
             <ProfileContent>
