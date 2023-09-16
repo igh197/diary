@@ -10,6 +10,7 @@ import LobbyPage from './pages/LobbyPage';
 import { ThemeProvider } from 'styled-components';
 import { useState, useEffect } from 'react';
 import { themes } from './lib/styles/theme';
+import PostSamplePage from './pages/PostSamplePage';
 
 export default function App() {
   const [currentTheme, setCurrentTheme] = useState(themes.pinkTheme);
@@ -48,6 +49,7 @@ export default function App() {
             }
             path="/settings"
           />
+          <Route element={<PostSamplePage />} path="/postsample" />
         </Routes>
       </Router>
     </ThemeProvider>
