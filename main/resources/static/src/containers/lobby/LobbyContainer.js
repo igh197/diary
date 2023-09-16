@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 import Responsive from '../../components/common/Responsive';
 import Button from '../../components/common/Button';
+import palette from '../../lib/styles/palette';
 
 const LobbyBlock = styled(Responsive)`
   height: 100vh;
   width: 100vw;
-  background: ${(props) => props.theme.background};
+  background: ${(props) => props.theme.titleBackground};
   display: flex;
   flex-direction: column;
   justify-content: center; // 가로 정렬
@@ -16,16 +17,19 @@ const LobbyBlock = styled(Responsive)`
 `;
 
 const Header = styled.div`
-  color: white;
-  text-shadow: 1px 1px 1px ${(props) => props.theme.background};
+  text-shadow: 1px 1px 1px ${palette.gray[0]};
   font-weight: 600;
   letter-spacing: 2px;
 
   &.logo {
+    font-family: ${(props) => props.theme.titleFont};
     font-size: 7rem;
+    color: ${(props) => props.theme.titleColor};
   }
 
   &.text {
+    font-family: ${(props) => props.theme.subTitleFont};
+    color: white;
     position: relative;
     bottom: 1rem;
     font-size: 1.5rem;
