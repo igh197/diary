@@ -3,23 +3,13 @@ import Responsive from './Responsive';
 import Button from './Button';
 import palette from '../../lib/styles/palette';
 
-const HeaderBlock = styled.div`
+const HeaderBlock = styled(Responsive)`
+  background: ${(props) => props.theme.background};
   width: 100%;
-  background: white;
-`;
-
-/**
- * Responsive 컴포넌트 속성에 스타일 추가해서 새로운 컴포넌트 생성
- */
-
-const Wrapper = styled(Responsive)`
-  margin-top: 2rem;
   text-align: right;
-  margin-right: 2rem;
-  margin-bottom: 2rem;
   font-size: 1rem;
   font-weight: bold;
-  }
+  padding-top: 1rem;
 `;
 
 /**
@@ -27,6 +17,7 @@ const Wrapper = styled(Responsive)`
  */
 
 const Spacer = styled.div`
+  background: ${(props) => props.theme.background};
   height: 4rem;
 `;
 
@@ -36,45 +27,44 @@ const UserInfo = styled.div`
 `;
 
 const UserImg = styled(Button)`
-  height: 50px;
-  weight: 50px;
+  height: 5rem;
+  width: 5rem;
   display: inline-block;
   border-radius: 5rem;
   background: ${palette.gray[0]};
+  margin-right: 1rem;
 `;
 
 const Header = ({ user, onLogout, userImg }) => {
   return (
     <>
       <HeaderBlock>
-        <Wrapper>
-          <div>
-            {user ? (
-              <div>
-                <UserInfo to="/settings">{user.account}</UserInfo>
-                <Button onClick={onLogout}>Logout</Button>
-              </div>
-            ) : (
-              <div>
-                <Button to="/login">Sign in</Button>
-                <Button to="/settings">Settings</Button>
-                {/* 지울것 */}
-              </div>
-            )}
-          </div>
-          <div>
-            <UserImg to="/settings" $circle="true"></UserImg>
-            {user ? (
-              <Button to="/" $header="true">
-                's Dinary
-              </Button>
-            ) : (
-              <Button to="/" $header="true">
-                Dinary
-              </Button>
-            )}
-          </div>
-        </Wrapper>
+        <div>
+          {user ? (
+            <div>
+              <UserInfo to="/settings">{user.account}</UserInfo>
+              <Button onClick={onLogout}>Logout</Button>
+            </div>
+          ) : (
+            <div>
+              <Button to="/login">Sign in</Button>
+              <Button to="/settings">Settings</Button>
+              {/* 지울것 */}
+            </div>
+          )}
+        </div>
+        <div>
+          <UserImg to="/settings" $circle="true"></UserImg>
+          {user ? (
+            <Button to="/" $header="true">
+              's Dinary
+            </Button>
+          ) : (
+            <Button to="/" $header="true">
+              Dinary
+            </Button>
+          )}
+        </div>
       </HeaderBlock>
       <Spacer />
     </>

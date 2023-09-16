@@ -6,15 +6,13 @@ import { Link } from 'react-router-dom';
 
 /* 화면 전체를 채움 */
 const AuthTemplateBlock = styled.div`
-  font-family: 'Playfair Display', serif;
   letter-spacing: 2px;
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
   right: 0;
-  // backgroud: ${palette.gray[0]};
-  background: #ffffff;
+  background: ${(props) => props.theme.background}};
   /* flex로 내부 내용 중앙 정렬 */
   display: flex;
   flex-direction: column;
@@ -23,8 +21,9 @@ const AuthTemplateBlock = styled.div`
 `;
 
 /* 흰색 박스 */
-const PinkBox = styled.div`
+const InnerBox = styled.div`
   .logo-area {
+    font-family: ${(props) => props.theme.titleFont};
     display: block;
     padding-bottom: 2rem;
     text-align: center;
@@ -38,19 +37,19 @@ const PinkBox = styled.div`
   padding: 2rem;
   width: 500px;
   height: 550px;
-  background-color: ${(props) => props.theme.content};
+  background: ${(props) => props.theme.content};
   border-radius: 5px;
 `;
 
 const AuthTemplate = ({ children }) => {
   return (
     <AuthTemplateBlock>
-      <PinkBox>
+      <InnerBox>
         <div className="logo-area">
           <Link to="/">Dinary</Link>
         </div>
         {children}
-      </PinkBox>
+      </InnerBox>
       {/*불 값 수정*/}
     </AuthTemplateBlock>
   );

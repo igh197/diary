@@ -9,12 +9,13 @@ font-family: ${(props) => props.theme.fontFamily};
   font-size: 1rem;
   font-weight: bold;
   padding: 0rem;
-  color: black;
+  color: ${(props) => props.theme.text3};
   outline: none;
   cursor: pointer;
   background: none;
   letter-spacing: 2px;
-  margin-left: 1rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 
   &:hover {
     color: ${palette.gray[0]};
@@ -30,22 +31,9 @@ font-family: ${(props) => props.theme.fontFamily};
     `}
 
   ${(props) =>
-    props.$authButton &&
-    css`
-      height: 4rem;
-      font-size: 1.5rem;
-      border-bottom: 2px solid ${palette.gray[0]};
-      background: ${(props) => props.theme.button};
-      color: #ffffff;
-      text-shadow: 1px 1px 1px ${palette.gray[0]};
-      &:hover {
-        background: ${palette.gray[0]};
-      }
-    `}
-
-  ${(props) =>
     props.$header &&
     css`
+      font-family: ${(props) => props.theme.titleFont};
       padding-right: 5rem;
       font-size: 5rem;
       font-weight: bold;

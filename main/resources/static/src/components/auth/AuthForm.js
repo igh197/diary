@@ -21,7 +21,7 @@ const AuthFormBlock = styled.div`
 `;
 
 const InputDiv = styled.div`
-  background: white;
+  background: ${(props) => props.theme.inputBackground};
   padding-left: 1rem;
   border-bottom: 2px solid ${palette.gray[0]};
   height: 4rem;
@@ -66,10 +66,27 @@ const StyledInput = styled.input`
 	}
 `;
 
+const ButtonAuth = styled(Button)`
+  height: 4rem;
+  font-size: 1.5rem;
+  border-bottom: 2px solid ${palette.gray[0]};
+  background: ${(props) => props.theme.button};
+  color: #ffffff;
+  text-shadow: 1px 1px 1px ${palette.gray[0]};
+  &:hover {
+    background: ${palette.gray[0]};
+  }
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  width: 100%;
+  margin-top: 2rem;
+`;
+
 /**
  * 폼 하단에 로그인 혹은 회원가입 링크를 보여 줌
  */
 const Footer = styled.div`
+  font-family: ${(props) => props.theme.fontFamily};
   margin-top: 2rem;
   text-align: right;
   font-size: 1.5rem;
@@ -141,13 +158,7 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
           </InputDiv>
         )}
         {error && <ErrorMessage>{error}</ErrorMessage>}
-        <Button
-          $authButton="true"
-          $fullWidth="true"
-          style={{ marginTop: '2rem' }}
-        >
-          {text}
-        </Button>
+        <ButtonAuth>{text}</ButtonAuth>
       </form>
 
       <Footer>
