@@ -36,7 +36,7 @@ const InnerBox = styled.div`
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.025);
   padding: 2rem;
   width: 500px;
-  height: 550px;
+  height: 550px; // 수정하자!
   background: ${(props) => props.theme.content};
   border-radius: 5px;
 `;

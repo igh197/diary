@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 import Responsive from '../common/Responsive';
 import Button from '../common/Button';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 const EditorBlock = styled(Responsive)`

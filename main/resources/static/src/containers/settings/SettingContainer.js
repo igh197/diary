@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Responsive from '../../components/common/Responsive';
 import palette from '../../lib/styles/palette';
-import HeaderContainer from '../../components/common/HeaderContainer';
+import HeaderContainer from '../HeaderContainer';
 import { Link } from 'react-router-dom';
 import Theme from '../../components/theme/Theme';
 
