@@ -1,7 +1,9 @@
 import styled from 'styled-components';
-import Responsive from './Responsive';
-import Button from './Button';
-import palette from '../../lib/styles/palette';
+import Responsive from '../Responsive';
+import Button from '../Button';
+import palette from '../../../lib/styles/palette';
+import UserImage from './UserImage';
+import useModal from '../../hooks/useModal';
 
 const HeaderBlock = styled(Responsive)`
   background: ${(props) => props.theme.background};
@@ -27,8 +29,8 @@ const UserInfo = styled.div`
 `;
 
 const UserImg = styled(Button)`
-  height: 5rem;
-  width: 5rem;
+  height: 6rem;
+  width: 6rem;
   display: inline-block;
   border-radius: 5rem;
   background: ${palette.gray[0]};
@@ -36,6 +38,8 @@ const UserImg = styled(Button)`
 `;
 
 const Header = ({ user, onLogout, userImg }) => {
+  const { isOpen, open, close } = useModal();
+
   return (
     <>
       <HeaderBlock>
@@ -54,18 +58,17 @@ const Header = ({ user, onLogout, userImg }) => {
           )}
         </div>
         <div>
-          <UserImg to="/settings" $circle="true"></UserImg>
-          {user ? (
-            <Button to="/" $header="true">
-              's Dinary
-            </Button>
-          ) : (
-            <Button to="/" $header="true">
-              Dinary
-            </Button>
-          )}
+          <UserImg $circle="true" onClick={open} />
+          <Button to="/" $header="true">
+            's Dinary
+          </Button>
         </div>
       </HeaderBlock>
+      {isOpen && (
+        <>
+          <UserImage close={close}></UserImage>
+        </>
+      )}
       <Spacer />
     </>
   );
