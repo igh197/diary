@@ -3,6 +3,7 @@ import qs from 'qs';
 import Button from '../common/Button';
 
 const PaginationBlock = styled.div`
+  background: ${(props) => props.theme.background};
   width: 320px;
   margin: 0 auto;
   display: flex;
