@@ -1,3 +1,8 @@
+/* 
+리팩토링 할 일
+상수 이름!!!!!! 좀 더 고민하거나 한번에 정리해서 바꾸자!
+*/
+
 export const themes = {
   pinkTheme: {
     titleFont: 'Playfair Display',
@@ -15,6 +20,12 @@ export const themes = {
     text3: '#000000',
     calendar: '#FFE5E5',
     calendarContent: '#ECC9C9',
+    weeklyContent: '#ffffff',
+    weeklyEmoji: '#ffffff',
+    weeklyColor: '#FDA1A1',
+    weeklyText: '#000000',
+    weeklyLine: '#FDA1A1',
+    userBorder: '#FFD7D7',
   },
   purpleTheme: {
     titleFont: 'Norican',
@@ -32,9 +43,15 @@ export const themes = {
     text3: '#000000',
     calendar: '#9A468A',
     calendarContent: '#FFAAAA',
+    weeklyContent: '#ffffff',
+    weeklyEmoji: '#ffffff',
+    weeklyColor: '#994488',
+    weeklyText: '#000000',
+    weeklyLine: '#994488',
+    userBorder: '#F8DCFF',
   },
   darkTheme: {
-    titleFont: 'Anton',
+    titleFont: 'Rubik Mono One',
     subTitleFont: 'Pacifico',
     titleBackground: '#000000',
     titleColor: '#001AFF',
@@ -49,5 +66,11 @@ export const themes = {
     text3: 'white',
     calendar: 'linear-gradient(to bottom, #273565 ,#000000)',
     calendarContent: '#E9EEFF',
+    weeklyContent: '#1E263B',
+    weeklyEmoji: '#000000',
+    weeklyColor: '#001AFF',
+    weeklyText: '#A6AD79',
+    weeklyLine: '#E9EEFF',
+    userBorder: '#ABB8D0',
   },
 };
