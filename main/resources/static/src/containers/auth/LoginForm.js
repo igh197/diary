@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  useDispatch,
-  useSelector,
-} from '../../../node_modules/react-redux/es/exports';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { changeField, initializeForm, login } from '../../modules/auth';
 import AuthForm from '../../components/auth/AuthForm';

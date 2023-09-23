@@ -1,6 +1,5 @@
 import Pagination from '../../components/posts/Pagination';
-import { useSelector } from '../../../node_modules/react-redux/es/exports';
-// import { withRouter } from "../../../node_modules/react-router-dom/esm/react-router-dom";
+import { useSelector } from 'react-redux';
 import qs from 'qs';
 
 const PostListContainer = ({ location, match }) => {
