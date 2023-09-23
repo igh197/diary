@@ -7,25 +7,33 @@ import PostPage from './pages/PostPage';
 import SettingsPage from './pages/SettingsPage';
 import './App.css';
 import LobbyPage from './pages/LobbyPage';
-import { ThemeProvider } from 'styled-components';
 import { useState, useEffect } from 'react';
 import { themes } from './lib/styles/theme';
 import PostSamplePage from './pages/PostSamplePage';
+import { ThemeProvider } from 'styled-components';
 
 export default function App() {
   const [currentTheme, setCurrentTheme] = useState(themes.pinkTheme);
 
   const handleChangeTheme = (themeName) => {
-    const newTheme = themes[themeName];
-    setCurrentTheme(newTheme);
-    localStorage.setItem('new-theme', JSON.stringify(newTheme));
+    if (themeName) {
+      const newTheme = themes[themeName];
+      setCurrentTheme(newTheme);
+      localStorage.setItem('new-theme', JSON.stringify(newTheme));
+    } else {
+      return;
+    }
   };
 
   // react hook to get the theme selected by the user that is saved in local storage
   useEffect(() => {
-    const newTheme = JSON.parse(localStorage.getItem('new-theme'));
-    if (newTheme) {
-      setCurrentTheme(newTheme);
+    if (localStorage.getItem('new-theme') === 'undefined') {
+      localStorage.setItem('new-theme', JSON.stringify(themes.pinkTheme));
+    } else {
+      const newTheme = JSON.parse(localStorage.getItem('new-theme'));
+      if (newTheme) {
+        setCurrentTheme(newTheme);
+      }
     }
   }, []);
 
