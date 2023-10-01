@@ -1,5 +1,7 @@
+import { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
+import AskRemoveModal from './AskRemoveModal';
 
 const PostActionButtonsBlock = styled.div`
   display: flex;
@@ -8,6 +10,7 @@ const PostActionButtonsBlock = styled.div`
   margin-top: -1.5rem;
 `;
 
+// 수정
 const ActionButton = styled.button`
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
@@ -19,19 +22,37 @@ const ActionButton = styled.button`
   cursor: pointer;
   &:hover {
     background: ${palette.gray[0]};
-    color: ${palette.pink[7]};
+    color: ${palette.gray[0]};
   }
   & + & {
     margin-left: 0.25rem;
   }
 `;
 
-const PostActionButtons = ({ onEdit }) => {
+const PostActionButtons = ({ onEdit, onRemove }) => {
+  const [modal, setModal] = useState(false);
+  const onRemoveClick = () => {
+    setModal(true);
+  };
+  const onCancel = () => {
+    setModal(false);
+  };
+  const onConfirm = () => {
+    setModal(false);
+    onRemove();
+  };
   return (
-    <PostActionButtonsBlock>
-      <ActionButton onClick={onEdit}>수정</ActionButton>
-      <ActionButton>삭제</ActionButton>
-    </PostActionButtonsBlock>
+    <>
+      <PostActionButtonsBlock>
+        <ActionButton onClick={onEdit}>수정</ActionButton>
+        <ActionButton onClick={onRemoveClick}>삭제</ActionButton>
+      </PostActionButtonsBlock>
+      <AskRemoveModal
+        visible={modal}
+        onConfirm={onConfirm}
+        onCancel={onCancel}
+      />
+    </>
   );
 };
 
