@@ -9,11 +9,8 @@ const LobbyBlock = styled(Responsive)`
   background: ${(props) => props.theme.titleBackground};
   display: flex;
   flex-direction: column;
-  justify-content: center; // 가로 정렬
-  align-items: center; // 세로 정렬
-  div + div {
-    margin-bottom: 1rem;
-  }
+  justify-content: center;
+  align-items: center;
 `;
 
 const Header = styled.div`
@@ -29,18 +26,20 @@ const Header = styled.div`
 
   &.text {
     font-family: ${(props) => props.theme.subTitleFont};
-    color: white;
     position: relative;
     bottom: 1rem;
+    color: white;
     font-size: 1.5rem;
   }
 `;
 
-const StyledButton = styled(Button)`
-  margin-right: 1rem;
-  margin-left: 1rem;
+const SubHeading = styled.div`
+  margin-top: 2rem;
+  width: 20%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-size: 1.5rem;
-  letter-spacing: 2px;
 `;
 
 export default function LobbyContainer() {
@@ -48,11 +47,10 @@ export default function LobbyContainer() {
     <LobbyBlock>
       <Header className="logo">Dinary</Header>
       <Header className="text">Find your feelings</Header>
-      <div>
-        <StyledButton to="/login">Sign in</StyledButton>
-        <StyledButton>|</StyledButton>
-        <StyledButton to="/register">Sign up</StyledButton>
-      </div>
+      <SubHeading>
+        <Button to="/login">Sign in</Button>|
+        <Button to="/register">Sign up</Button>
+      </SubHeading>
     </LobbyBlock>
   );
 }

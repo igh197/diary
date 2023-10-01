@@ -7,56 +7,27 @@ import PostPage from './pages/PostPage';
 import SettingsPage from './pages/SettingsPage';
 import './App.css';
 import LobbyPage from './pages/LobbyPage';
-import { useState, useEffect } from 'react';
-import { themes } from './lib/styles/theme';
 import PostSamplePage from './pages/PostSamplePage';
 import { ThemeProvider } from 'styled-components';
+import { useRecoilValue } from 'recoil';
+import { themeState } from './State/userState';
+import { themes } from './lib/styles/theme';
 
 export default function App() {
-  const [currentTheme, setCurrentTheme] = useState(themes.pinkTheme);
-
-  const handleChangeTheme = (themeName) => {
-    if (themeName) {
-      const newTheme = themes[themeName];
-      setCurrentTheme(newTheme);
-      localStorage.setItem('new-theme', JSON.stringify(newTheme));
-    } else {
-      return;
-    }
-  };
-
-  // react hook to get the theme selected by the user that is saved in local storage
-  useEffect(() => {
-    if (localStorage.getItem('new-theme') === 'undefined') {
-      localStorage.setItem('new-theme', JSON.stringify(themes.pinkTheme));
-    } else {
-      const newTheme = JSON.parse(localStorage.getItem('new-theme'));
-      if (newTheme) {
-        setCurrentTheme(newTheme);
-      }
-    }
-  }, []);
+  const currentTheme = useRecoilValue(themeState);
 
   return (
-    <ThemeProvider theme={currentTheme}>
+    <ThemeProvider theme={themes[currentTheme]}>
       <Router>
         <Routes>
           <Route element={<LobbyPage />} path="/" />
-          <Route element={<PostListPage />} path="/@:account" exact />
-          <Route element={<PostListPage />} path="/" exact />
-          <Route element={<LoginPage />} path="/login" />
           <Route element={<RegisterPage />} path="/register" />
+          <Route element={<LoginPage />} path="/login" />
+          <Route element={<SettingsPage />} path="/settings" />
+          <Route element={<PostListPage />} path="/@:account" exact />
           <Route element={<WritePage />} path="/write" />
           <Route element={<PostPage />} path="/@:account/:postId" />
-          <Route
-            element={
-              <SettingsPage
-                onChangeTheme={handleChangeTheme}
-                value={currentTheme}
-              />
-            }
-            path="/settings"
-          />
+          {/* 임시 */}
           <Route element={<PostSamplePage />} path="/postsample" />
         </Routes>
       </Router>
