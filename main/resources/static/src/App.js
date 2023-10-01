@@ -5,7 +5,7 @@ import RegisterPage from './pages/RegisterPage';
 import WritePage from './pages/WritePage';
 import PostPage from './pages/PostPage';
 import SettingsPage from './pages/SettingsPage';
-import './App.css';
+// import './App.css';
 import LobbyPage from './pages/LobbyPage';
 import PostSamplePage from './pages/PostSamplePage';
 import { ThemeProvider } from 'styled-components';
