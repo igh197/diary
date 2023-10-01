@@ -1,16 +1,13 @@
-import { useDispatch, useSelector } from 'react-redux';
 import TagBox from '../../components/write/TagBox';
-import { changeField } from '../../modules/write';
+import { writeTagState } from '../../State/postState';
+import { useRecoilState } from 'recoil';
 
-const TagBoxContainer = () => {
-  const dispatch = useDispatch();
-  const tags = useSelector((state) => state.write.tags);
+export default function TagBoxContainer() {
+  const [tags, setTags] = useRecoilState(writeTagState);
 
   const onChangeTags = (nextTags) => {
-    dispatch(changeField({ key: 'tags', value: nextTags }));
+    setTags(nextTags);
   };
 
   return <TagBox onChangeTags={onChangeTags} tags={tags} />;
-};
-
-export default TagBoxContainer;
+}

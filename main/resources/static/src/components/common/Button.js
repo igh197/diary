@@ -48,35 +48,15 @@ font-family: ${(props) => props.theme.fontFamily};
   ${(props) =>
     props.$circle &&
     css`
-      position: fixed;
-      top: 60%;
-      height: 70px;
-      width: 70px;
-      text-align: center;
-      border-radius: 100px;
+      background: white;
+      height: 5rem;
+      width: 5rem;
+      border-radius: 100%;
       border-bottom: 2px solid ${palette.gray[0]};
       color: ${(props) => props.theme.text};
       font-size: 3rem;
+      margin: 5rem;
     `}
-
-  ${(props) =>
-    props.$left &&
-    css`
-      left: 10%;
-    `}
-
-    ${(props) =>
-      props.$right &&
-      css`
-        right: 10%;
-      `}
-
-      ${(props) =>
-        props.$cancle &&
-        css`
-          top: 40%;
-          right: 10%;
-        `}
 
     &:disabled {
       background: ${palette.gray[0]};

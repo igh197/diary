@@ -1,21 +1,13 @@
-import React from 'react';
-import Resposive from '../components/common/Responsive';
 import Header from '../components/common/header/Header';
 import EditorContainer from '../containers/write/EditorContainer';
-import TagBoxContainer from '../containers/write/TagBoxContainer';
-import WriteActionButtonContainer from '../containers/write/WriteActionButtonsContainer';
+// import TagBoxContainer from '../containers/write/TagBoxContainer';
 
-const WritePage = () => {
+export default function WritePage() {
   return (
     <>
       <Header />
-      <Resposive>
-        <EditorContainer />
-        <TagBoxContainer />
-        <WriteActionButtonContainer />
-      </Resposive>
+      <EditorContainer />
+      {/* <TagBoxContainer /> */}
     </>
   );
-};
-
-export default WritePage;
+}

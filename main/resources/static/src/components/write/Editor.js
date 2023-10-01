@@ -3,35 +3,35 @@ import Quill from 'quill';
 import 'quill/dist/quill.bubble.css';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
-import Responsive from '../common/Responsive';
-import Button from '../common/Button';
 // import { Link } from 'react-router-dom';
-import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
-const EditorBlock = styled(Responsive)`
+// 수정
+const EditorBlock = styled.div`
+  width: 100%;
+  height: 100%;
   /* 페이지 위아래 여백 지정 */
-  background-color: ${palette.pink[0]};
-  padding-top: 1rem;
-  padding-bottom: 5rem;
+  background-color: ${(props) => props.theme.content};
+  padding: 2rem;
 `;
 
 const TitleInput = styled.input`
   font-size: 3rem;
+  padding-top: 2rem; // 꼼수야 다른 방법이 있으면 수정 (글 아래로 배치)
   outline: none;
-  padding-bottom: 0.5rem;
   border: none;
-  border-bottom: 1px solid ${palette.gray[0]};
-  margin-bottom: 2rem;
+  border-bottom: 5px solid ${(props) => props.theme.button}; // 수정
   width: 100%;
-  height: 20rem;
-  background-color: ${palette.gray[0]};
+  height: 10rem;
+  background-color: ${(props) => props.theme.content};
 `;
 
+// 수정
 const QuillWrapper = styled.div`
   /* 최소 크기 지정 및 padding 제거 */
-  background-color: ${palette.pink[0]};
-  border-top: 3px solid ${palette.pink[1]};
-  border-bottom: 3px solid ${palette.pink[1]};
+  background-color: ${(props) => props.theme.content};
+  border-top: 3px solid ${palette.gray[0]};
+  border-bottom: 3px solid ${palette.gray[0]};
+  padding-top: 2rem;
   .ql-editor {
     padding: 0;
     min-height: 320px;
@@ -43,7 +43,7 @@ const QuillWrapper = styled.div`
   }
 `;
 
-const Editor = ({ title, body, onChangeField }) => {
+export default function Editor({ title, body, onChangeField }) {
   const quillElement = useRef(null); // Quill을 적용할 DivElement를 설정
   const quillInstance = useRef(null); // Quill 인스턴스를 설정
 
@@ -85,29 +85,15 @@ const Editor = ({ title, body, onChangeField }) => {
   };
 
   return (
-    <>
-      <div>
-        <Button $circle="true" $left="true">
-          <FiChevronLeft />
-        </Button>
-      </div>
-      <EditorBlock>
-        <TitleInput
-          placeholder="제목을 입력하세요"
-          onChange={onChangeTitle}
-          value={title}
-        />
-        <QuillWrapper>
-          <div ref={quillElement} />
-        </QuillWrapper>
-      </EditorBlock>
-      <div>
-        <Button $circle="true" $right="true">
-          <FiChevronRight />
-        </Button>
-      </div>
-    </>
+    <EditorBlock>
+      <TitleInput
+        placeholder="제목을 입력하세요"
+        onChange={onChangeTitle}
+        value={title}
+      />
+      <QuillWrapper>
+        <div ref={quillElement} />
+      </QuillWrapper>
+    </EditorBlock>
   );
-};
-
-export default Editor;
+}

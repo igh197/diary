@@ -1,3 +1,5 @@
+// 일단은 안 보이게 할 예정
+
 import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
@@ -80,7 +82,7 @@ const TagList = React.memo(({ tags, onRemove }) => (
   </TagListBlock>
 ));
 
-const TagBox = ({ tags, onChangeTags }) => {
+export default function TagBox({ tags, onChangeTags }) {
   const [input, setInput] = useState('');
   const [localTags, setLocalTags] = useState([]);
 
@@ -136,6 +138,4 @@ const TagBox = ({ tags, onChangeTags }) => {
       <TagList tags={localTags} onRemove={onRemove} />
     </TagBoxBlock>
   );
-};
-
-export default TagBox;
+}

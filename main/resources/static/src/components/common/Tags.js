@@ -2,15 +2,16 @@ import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 import { Link } from 'react-router-dom';
 
+// 수정
 const TagsBlock = styled.div`
   margin-top: 0.5rem;
   .tag {
     display: inline-block;
-    color: ${palette.pink[7]};
+    color: ${palette.gray[0]};
     text-decoration: none;
     margin-right: 0.5rem;
     &:hover {
-      color: ${palette.pink[6]};
+      color: ${palette.gray[0]};
     }
   }
 `;
