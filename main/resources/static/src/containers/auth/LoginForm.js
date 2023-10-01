@@ -1,45 +1,46 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { changeField, initializeForm, login } from '../../modules/auth';
 import AuthForm from '../../components/auth/AuthForm';
-import { check } from '../../modules/user';
+import { loginState } from '../../State/authState';
+import { useRecoilState } from 'recoil';
+import { userState } from '../../State/userState';
+import { login, check } from '../../lib/api/auth';
 
-const LoginForm = () => {
+export default function LoginForm() {
   const [error, setError] = useState(null);
-  const dispatch = useDispatch();
-  const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
-    form: auth.login,
-    auth: auth.auth,
-    authError: auth.authError,
-    user: user.user,
-  }));
+  const [user, setUser] = useRecoilState(loginState);
+  const [account, setAccount] = useRecoilState(userState);
+  const { form, auth, authError } = user;
+  const navigate = useNavigate();
+
   // 인풋 변경 이벤트 핸들러
   const onChange = (e) => {
     const { value, name } = e.target;
-    dispatch(
-      changeField({
-        form: 'login',
-        key: name,
-        value,
-      }),
-    );
+    setUser({
+      ...form,
+      [name]: value,
+    });
   };
 
   // 폼 등록 이벤트 핸들러
   const onSubmit = (e) => {
+    setAccount(form);
     e.preventDefault();
-    const { account, password } = form;
-    dispatch(login({ account, password }));
-    // 수정
+    login({ account: form.account, password: form.password });
+    if (check()) {
+      setUser({
+        ...form,
+        auth: true,
+        authError: null,
+      });
+    } else {
+      setUser({
+        ...form,
+        auth: null,
+        authError: true,
+      });
+    }
   };
-
-  const navigate = useNavigate();
-
-  // 컴포넌트가 처음 렌더링될 때 form을 초기화함
-  useEffect(() => {
-    dispatch(initializeForm('login'));
-  }, [dispatch]);
 
   useEffect(() => {
     if (authError) {
@@ -50,20 +51,19 @@ const LoginForm = () => {
     }
     if (auth) {
       console.log('로그인 성공');
-      dispatch(check());
     }
-  }, [auth, authError, dispatch]);
+  }, [auth, authError]);
 
   useEffect(() => {
-    if (user) {
-      navigate('/'); // 홈 화면으로 이동
+    if (auth) {
+      navigate('/');
       try {
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('account', JSON.stringify(account.account));
       } catch (e) {
         console.log('localStorage is not working');
       }
     }
-  }, [navigate, user]);
+  }, [navigate, auth, account.account]);
 
   return (
     <AuthForm
@@ -74,6 +74,4 @@ const LoginForm = () => {
       error={error}
     />
   );
-};
-
-export default LoginForm;
+}

@@ -41,7 +41,7 @@ const InnerBox = styled.div`
   border-radius: 5px;
 `;
 
-const AuthTemplate = ({ children }) => {
+export default function AuthTemplate({ children }) {
   return (
     <AuthTemplateBlock>
       <InnerBox>
@@ -53,6 +53,4 @@ const AuthTemplate = ({ children }) => {
       {/*불 값 수정*/}
     </AuthTemplateBlock>
   );
-};
-
-export default AuthTemplate;
+}

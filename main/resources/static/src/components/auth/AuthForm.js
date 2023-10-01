@@ -1,5 +1,3 @@
-// src/components/auth/AuthForm.js
-
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import palette from '../../lib/styles/palette';
@@ -42,8 +40,19 @@ const InputDiv = styled.div`
   ${(props) =>
     props.select &&
     css`
-      border: 2px solid ${palette.gray[0]};
+      border: 2px solid black;
     `}
+
+  .icon {
+    width: 2rem;
+    height: 2rem;
+    color: ${palette.gray[0]};
+    ${(props) =>
+      props.select &&
+      css`
+        color: black;
+      `}
+  }
 `;
 
 const StyledInput = styled.input`
@@ -112,7 +121,7 @@ const ErrorMessage = styled.div`
   margin-top: 1rem;
 `;
 
-const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
+export default function AuthForm({ type, form, onChange, onSubmit, error }) {
   const text = textMap[type];
   const [select, setSelect] = useState('');
 
@@ -120,7 +129,7 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
     <AuthFormBlock>
       <form onSubmit={onSubmit} action="../login" method="POST">
         <InputDiv select={select === 'login' ? true : false}>
-          <MdPersonOutline size="2rem" />
+          <MdPersonOutline className="icon" />
           <StyledInput
             autoComplete="account"
             name="account"
@@ -132,7 +141,7 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
         </InputDiv>
 
         <InputDiv select={select === 'password' ? true : false}>
-          <MdLockOutline size="2rem" />
+          <MdLockOutline className="icon" />
           <StyledInput
             autoComplete="new-password"
             name="password"
@@ -145,7 +154,7 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
         </InputDiv>
         {type === 'register' && (
           <InputDiv select={select === 'passwordConfirm' ? true : false}>
-            <MdLockOpen size="2rem" />
+            <MdLockOpen className="icon" />
             <StyledInput
               autoComplete="new-password"
               name="passwordConfirm"
@@ -170,6 +179,4 @@ const AuthForm = ({ type, form, onChange, onSubmit, error }) => {
       </Footer>
     </AuthFormBlock>
   );
-};
-
-export default AuthForm;
+}
