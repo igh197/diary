@@ -2,9 +2,7 @@ import styled from 'styled-components';
 
 const ResponsiveBlock = styled.div`
   background: ${(props) => props.theme.background};
-  padding-left: 1rem;
-  padding-right: 1rem;
-  width: 1024px;
+  width: 100%;
   margin: 0 auto; /* 중앙 정렬 */
   font-family: ${(props) => props.theme.fontFamily}};
 

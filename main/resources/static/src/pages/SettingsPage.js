@@ -1,10 +1,11 @@
-import SettingContainer from '../components/settings/Setting';
+import Header from '../components/common/header/Header';
+import Setting from '../containers/settings/Setting';
 
-export default function SettingsPage({ onChangeTheme, currentTheme }) {
+export default function SettingsPage() {
   return (
-    <SettingContainer
-      onChangeTheme={onChangeTheme}
-      currentTheme={currentTheme}
-    />
+    <>
+      <Header />
+      <Setting />
+    </>
   );
 }
