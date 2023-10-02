@@ -1,5 +1,5 @@
 import TagBox from '../../components/write/TagBox';
-import { writeTagState } from '../../State/postState';
+import { writeTagState } from '../../State/writeState';
 import { useRecoilState } from 'recoil';
 
 export default function TagBoxContainer() {

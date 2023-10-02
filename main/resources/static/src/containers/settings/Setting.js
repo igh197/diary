@@ -1,24 +1,23 @@
 import styled from 'styled-components';
-import Responsive from '../../components/common/Responsive';
 import palette from '../../lib/styles/palette';
 import { Link } from 'react-router-dom';
 import Theme from '../../components/settings/Theme';
 import { useRecoilValue } from 'recoil';
 import { userState } from '../../State/userState';
 import UploadFile from '../../components/settings/UploadFile';
+import Responsive from '../../components/common/Responsive';
 
+// UI 수정!!
 const SettingsPageBlock = styled(Responsive)`
-background: ${(props) => props.theme.background}};
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   outline: none;
 `;
 
 const ProfileBlock = styled.div`
   width: 50%;
-  height: 100%;
-  padding-top: 3rem;
+  padding: 2rem 0;
   background: ${(props) => props.theme.content};
   display: flex;
   align-items: center;
@@ -35,7 +34,7 @@ const ProfileBlock = styled.div`
     }
   }
 
-  .pink {
+  .profile-name {
     width: 80%;
     text-align: left;
     color: ${(props) => props.theme.text2};
@@ -46,11 +45,6 @@ const ProfileBlock = styled.div`
     justify-content: center;
     width: 30rem;
     height: 30rem;
-  }
-
-  & + & {
-    margin-left: 2rem;
-    margin-right: 2rem;
   }
 
   .content {
@@ -65,7 +59,7 @@ background: ${palette.gray[0]};
 }`;
 
 const ProfileContent = styled.div`
-  weight: 100%;
+  width: 90%;
   margin-top: 4rem;
   text-align: left;
   font-size: 1.5rem;
@@ -78,7 +72,6 @@ const ProfileContent = styled.div`
     width: 25rem;
     height: 3.5rem;
     line-height: 3.5rem;
-    margin-left: 3rem;
     font-size: 1.5rem;
     color: ${palette.gray[0]};
     background: white;
@@ -89,7 +82,6 @@ const ProfileContent = styled.div`
     font-size: 1.5rem;
     width: 25rem;
     height: 3.5rem;
-    margin-left: 3rem;
     border: none;
     &:focus {
       outline: none;
@@ -108,6 +100,7 @@ export default function Setting() {
     <>
       <SettingsPageBlock>
         <ProfileBlock className="profile-img">
+          {/* 파일 업로드하면서 수정예정 */}
           <ProfileImage>
             <UploadFile />
           </ProfileImage>
@@ -116,7 +109,7 @@ export default function Setting() {
           </Link>
         </ProfileBlock>
         <ProfileBlock>
-          <div className="pink">Profile</div>
+          <div className="profile-name">Profile</div>
           <div className="content">
             <ProfileContent>
               ID : <span>{userAccount}</span>
@@ -129,8 +122,8 @@ export default function Setting() {
               PW :<input placeholder="비밀번호 확인" />
             </ProfileContent>
             <ProfileContent>Change Theme</ProfileContent>
+            <Theme />
           </div>
-          <Theme />
         </ProfileBlock>
       </SettingsPageBlock>
     </>

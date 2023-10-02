@@ -1,4 +1,4 @@
-import Header from '../components/common/header/Header';
+import Header from '../components/common/Header';
 import Setting from '../containers/settings/Setting';
 
 export default function SettingsPage() {

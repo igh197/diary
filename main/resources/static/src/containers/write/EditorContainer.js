@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { postState } from '../../State/postState';
+import { writeState } from '../../State/postState';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { writePost, updatePost } from '../../lib/api/posts';
 import WriteForm from '../../components/write/WriteForm';
@@ -8,8 +8,8 @@ import WriteForm from '../../components/write/WriteForm';
 // 모달 구현!
 
 export default function EditorContainer() {
-  const reset = useResetRecoilState(postState);
-  const [write, setWrite] = useRecoilState(postState);
+  const reset = useResetRecoilState(writeState);
+  const [write, setWrite] = useRecoilState(writeState);
   const { title, body, tags, post, postError, originalPostId } = write;
   const navigate = useNavigate();
 
