@@ -10,6 +10,22 @@ export const userState = atom({
   },
 });
 
+export const userAccountState = selector({
+  key: 'userAccountState',
+  get: ({ get }) => {
+    const localStorageAccount = localStorage.getItem('account');
+    return localStorageAccount ? JSON.parse(localStorageAccount) : 'account';
+    // 나중에는 api로 끌고 오기 callback!!
+  },
+  set: ({ set }, newValue) => {
+    localStorage.setItem('account', JSON.stringify(newValue));
+    set(userState, (oldValue) => ({
+      ...oldValue,
+      account: newValue,
+    }));
+  },
+});
+
 export const themeState = selector({
   key: 'themeState',
   get: async ({ get }) => {
