@@ -1,43 +1,63 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from '../../../node_modules/react-router-dom/dist/index';
-import { readPost, unloadPost } from '../../modules/post';
+// import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+// import { readPost, unloadPost } from '../../modules/post';
 import PostViewer from '../../components/post/PostViewer';
 import PostActionButtons from '../../components/post/PostActionButtons';
-import { removePost } from '../../lib/api/posts';
+// import { removePost } from '../../lib/api/posts';
+// import { useRecoilState, useRecoilValue } from 'recoil';
+// import { userAccountState } from '../../State/userState';
+// import { postState } from '../../State/postState';
 
-const PostViewerContainer = ({ match }) => {
+//http://localhost:3000/account/1
+const postIdData = {
+  1: {
+    post: {
+      category: '카테고리1',
+      title: '제목',
+      body: '내용',
+      account: 'account',
+      publishedDate: '2021-08-18T11:22:01.000Z',
+      tags: ['태그1', '태그2', '태그3'],
+      emotions: '기쁨',
+    },
+
+    error: null,
+  },
+};
+
+// 여기에 이미지도 추가해야해 (사용자 프로필 사진)
+export default function PostViewerContainer({ match }) {
+  // Sample
+  const { postId } = useParams();
+  const posting = postIdData[postId];
+
   // 처음 마운트될 때 포스트 읽기 API 요청
-  const { postId } = match.params;
-  const dispatch = useDispatch();
+  // 다시 보자!!
+  // const { postId } = match.params;/
+  // const account = useRecoilValue(userAccountState);
   const navigate = useNavigate();
-  const { post, error, loading, user } = useSelector(
-    ({ post, loading, user }) => ({
-      post: post.post,
-      error: post.error,
-      loading: loading['post/READ_POST'],
-      user: user.user,
-    }),
-  );
+  // const [postInfo, setPostInfo] = useRecoilState(postState);
+  // const { post, error } = postInfo;
 
-  useEffect(() => {
-    dispatch(readPost(postId));
-    // 언마운트될 때 리덕스에서 포스트 데이터 없애기
-    return () => {
-      dispatch(unloadPost());
-    };
-  }, [dispatch, postId]);
+  // useEffect(() => {
+  //   readPost(postId);
+  //   // 언마운트될 때 리덕스에서 포스트 데이터 없애기
+  //   return () => {
+  //     unloadPost();
+  //   };
+  // }, [postId]);
 
   const onEdit = () => {
-    // dispatch(setOriginalPost(post));
+    // setPostInfo({ ...postInfo, originalPostId: post._id });
     navigate('/write');
   };
 
-  const ownPost = (user && user._id) === (post && post.user._id);
+  // 수정 이건 또 뭔데?
+  // const ownPost = (account && account._id) === (post && post._id);
 
   const onRemove = async () => {
     try {
-      await removePost(postId);
+      // await removePost(postId);
       navigate('/'); // 홈으로 이동
     } catch (e) {
       console.log(e);
@@ -46,12 +66,13 @@ const PostViewerContainer = ({ match }) => {
 
   return (
     <PostViewer
-      post={post}
-      loading={loading}
-      error={error}
-      actionButtons={ownPost && <PostActionButtons onEdit={onEdit} />}
+      // post={post}
+      // error={error}
+      post={posting.post}
+      error={posting.error}
+      // actionButtons={ownPost && <PostActionButtons onEdit={onEdit} />}
+      actionButtons={<PostActionButtons onEdit={onEdit} />}
+      onRemove={onRemove}
     />
   );
-};
-
-export default PostViewerContainer;
+}

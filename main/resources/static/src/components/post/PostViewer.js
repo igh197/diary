@@ -1,11 +1,27 @@
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
-import Responsive from '../common/Responsive';
 import SubInfo from '../common/SubInfo';
 import Tags from '../common/Tags';
+import Responsive from '../common/Responsive';
 
+// 테마 담는 공간 일단은 div로 놓고 나중에 image로 바꾸자
 const PostViewerBlock = styled(Responsive)`
-  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  width: 100%;
+`;
+
+const Contents = styled.div`
+  z-index: 10;
+  width: 66%;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 1rem 3rem;
+  background-color: ${(props) => props.theme.content};
+  color: ${(props) => props.theme.text3};
 `;
 
 const PostHead = styled.div`
@@ -21,7 +37,6 @@ const PostHead = styled.div`
 
 const PostContent = styled.div`
   font-size: 1.3125rem;
-  color: ${palette.gray[0]};
 `;
 
 export default function PostViewer({ post, error, loading, actionButtons }) {
@@ -38,21 +53,24 @@ export default function PostViewer({ post, error, loading, actionButtons }) {
     return null;
   }
 
-  const { title, body, user, publishedDate, tags } = post;
+  const { category, title, body, account, publishedDate, tags, emotions } =
+    post;
   return (
     <PostViewerBlock>
-      <PostHead>
-        <h1>{title}</h1>
-        <SubInfo account={user.account}>
-          <span>
-            <b>{user.username}</b>
-          </span>
+      <Contents>
+        <PostHead>
           <span>{new Date(publishedDate).toLocaleDateString()}</span>
-        </SubInfo>
-        <Tags tags={tags} />
-      </PostHead>
-      {actionButtons}
-      <PostContent dangerouslySetInnerHTML={{ __html: body }} />
+          <h1>{title}</h1>
+          <SubInfo account={account}>
+            <span>
+              <b>{account}</b>
+            </span>
+          </SubInfo>
+          <Tags tags={tags} />
+        </PostHead>
+        {actionButtons}
+        <PostContent dangerouslySetInnerHTML={{ __html: body }} />
+      </Contents>
     </PostViewerBlock>
   );
 }

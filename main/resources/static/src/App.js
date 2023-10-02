@@ -28,6 +28,7 @@ export default function App() {
           <Route element={<WritePage />} path="/write" />
           <Route element={<PostPage />} path="/@:account/:postId" />
           {/* 임시 */}
+          <Route element={<PostPage />} path="/account/:postId" />
           <Route element={<PostSamplePage />} path="/postsample" />
         </Routes>
       </Router>
