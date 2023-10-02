@@ -58,7 +58,8 @@ export const themes = {
     fontFamily: 'Lexend Exa',
     inputBackground: '#99930B',
     background: '#000000',
-    content: 'linear-gradient(to bottom, #273565 ,#000000)', // 느려..
+    // content: 'linear-gradient(to bottom, #273565 ,#000000)', // 느려..
+    content: '#21283F',
     text: '#001AFF',
     button: '#0019FF',
     emoji: '#ABB8D0',

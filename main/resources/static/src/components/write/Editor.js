@@ -12,6 +12,7 @@ const EditorBlock = styled.div`
   /* 페이지 위아래 여백 지정 */
   background-color: ${(props) => props.theme.content};
   padding: 2rem;
+  overflow-y: auto;
 `;
 
 const TitleInput = styled.input`

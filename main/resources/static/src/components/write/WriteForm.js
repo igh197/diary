@@ -7,6 +7,7 @@ import Responsive from '../common/Responsive';
 import Editor from './Editor';
 
 const WriteBlock = styled(Responsive)`
+  height: 100vh;
   display: flex;
   flex-direction: row;
   justify-content: center;
