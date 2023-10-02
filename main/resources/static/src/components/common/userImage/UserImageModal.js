@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import palette from '../../../lib/styles/palette';
 
-export default function UserImage({ close }) {
+export default function UserImageModal({ close }) {
   return (
     <Wrapper>
       <Overlay onClick={close}></Overlay>

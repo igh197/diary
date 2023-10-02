@@ -34,7 +34,7 @@ font-family: ${(props) => props.theme.fontFamily};
     props.$header &&
     css`
       font-family: ${(props) => props.theme.titleFont};
-      padding-right: 5rem;
+      padding-right: 3rem;
       font-size: 5rem;
       font-weight: bold;
       color: ${(props) => props.theme.text};

@@ -1,15 +1,16 @@
 import styled from 'styled-components';
-import Responsive from '../Responsive';
-import Button from '../Button';
-import palette from '../../../lib/styles/palette';
-import UserImage from './UserImage';
-import useModal from '../../hooks/useModal';
+import Button from './Button';
+import UserImage from './userImage/UserImage';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
-import { userState } from '../../../State/userState';
-import { postTheme, postUserImage } from '../../../lib/api/user';
+import { userState } from '../../State/userState';
+import { postTheme, postUserImage } from '../../lib/api/user';
 
-const HeaderBlock = styled(Responsive)`
+const Wrapper = styled.div`
+  width: 100%;
   background: ${(props) => props.theme.background};
+`;
+
+const HeaderBlock = styled.div`
   width: 100%;
   text-align: right;
   font-size: 1rem;
@@ -29,32 +30,18 @@ const HeaderBlock = styled(Responsive)`
  */
 
 const Spacer = styled.div`
-  background: ${(props) => props.theme.background};
   height: 4rem;
 `;
 
 const UserInfo = styled(Button)`
-  font-familty: ${(props) => props.theme.subTitleFont};
   color: ${(props) => props.theme.text3};
   font-weight: 800;
-  margin-right: 1rem;
-  letter-spacing: 2px;
-`;
-
-const UserImg = styled.div`
-  height: 7rem;
-  width: 7rem;
-  display: inline-block;
-  border-radius: 100%;
-  background: ${palette.gray[0]};
 `;
 
 export default function Header() {
   const user = useRecoilValue(userState);
   const resetUser = useResetRecoilState(userState);
   const { account, userImage, userTheme } = user;
-
-  const { isOpen, open, close } = useModal();
 
   const handleLogout = () => {
     postTheme(account, userTheme);
@@ -66,7 +53,7 @@ export default function Header() {
   };
 
   return (
-    <>
+    <Wrapper>
       <HeaderBlock>
         <div className="header">
           <UserInfo to="/settings">{account}</UserInfo>
@@ -74,20 +61,17 @@ export default function Header() {
             Logout
           </Button>
         </div>
-        <div>
-          {/* 이미지 추가하기 파일 소스 value */}
-          <UserImg $circle="true" onClick={open} value={userImage} />
+        <div className="header">
+          {/* 이미지 추가하기 파일 소스 value 
+          이게 왜 정렬이 돼? 왜 header로 했더니 정렬이 돼?
+          도대체 무슨 속성이었길래*/}
+          <UserImage value={userImage} />
           <Button to="/" $header="true">
             's Dinary
           </Button>
         </div>
       </HeaderBlock>
-      {isOpen && (
-        <>
-          <UserImage close={close}></UserImage>
-        </>
-      )}
       <Spacer />
-    </>
+    </Wrapper>
   );
 }

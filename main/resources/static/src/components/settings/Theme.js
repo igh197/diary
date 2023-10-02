@@ -7,15 +7,20 @@ import { useRecoilState } from 'recoil';
 
 const ThemeBlock = styled.div`
   width: 100%;
-  margin: 2rem auto;
+  padding: 2rem 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  .radio {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
 `;
 
 const ThemeRadioBox = styled.div`
-  display: inline-block;
-  justify-content: row;
   input {
     vertical-align: middle;
     appearance: none;
@@ -25,8 +30,6 @@ const ThemeRadioBox = styled.div`
     width: 1rem;
     height: 1rem;
     margin-bottom: 2rem;
-    margin-right: 6rem;
-    margin-left: 6rem;
 
     &:checked {
       background: black;
@@ -37,8 +40,9 @@ const ThemeRadioBox = styled.div`
 `;
 
 const ImageBlock = styled.div`
-  display: inline-block;
-  justify-content: row;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 `;
 
 const ImagePut = styled(ImageBlock)`
@@ -76,7 +80,7 @@ export default function Theme() {
 
   return (
     <ThemeBlock>
-      <form>
+      <form className="radio">
         {themesInput.map((theme, index) => (
           <ThemeRadioBox key={index}>
             <input
