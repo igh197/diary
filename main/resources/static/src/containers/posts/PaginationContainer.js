@@ -1,13 +1,16 @@
 import Pagination from '../../components/posts/Pagination';
-import { useSelector } from 'react-redux';
 import qs from 'qs';
 
 const PostListContainer = ({ location, match }) => {
-  const { lastPage, posts, loading } = useSelector(({ posts, loading }) => ({
+  const {
+    lastPage,
+    posts,
+    loading,
+  } = ({ posts, loading }) => ({
     lastPage: posts.lastPage,
     posts: posts.posts,
     loading: loading['posts/LIST_POSTS'],
-  }));
+  });
 
   // 포스트가 아직 없거나 로딩 중이면 아무것도 보여 주지 않음
   if (!posts || loading) return null;
