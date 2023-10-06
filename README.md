@@ -19,6 +19,7 @@
 | PUT    | https://127.0.0.1:8080/user/{id}   |
 | DELETE | https://127.0.0.1:8080/user/{id}   |
 | POST   | https://127.0.0.1:8080/loginProc   |
+
 <br>**Images**
 | METHOD | URL                                |
 | ------ | :--------------------------------- |
