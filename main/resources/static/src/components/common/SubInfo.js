@@ -2,6 +2,8 @@ import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import palette from '../../lib/styles/palette';
 
+// 일단 보류 추후 수정
+
 const SubInfoBlock = styled.div`
   ${(props) =>
     props.hasMarginTop &&

@@ -3,6 +3,7 @@ import palette from '../../lib/styles/palette';
 import SubInfo from '../common/SubInfo';
 import Tags from '../common/Tags';
 import Responsive from '../common/Responsive';
+import UserImage from '../common/userImage/UserImage';
 
 // 테마 담는 공간 일단은 div로 놓고 나중에 image로 바꾸자
 const PostViewerBlock = styled(Responsive)`
@@ -26,12 +27,21 @@ const Contents = styled.div`
 
 const PostHead = styled.div`
   border-bottom: 1px solid ${palette.gray[0]};
-  padding-bottom: 3rem;
-  margin-bottom: 3rem;
-  h1 {
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+
+  span {
     font-size: 3rem;
     line-height: 1.5;
-    margin: 0;
+    margin: 0 1rem;
+  }
+
+  .info {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: 3rem;
   }
 `;
 
@@ -39,7 +49,13 @@ const PostContent = styled.div`
   font-size: 1.3125rem;
 `;
 
-export default function PostViewer({ post, error, loading, actionButtons }) {
+export default function PostViewer({
+  userImage,
+  post,
+  error,
+  loading,
+  actionButtons,
+}) {
   // 에러 발생 시
   if (error) {
     if (error.response && error.response.status === 404) {
@@ -59,13 +75,16 @@ export default function PostViewer({ post, error, loading, actionButtons }) {
     <PostViewerBlock>
       <Contents>
         <PostHead>
-          <span>{new Date(publishedDate).toLocaleDateString()}</span>
-          <h1>{title}</h1>
-          <SubInfo account={account}>
+          <div className="info">
+            <UserImage value={userImage} shrink={true} />
+            {new Date(publishedDate).toLocaleDateString()}
+          </div>
+          {category} : <span>{title}</span>
+          {/* <SubInfo account={account}>
             <span>
               <b>{account}</b>
             </span>
-          </SubInfo>
+          </SubInfo> */}
           <Tags tags={tags} />
         </PostHead>
         {actionButtons}

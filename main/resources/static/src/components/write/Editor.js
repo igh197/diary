@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import Quill from 'quill';
-import 'quill/dist/quill.bubble.css';
+import 'quill/dist/quill.snow.css';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 // import { Link } from 'react-router-dom';
@@ -50,7 +50,7 @@ export default function Editor({ title, body, onChangeField }) {
 
   useEffect(() => {
     quillInstance.current = new Quill(quillElement.current, {
-      theme: 'bubble',
+      theme: 'snow',
       placeholder: '내용을 작성하세요...',
       modules: {
         // 더 많은 옵션

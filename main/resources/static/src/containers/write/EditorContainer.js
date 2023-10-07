@@ -6,6 +6,7 @@ import { writePost, updatePost } from '../../lib/api/posts';
 import WriteForm from '../../components/write/WriteForm';
 
 // 모달 구현!
+// header로 따라서 모달 구현하자
 
 export default function EditorContainer() {
   const reset = useResetRecoilState(writeState);

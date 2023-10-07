@@ -22,18 +22,22 @@ export default function LoginForm() {
     });
   };
 
-  // 폼 등록 이벤트 핸들러
+  // 폼 등록 이벤트 핸들러 - 백엔드 물어보고 수정
   const onSubmit = (e) => {
     setAccount(form);
     e.preventDefault();
     login({ account: form.account, password: form.password });
-    if (check()) {
+    console.log('login 후에');
+    check();
+    console.log('check후에');
+    // 수정
+    try {
       setUser({
         ...form,
         auth: true,
         authError: null,
       });
-    } else {
+    } catch (e) {
       setUser({
         ...form,
         auth: null,

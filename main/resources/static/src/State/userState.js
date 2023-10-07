@@ -10,11 +10,17 @@ export const userState = atom({
   },
 });
 
-export const userAccountState = selector({
-  key: 'userAccountState',
+export const userProfileState = selector({
+  key: 'userProfileState',
   get: ({ get }) => {
     const localStorageAccount = localStorage.getItem('account');
-    return localStorageAccount ? JSON.parse(localStorageAccount) : 'account';
+    const localStorageImage = localStorage.getItem('user-image');
+    return {
+      account: localStorageAccount
+        ? JSON.parse(localStorageAccount)
+        : 'account',
+      userImage: localStorageImage ? JSON.parse(localStorageImage) : '',
+    };
     // 나중에는 api로 끌고 오기 callback!!
   },
   set: ({ set }, newValue) => {

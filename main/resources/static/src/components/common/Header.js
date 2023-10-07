@@ -50,6 +50,7 @@ export default function Header() {
     localStorage.removeItem('theme');
     localStorage.removeItem('user-image');
     resetUser();
+    // api도 사용 추후 수정 logout
   };
 
   return (

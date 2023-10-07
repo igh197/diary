@@ -24,7 +24,6 @@ const AuthTemplateBlock = styled.div`
 const InnerBox = styled.div`
   .logo-area {
     font-family: ${(props) => props.theme.titleFont};
-    display: block;
     padding-bottom: 2rem;
     text-align: center;
     font-weight: bold;
@@ -35,8 +34,7 @@ const InnerBox = styled.div`
   }
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.025);
   padding: 2rem;
-  width: 500px;
-  height: 550px; // 수정하자!
+  width: 500px; // 이거를 어떻게 크기로 변환할까..? 수정
   background: ${(props) => props.theme.content};
   border-radius: 5px;
 `;
