@@ -29,6 +29,10 @@ public class UserController {
         userService.save(userRequest);  //userService class에서 구현됨
 
     }
+    @PostMapping("/loginProc")
+    public User login(@RequestBody UserRequest userRequest){
+        return userService.login(userRequest);
+    }
     @GetMapping("/users")
     public Header<List<UserResponse>> getUsers(@PageableDefault Pageable pageable){  //user 리스트 , admin만 접근 가능
         return userService.search(pageable);        //userService class에 구현되어 있음

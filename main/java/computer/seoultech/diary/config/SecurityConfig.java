@@ -1,11 +1,13 @@
 package computer.seoultech.diary.config;
 
+import computer.seoultech.diary.repository.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.metrics.MetricsProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
+
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,11 +28,13 @@ import java.util.Arrays;
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
-public class SecurityConfig implements WebMvcConfigurer {  //WebSecurityConfigurerAdapter class는 더이상 권장되지 않아 사용하지 않았음
+public class SecurityConfig implements WebMvcConfigurer {
+    private final UserRepository userRepository;  //WebSecurityConfigurerAdapter class는 더이상 권장되지 않아 사용하지 않았음
+
     @Override
     public void addCorsMappings(CorsRegistry registry){
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000/*","http://localhost:8080/*")
+                .allowedOrigins("http://localhost:3000","http://localhost:8080/*")
                 .allowedMethods("POST","GET","PUT","DELETE","OPTION")
                 .allowCredentials(true);
     }
@@ -38,7 +42,7 @@ public class SecurityConfig implements WebMvcConfigurer {  //WebSecurityConfigur
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.addAllowedOrigin("*");
+        configuration.addAllowedOriginPattern("*");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);
@@ -63,14 +67,13 @@ public class SecurityConfig implements WebMvcConfigurer {  //WebSecurityConfigur
                 .authorizeHttpRequests()
                 //post request
 
-                .requestMatchers(HttpMethod.POST,"/register","/login").permitAll()
-                .requestMatchers(HttpMethod.POST,"/diary/new","/image/new","/diaryfile/{id}").hasAnyRole("USER","ADMIN")
+                .requestMatchers(HttpMethod.POST,"/register","/loginProc").permitAll()
+                .requestMatchers(HttpMethod.POST,"/diary/new","/image/new","/diaryfile/{id}","userimage/{id}").hasAnyRole("USER","ADMIN")
                 //get request
-                .requestMatchers(HttpMethod.GET,"/diarys","/diary/{id}","/","/diaryfiles","/diaryfile/{id}").hasAnyRole("USER","ADMIN")
-                .requestMatchers(HttpMethod.GET,"/login").permitAll()
-                .requestMatchers(HttpMethod.GET,"/user/{id}","/users").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET,"/user/{id}","/diarys","/diary/{id}","/","/diaryfiles","/diaryfile/{id}").hasAnyRole("USER","ADMIN")
+                .requestMatchers(HttpMethod.GET,"/users").hasAnyRole("ADMIN","USER")
                 //put request
-                .requestMatchers(HttpMethod.PUT,"/diary/{id}").hasAnyRole("USER","ADMIN")
+                .requestMatchers(HttpMethod.PUT,"/diary/{id}","/userimage/{id}").hasAnyRole("USER","ADMIN")
                 .requestMatchers(HttpMethod.PUT,"/user/{id}").hasRole("ADMIN")
                 //delete request
                 .requestMatchers(HttpMethod.DELETE,"/diary/{id}").hasAnyRole("USER","ADMIN")
@@ -83,9 +86,25 @@ public class SecurityConfig implements WebMvcConfigurer {  //WebSecurityConfigur
                 .formLogin()
                 .usernameParameter("account") // 계정 ID
                 .passwordParameter("password") //비밀번호
-                .loginProcessingUrl("/login") //스프링 시큐리티가 제공하는 로그인 인증 기능
-                .defaultSuccessUrl("/")
-                .permitAll()
+                .loginProcessingUrl("/loginProc") //스프링 시큐리티가 제공하는 로그인 인증 기능
+                .defaultSuccessUrl("http://127.0.0.1:8080/")
+                .permitAll();
+                 http.logout()
+                .logoutUrl("/logout")   // 로그아웃 처리 URL (= form action url)
+                //.logoutSuccessUrl("/login") // 로그아웃 성공 후 targetUrl,
+                // logoutSuccessHandler 가 있다면 효과 없으므로 주석처리.
+                .addLogoutHandler((request, response, authentication) -> {
+                    // 사실 굳이 내가 세션 무효화하지 않아도 됨.
+                    // LogoutFilter가 내부적으로 해줌.
+                    HttpSession session = request.getSession();
+                    if (session != null) {
+                        session.invalidate();
+                    }
+                })  // 로그아웃 핸들러 추가
+                .logoutSuccessHandler((request, response, authentication) -> {
+                    response.sendRedirect("/");
+                }) // 로그아웃 성공 핸들러
+                .deleteCookies("remember-me");
                 ;
 
 
