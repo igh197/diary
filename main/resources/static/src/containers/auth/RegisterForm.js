@@ -47,7 +47,7 @@ export default function RegisterForm() {
     }
   };
 
-  // 컴포넌트가 처음 렌더링될 때 form을 초기화함
+  // 컴포넌트가 처음 렌더링될 때 form을 초기화함 - 수정
   useEffect(() => {
     if (authError) {
       // 계정명이 이미 존재할 때
@@ -65,7 +65,7 @@ export default function RegisterForm() {
     }
   }, [auth, authError]);
 
-  // user 값이 잘 설정되었는지 확인
+  // user 값이 잘 설정되었는지 확인 - 수정
   useEffect(() => {
     if (auth) {
       console.log('check API 성공');

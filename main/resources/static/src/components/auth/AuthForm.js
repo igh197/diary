@@ -2,7 +2,6 @@ import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import palette from '../../lib/styles/palette';
 import Button from '../common/Button';
-import { MdLockOutline, MdPersonOutline, MdLockOpen } from 'react-icons/md';
 import { useState } from 'react';
 
 /**
@@ -19,18 +18,20 @@ const AuthFormBlock = styled.div`
 `;
 
 const InputDiv = styled.div`
+  width: 502px;
+  height: 57px;
+  border-radius: 39px;
   background: ${(props) => props.theme.inputBackground};
   padding-left: 1rem;
-  border-bottom: 2px solid ${palette.gray[0]};
-  height: 4rem;
   display: flex;
   justify-content: left;
   align-items: center;
   z-index: 1;
   opacity: 1;
+  padding-right: 1rem;
 
   & + & {
-    margin-top: 2rem;
+    margin-top: 1rem;
   }
 
   &:hover {
@@ -40,7 +41,7 @@ const InputDiv = styled.div`
   ${(props) =>
     props.select &&
     css`
-      border: 2px solid black;
+      border: 2px solid #79317a;
     `}
 
   .icon {
@@ -56,61 +57,61 @@ const InputDiv = styled.div`
 `;
 
 const StyledInput = styled.input`
-	font-size: 1.5rem;
-	border: none;
+  font-size: 16px;
+  text-align: left;
+  color: #c1c1c1;
+  border: none;
   background: none;
-	width: 90%;
-	height: 90%;
+
+  width: 90%;
+  height: 90%;
   margin-left: 1rem;
   overflow: auto;
-	
-	outline: none;
-	color: ${(props) => props.theme.button}
-	text-shadow: 1px 1px 1px ${palette.gray[0]};
-    opacity: 0.8;
 
-    
-	&:focus {
-		color: #0ca678;
-	}
+  outline: none;
+
+  &:focus {
+    color: #0ca678;
+  }
 `;
 
 const ButtonAuth = styled(Button)`
-  height: 4rem;
-  font-size: 1.5rem;
-  border-bottom: 2px solid ${palette.gray[0]};
-  background: ${(props) => props.theme.button};
-  color: #ffffff;
-  text-shadow: 1px 1px 1px ${palette.gray[0]};
+  margin-top: 2.5rem;
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+  color: #fff;
+  width: 502px;
+  height: 57px;
+  border-radius: 39px;
+  background: #79317a;
+
   &:hover {
     background: ${palette.gray[0]};
   }
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  width: 100%;
-  margin-top: 2rem;
 `;
 
 /**
  * 폼 하단에 로그인 혹은 회원가입 링크를 보여 줌
  */
 const Footer = styled.div`
-  font-family: ${(props) => props.theme.fontFamily};
+  display: flex;
+  justify-content: center;
+  postion: absolute;
+  left: 991px;
+  top: 740px;
+  font-size: 16px;
+  text-align: left;
+  color: #c1c1c1;
   margin-top: 2rem;
-  text-align: right;
-  font-size: 1.5rem;
-  a {
-    color: ${(props) => props.theme.text};
-    text-decoration: underline;
-    &:hover {
-      color: ${palette.gray[0]};
-    }
+  &:hover {
+    color: ${palette.gray[0]};
   }
 `;
 
 const textMap = {
-  login: 'Login',
-  register: 'Join',
+  login: 'LOG IN',
+  register: 'JOIN',
 };
 
 /* 에러 */
@@ -129,32 +130,38 @@ export default function AuthForm({ type, form, onChange, onSubmit, error }) {
     <AuthFormBlock>
       <form onSubmit={onSubmit} action="../login" method="POST">
         <InputDiv select={select === 'login' ? true : false}>
-          <MdPersonOutline className="icon" />
+          {/* <MdPersonOutline className="icon" /> */}
           <StyledInput
             autoComplete="account"
             name="account"
-            placeholder="아이디"
+            placeholder="아이디를 입력해주세요"
             onChange={onChange}
             value={form.account}
             onFocus={() => setSelect('login')}
           />
+          {select === 'login' ? <img src="/images/Login/Eye.png" alt="" /> : ''}
         </InputDiv>
 
         <InputDiv select={select === 'password' ? true : false}>
-          <MdLockOutline className="icon" />
+          {/* <MdLockOutline className="icon" /> */}
           <StyledInput
             autoComplete="new-password"
             name="password"
-            placeholder="비밀번호"
+            placeholder="비밀번호를 입력해주세요"
             type="password"
             onChange={onChange}
             value={form.password}
             onFocus={() => setSelect('password')}
           />
+          {select === 'password' ? (
+            <img src="/images/Login/Eye.png" alt="" />
+          ) : (
+            ''
+          )}
         </InputDiv>
         {type === 'register' && (
           <InputDiv select={select === 'passwordConfirm' ? true : false}>
-            <MdLockOpen className="icon" />
+            {/* <MdLockOpen className="icon" /> */}
             <StyledInput
               autoComplete="new-password"
               name="passwordConfirm"
@@ -164,6 +171,11 @@ export default function AuthForm({ type, form, onChange, onSubmit, error }) {
               value={form.passwordConfirm}
               onFocus={() => setSelect('passwordConfirm')}
             />
+            {select === 'passwordConfirm' ? (
+              <img src="/images/Login/Eye.png" alt="" />
+            ) : (
+              ''
+            )}
           </InputDiv>
         )}
         {error && <ErrorMessage>{error}</ErrorMessage>}
@@ -172,9 +184,9 @@ export default function AuthForm({ type, form, onChange, onSubmit, error }) {
 
       <Footer>
         {type === 'login' ? (
-          <Link to="/register">Join</Link>
+          <Link to="/register">회원가입</Link>
         ) : (
-          <Link to="/login">Login</Link>
+          <Link to="/">로그인</Link>
         )}
       </Footer>
     </AuthFormBlock>
