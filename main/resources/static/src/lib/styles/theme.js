@@ -5,11 +5,9 @@
 
 export const themes = {
   pinkTheme: {
-    titleFont: 'Playfair Display',
-    subTitleFont: 'Playfair Display',
     titleBackground: '#FDA1A1',
     titleColor: '#ffffff',
-    fontFamily: 'Playfair Display',
+    fontFamily: 'Helvetica Neue',
     inputBackground: '#ffffff',
     background: '#ffffff',
     content: '#FFF9F9',
@@ -28,13 +26,11 @@ export const themes = {
     userBorder: '#FFD7D7',
   },
   purpleTheme: {
-    titleFont: 'Norican',
-    subTitleFont: 'Open Sans',
     titleBackground: '#994488',
     titleColor: '#ffffff',
-    fontFamily: 'Open Sans',
+    fontFamily: 'Helvetica Neue',
     inputBackground: '#ffffff',
-    background: '#ffffff',
+    background: '#FCF4FF',
     content: '#FCF4FF',
     text: '#9A468A',
     button: '#BC5DAA',
@@ -51,11 +47,9 @@ export const themes = {
     userBorder: '#F8DCFF',
   },
   darkTheme: {
-    titleFont: 'Rubik Mono One',
-    subTitleFont: 'Pacifico',
     titleBackground: '#000000',
     titleColor: '#001AFF',
-    fontFamily: 'Lexend Exa',
+    fontFamily: 'Helvetica Neue',
     inputBackground: '#99930B',
     background: '#000000',
     // content: 'linear-gradient(to bottom, #273565 ,#000000)', // 느려..

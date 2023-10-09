@@ -1,9 +1,5 @@
 import palette from '../../lib/styles/palette';
 import styled from 'styled-components';
-import Button from '../common/Button';
-import { useState } from 'react';
-import { themeState } from '../../State/userState';
-import { useRecoilState } from 'recoil';
 
 const ThemeBlock = styled.div`
   width: 100%;
@@ -54,33 +50,12 @@ const ImagePut = styled(ImageBlock)`
   margin-bottom: 2rem;
 `;
 
-const Save = styled(Button)`
-  width: 9rem;
-  height: 3rem;
-  border-radius: 5px;
-  box-shadow: 0 3px 2px ${palette.gray[0]};
-  background: white;
-  color: black;
-`;
-
-export default function Theme() {
-  const [currentTheme, setCurrentTheme] = useRecoilState(themeState);
-  const [tempTheme, setTempTheme] = useState(currentTheme);
-
-  const handleTempTheme = (newTheme) => {
-    setTempTheme(newTheme);
-  };
-
-  const handleTheme = () => {
-    setCurrentTheme(tempTheme);
-    window.location.reload();
-  };
-
+export default function Theme({ tempTheme, onChange, onSubmit }) {
   const themesInput = ['pinkTheme', 'purpleTheme', 'darkTheme'];
 
   return (
     <ThemeBlock>
-      <form className="radio">
+      <form className="radio" onSubmit={onSubmit}>
         {themesInput.map((theme, index) => (
           <ThemeRadioBox key={index}>
             <input
@@ -88,7 +63,7 @@ export default function Theme() {
               name="theme"
               value={theme}
               checked={tempTheme === theme}
-              onChange={() => handleTempTheme(theme)}
+              onChange={onChange}
             />
           </ThemeRadioBox>
         ))}
@@ -98,7 +73,6 @@ export default function Theme() {
         <ImagePut />
         <ImagePut />
       </ImageBlock>
-      <Save onClick={() => handleTheme(tempTheme)}>Save</Save>
     </ThemeBlock>
   );
 }

@@ -1,11 +1,11 @@
 import Header from '../components/common/Header';
-import Setting from '../containers/settings/Setting';
+import SettingContainer from '../containers/settings/SettingContainer';
 
 export default function SettingsPage() {
   return (
     <>
       <Header />
-      <Setting />
+      <SettingContainer />
     </>
   );
 }
