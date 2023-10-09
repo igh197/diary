@@ -1,106 +1,108 @@
 import styled from 'styled-components';
-import palette from '../../lib/styles/palette';
 import Button from '../common/Button';
+import PostItem from './PostItem';
 
-const WritePostButtonWrapper = styled.div`
-  display: flex;
-  margin: 1rem auto;
-  justify-content: center;
+const Wrapper = styled.div`
+  width: 30%;
+  height: 50%;
+
+  .button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-left: 1rem;
+    padding-right: 0.5rem;
+    font-size: 1rem;
+  }
 `;
 
 const WritePostButton = styled(Button)`
-  display: inline-block;
-  text-align: center;
-  border-radius: 50px;
-  width: 60%;
-  height: 4rem;
-  font-size: 3rem;
   font-weight: bold;
-  background: ${(props) => props.theme.weeklyContent};
   color: ${(props) => props.theme.text2};
+  letter-spacing: 1px;
 `;
 
-const PostItemBlock = styled.div`
-  padding-left: 1rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  display: flex;
-  justify-content: row;
-  align-items: center;
-  border-bottom: 1px solid ${palette.gray[0]};
-  /* 맨 위 포스트는 padding-top 없음 */
-  &:first-child {
-    padding-top: 0;
-  }
-
-  h2 {
-    margin-left: 3rem;
-    color: ${(props) => props.theme.text3};
-    font-size: 2rem;
-    margin-bottom: 0;
-    margin-top: 0;
-    &:hover {
-      color: ${palette.gray[0]};
-    }
-  }
+const PostListBlock = styled.div`
+  background-image: url('/images/Posts/ListBlock.png');
+  background-size: cover;
+  border-radius: 13px;
+  width: 100%;
+  color: white;
+  padding: 1rem 1.5rem;
 
   p {
-    margin-top: 2rem;
-  }
-
-  .img {
-    display: inline-block;
-    width: 12rem;
-    height: 6rem;
-    margin-left: 1rem;
-    maring-right: 1rem;
-    background: ${palette.gray[0]};
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1.5rem;
   }
 `;
 
-const PostItem = ({ post, id }) => {
-  // const { publishedDate, user, tags, title, body, _id } = post;
+export default function PostsAlign({ posts }) {
+  const postsExample = [
+    {
+      id: 1,
+      post: {
+        title: '우오와아',
+        body: '가나다라마바사아자차카타파하어느정도적어야이길이가끝이나는것일까알아맞혀보자이정도로썼는데도아직도안넘어갔다면그럴때는다시생각해보자답이나올것이다',
+        publishedDate: '2023.10.13',
+      },
+    },
+    {
+      id: 2,
+      post: {
+        title: '가을이다',
+        body: '선선한가을날씨와함께부는싱그러운바람이얼마나좋은지모른다이래서가을인가너무너무좋다',
+        publishedDate: '2023.10.13',
+      },
+    },
+    {
+      id: 3,
+      post: {
+        title: '가을이다',
+        body: '선선한가을날씨와함께부는싱그러운바람이얼마나좋은지모른다이래서가을인가너무너무좋다',
+        publishedDate: '2023.10.13',
+      },
+    },
+    {
+      id: 4,
+      post: {
+        title: '가을이다',
+        body: '선선한가을날씨와함께부는싱그러운바람이얼마나좋은지모른다이래서가을인가너무너무좋다',
+        publishedDate: '2023.10.13',
+      },
+    },
+    {
+      id: 5,
+      post: {
+        title: '가을이다',
+        body: '선선한가을날씨와함께부는싱그러운바람이얼마나좋은지모른다이래서가을인가너무너무좋다',
+        publishedDate: '2023.10.13',
+      },
+    },
+  ];
+
   return (
-    <PostItemBlock>
-      <div className="img" />
-      <h2>제목{id}</h2>
-      {/* <h2>
-        <Link to={`/@${user.account}/${_id}`}>{title}</Link>
-      </h2>
-      <SubInfo account={user.account} publishedDate={new Date(publishedDate)} />
-      <Tags tags={tags} />
-      <p>{body}</p> */}
-    </PostItemBlock>
-  );
-};
-
-const PostsAlignBlock = styled.div`
-  display: inline-block;
-
-  height: 40rem;
-  background: ${(props) => props.theme.content};
-  margin-bottom: 3rem;
-`;
-
-export default function PostsAlign() {
-  return (
-    <PostsAlignBlock>
-      {' '}
-      <WritePostButtonWrapper>
-        <WritePostButton to="/write">+</WritePostButton>
+    <Wrapper>
+      <div className="button-wrapper">
+        <WritePostButton to="/write">글쓰기</WritePostButton>
         {/* {showWriteButton && <Button to="/write">새 글 작성하기</Button>} */}
-      </WritePostButtonWrapper>
-      <PostItem id={1} />
-      <PostItem id={2} />
-      <PostItem id={3} />
-      {/* 로딩 중이 아니고, 포스트 배열이 존재할 때만 보여 줌 */}
-      {/* {!loading && posts && (
+      </div>
+      <PostListBlock>
+        <p>내 일기</p>
+        {postsExample.map((content) => (
+          <PostItem key={content.id} post={content.post} />
+        ))}
+        {/* 로딩 중이 아니고, 포스트 배열이 존재할 때만 보여 줌 */}
+        {/* {!loading && posts && (
 <div>
   <PostItem />
   <PostItem />
   <PostItem />
 </div>
 )} */}
-    </PostsAlignBlock>
+      </PostListBlock>
+    </Wrapper>
   );
 }

@@ -4,8 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import PostViewer from '../../components/post/PostViewer';
 import PostActionButtons from '../../components/post/PostActionButtons';
 // import { removePost } from '../../lib/api/posts';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { userProfileState } from '../../State/userState';
+// import { useRecoilState, useRecoilValue } from 'recoil';
 // import { postState } from '../../State/postState';
 
 //http://localhost:3000/account/1
@@ -34,8 +33,6 @@ export default function PostViewerContainer({ match }) {
   // 처음 마운트될 때 포스트 읽기 API 요청
   // 다시 보자!!
   // const { postId } = match.params;/
-  const user = useRecoilValue(userProfileState);
-  const { account, userImage } = user;
   const navigate = useNavigate();
   // const [postInfo, setPostInfo] = useRecoilState(postState);
   // const { post, error } = postInfo;
@@ -67,7 +64,6 @@ export default function PostViewerContainer({ match }) {
 
   return (
     <PostViewer
-      profileImage={userImage}
       // post={post}
       // error={error}
       post={posting.post}

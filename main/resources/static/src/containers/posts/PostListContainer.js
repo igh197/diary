@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import qs from 'qs';
 import { useNavigate } from '../../../node_modules/react-router-dom/dist/index';
-import { listPosts } from '../../modules/posts';
 import PostList from '../../components/posts/PostList';
 
 const PostListContainer = ({ location, match }) => {
@@ -23,7 +22,7 @@ const PostListContainer = ({ location, match }) => {
     const { tag, page } = qs.parse(location.search, {
       ignoreQueryPrefix: true,
     });
-    listPosts({ tag, page, account });
+    // listPosts({ tag, page, account });
   }, [location.search]);
 
   return (
