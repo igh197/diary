@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import Quill from 'quill';
-import 'quill/dist/quill.snow.css';
+import 'quill/dist/quill.bubble.css';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 // import { Link } from 'react-router-dom';
@@ -10,7 +10,8 @@ const EditorBlock = styled.div`
   width: 100%;
   height: 100%;
   /* 페이지 위아래 여백 지정 */
-  background-color: ${(props) => props.theme.content};
+  // background-color: ${(props) => props.theme.content};
+  background: white;
   padding: 2rem;
   overflow-y: auto;
 `;
@@ -23,13 +24,13 @@ const TitleInput = styled.input`
   border-bottom: 5px solid ${(props) => props.theme.button}; // 수정
   width: 100%;
   height: 10rem;
-  background-color: ${(props) => props.theme.content};
+  // background-color: ${(props) => props.theme.content};
 `;
 
 // 수정
 const QuillWrapper = styled.div`
   /* 최소 크기 지정 및 padding 제거 */
-  background-color: ${(props) => props.theme.content};
+  // background-color: ${(props) => props.theme.content};
   border-top: 3px solid ${palette.gray[0]};
   border-bottom: 3px solid ${palette.gray[0]};
   padding-top: 2rem;
@@ -50,7 +51,7 @@ export default function Editor({ title, body, onChangeField }) {
 
   useEffect(() => {
     quillInstance.current = new Quill(quillElement.current, {
-      theme: 'snow',
+      theme: 'bubble',
       placeholder: '내용을 작성하세요...',
       modules: {
         // 더 많은 옵션

@@ -1,6 +1,6 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { writeState } from '../../State/postState';
+import { postState, writeState } from '../../State/postState';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { writePost, updatePost } from '../../lib/api/posts';
 import WriteForm from '../../components/write/WriteForm';
@@ -9,28 +9,34 @@ import WriteForm from '../../components/write/WriteForm';
 // header로 따라서 모달 구현하자
 
 export default function EditorContainer() {
+  const user = localStorage.getItem('account');
   const reset = useResetRecoilState(writeState);
-  const [write, setWrite] = useRecoilState(writeState);
-  const { title, body, tags, post, postError, originalPostId } = write;
+  const [write, setWrite] = useRecoilState(postState);
+  const { postContent, post, postError } = write;
+  const { id, title, body, emoji, tags, publishedDate } = postContent;
   const navigate = useNavigate();
 
-  const onChangeField = useCallback(
-    (payload) => {
-      setWrite((prev) => ({ ...prev, [payload.key]: payload.value }));
-    },
-    [setWrite],
-  );
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setWrite({
+      ...write,
+      [name]: value,
+    });
+  };
 
   // 포스트 등록
   const onPublish = () => {
-    if (originalPostId) {
-      updatePost({ title, body, tags, id: originalPostId });
+    if (id) {
+      updatePost({ id, title, body, emoji, tags, publishedDate });
       return;
     }
     writePost({
+      id,
       title,
       body,
+      emoji,
       tags,
+      publishedDate,
     });
   };
 
@@ -42,13 +48,12 @@ export default function EditorContainer() {
   // 성공 혹은 실패 시 할 작업
   useEffect(() => {
     if (post) {
-      const { _id, user } = post;
-      navigate(`/@${user.account}/${_id}`);
+      navigate(`/@${user}/${id}`);
     }
     if (postError) {
       console.log(postError);
     }
-  }, [navigate, post, postError]);
+  }, [navigate, post, postError, user, id]);
 
   // 언마운트될 때 초기화
   useEffect(() => {
@@ -59,12 +64,12 @@ export default function EditorContainer() {
 
   return (
     <WriteForm
-      onChangeField={onChangeField}
+      onChange={onChange}
       title={title}
       body={body}
       onPublish={onPublish}
       onCancel={onCancel}
-      isEdit={originalPostId}
+      isEdit={id}
     />
   );
 }

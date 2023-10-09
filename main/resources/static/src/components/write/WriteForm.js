@@ -2,9 +2,10 @@ import styled from 'styled-components';
 import Button from '../common/Button';
 // import { Link } from 'react-router-dom';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
-import { HiScissors, HiX, HiCheck } from 'react-icons/hi';
+import { HiX } from 'react-icons/hi';
 import Responsive from '../common/Responsive';
 import Editor from './Editor';
+import ModalContainer from './Modals/ModalContainer';
 
 const WriteBlock = styled(Responsive)`
   height: 100vh;
@@ -21,9 +22,9 @@ const WriteBlock = styled(Responsive)`
 `;
 
 export default function WriteForm({
+  onChange,
   title,
   body,
-  onChangeField,
   onCancel,
   onPublish,
   isEdit,
@@ -35,7 +36,7 @@ export default function WriteForm({
           <FiChevronLeft />
         </Button>
       </div>
-      <Editor title={title} body={body} onChangeField={onChangeField} />
+      <Editor title={title} body={body} onChange={onChange} />
       <div className="side-button">
         <Button onClick={onCancel} $circle="true">
           <HiX />
@@ -43,9 +44,7 @@ export default function WriteForm({
         <Button $circle="true">
           <FiChevronRight />
         </Button>
-        <Button onClick={onPublish} $circle="true">
-          {isEdit ? <HiScissors /> : <HiCheck />}
-        </Button>
+        <ModalContainer onClick={onPublish} isEdit={isEdit} />
       </div>
     </WriteBlock>
   );
