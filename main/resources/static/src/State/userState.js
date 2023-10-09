@@ -1,15 +1,16 @@
 import { atom, selector } from 'recoil';
-import { getTheme, getUserImage } from '../lib/api/user';
+import { getUser } from '../lib/api/user';
 
 export const userState = atom({
   key: 'userState',
   default: {
     account: 'account',
-    userImage: '',
+    userImage: '/images/User/Profile.png',
     userTheme: 'pinkTheme',
   },
 });
 
+// 이거 지금은 안 쓴다. 확인!
 export const userProfileState = selector({
   key: 'userProfileState',
   get: ({ get }) => {
@@ -60,7 +61,7 @@ export const userImageState = selector({
   key: 'userImageState',
   get: async ({ get }) => {
     try {
-      const response = await getUserImage(userState.account);
+      const response = await getUser(userState.account);
       return response;
     } catch (e) {
       return '';
