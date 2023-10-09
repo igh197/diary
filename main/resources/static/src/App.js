@@ -6,7 +6,6 @@ import WritePage from './pages/WritePage';
 import PostPage from './pages/PostPage';
 import SettingsPage from './pages/SettingsPage';
 // import './App.css';
-import LobbyPage from './pages/LobbyPage';
 import PostSamplePage from './pages/PostSamplePage';
 import { ThemeProvider } from 'styled-components';
 import { useRecoilValue } from 'recoil';
@@ -20,9 +19,8 @@ export default function App() {
     <ThemeProvider theme={themes[currentTheme]}>
       <Router>
         <Routes>
-          <Route element={<LobbyPage />} path="/" />
           <Route element={<RegisterPage />} path="/register" />
-          <Route element={<LoginPage />} path="/login" />
+          <Route element={<LoginPage />} path="/" />
           <Route element={<SettingsPage />} path="/settings" />
           <Route element={<PostListPage />} path="/@:account" exact />
           <Route element={<WritePage />} path="/write" />

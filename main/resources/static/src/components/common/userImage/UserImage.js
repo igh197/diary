@@ -1,33 +1,41 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import palette from '../../../lib/styles/palette';
-import Button from '../Button';
 import UserImageModal from './UserImageModal';
 import useModal from '../../hooks/useModal';
+import Button from '../Button';
 
-const UserImageButton = styled(Button)`
-  height: 7rem;
-  width: 7rem;
-  display: inline-Button; // 이거 왜 있어?
-  border-radius: 100%;
-  background: ${palette.gray[0]};
-
-  ${(props) =>
-    props.$shrink &&
-    css`
-      height: 2rem;
-      width: 2rem;
-      margin-right: 0.5rem;
-    `}
+const StyledButton = styled(Button)`
+  padding: 0;
+  margin-left: 0.7rem;
 `;
 
-// 이미지 올리기
-export default function UserImage({ userImage, shrink = false }) {
+const UserImageButton = styled.img`
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 100%;
+  background: ${palette.gray[0]};
+  border: 3px solid ${(props) => props.theme.text};
+`;
+
+export default function UserImage({ account, userImage, onClick }) {
   const { isOpen, open, close } = useModal();
 
   return (
     <>
-      <UserImageButton $circle="true" $shrink={shrink} onClick={open} />
-      {isOpen && <UserImageModal close={close} />}
+      <StyledButton>
+        <UserImageButton src={userImage} alt="Profile" onClick={open} />
+      </StyledButton>
+      <StyledButton>
+        <img src="/images/User/ArrowDown.svg" alt="이미지" onClick={open} />
+      </StyledButton>
+      {isOpen && (
+        <UserImageModal
+          account={account}
+          userImage={userImage}
+          close={close}
+          onClick={onClick}
+        />
+      )}
     </>
   );
 }

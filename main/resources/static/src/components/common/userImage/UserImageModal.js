@@ -1,14 +1,6 @@
 import styled from 'styled-components';
+import Button from '../Button';
 import palette from '../../../lib/styles/palette';
-
-export default function UserImageModal({ close }) {
-  return (
-    <Wrapper>
-      <Overlay onClick={close}></Overlay>
-      <Content></Content>
-    </Wrapper>
-  );
-}
 
 const Wrapper = styled.div``;
 const Overlay = styled.div`
@@ -18,23 +10,43 @@ const Overlay = styled.div`
   right: 0;
   bottom: 0;
   z-index: 999;
-  background-color: ${(props) => props.theme.background};
-  opacity: 0.7;
+  background: none;
 `;
 const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   position: fixed;
-  display: grid;
-  gap: 16px;
-  top: 50%;
-  left: 50%;
-  width: 400px;
-  height: 400px;
-  border-radius: 400px;
-  min-width: 200px;
-  max-width: 400px;
-  background-color: ${palette.gray[0]};
-  border: 15px solid ${(props) => props.theme.userBorder};
+  width: 100px;
+  height: 200px;
+  border-radius: 10px;
+  background-color: white;
   overflow: hidden;
-  transform: translate(-50%, -50%);
+  transform: translate(-100%, 20%);
   z-index: 999;
 `;
+
+const UserImageButton = styled.img`
+  height: 4rem;
+  width: 4rem;
+  border-radius: 100%;
+  background: ${palette.gray[0]};
+  border: 1px solid ${(props) => props.theme.text};
+`;
+
+export default function UserImageModal({ account, userImage, close, onClick }) {
+  return (
+    <Wrapper>
+      <Overlay onClick={close}></Overlay>
+      <Content>
+        <p>{account}</p>
+        <UserImageButton src={userImage} alt="Profile" />
+        <Button to="/settings">My Page</Button>
+        <Button to="/" onClick={onClick}>
+          Logout
+        </Button>
+      </Content>
+    </Wrapper>
+  );
+}
