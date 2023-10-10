@@ -37,8 +37,8 @@ public class UserService  implements UserDetailsService {  //spring security는 
             userRepository.save(User.builder()  //save는 JpaRepository가 내장한 함수, chain 기능 사용
                 .account(userRequest.getAccount()) //계정 입력
                            .auth("ROLE_USER") //대부분의 사용자는 ROLE_USER이기 때문
+                            .theme(userRequest.getTheme())
                            .createdAt(LocalDateTime.now())  //계정 생성 시간
-
                            .updatedAt(LocalDateTime.now()) //update 시간은 default로 지금
                            .name(userRequest.getName())  //사용자 이름
                            .email(userRequest.getEmail()) //사용자 이메일
@@ -67,6 +67,7 @@ public class UserService  implements UserDetailsService {  //spring security는 
         UserResponse userResponse = UserResponse.builder()
                 .account(user.getAccount())
                 .email(user.getEmail())
+                .theme(user.getTheme())
                 .build();
 
         return userResponse;
@@ -83,6 +84,7 @@ public class UserService  implements UserDetailsService {  //spring security는 
         User nUser = User.builder()
                 .account(userRequest.getAccount())
                 .password(passwordEncoder.encode(userRequest.getPassword())) //찾아서 내용 수정
+                .theme(userRequest.getTheme())
                 .name(userRequest.getName())
                 .email(userRequest.getEmail())
                 .build();
@@ -96,7 +98,11 @@ public class UserService  implements UserDetailsService {  //spring security는 
 
     public User login(UserRequest userRequest) {
         User user = userRepository.findUserByAccount(userRequest.getAccount()).orElseThrow();
-        return user;
-
+        if(user.getPassword().equals(passwordEncoder.encode(userRequest.getPassword()))) {
+            return user;
+        }
+        else{
+            return null;
+        }
     }
 }
