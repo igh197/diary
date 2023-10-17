@@ -1,18 +1,9 @@
 import qs from 'qs';
 import client from './client';
 
-export const writePost = ({
-  id,
-  category,
-  title,
-  body,
-  emoji,
-  tags,
-  publishedDate,
-}) =>
+export const writePost = ({ id, title, body, emoji, tags, publishedDate }) =>
   client.post('/api/diary/new', {
     id,
-    category,
     title,
     body,
     emoji,

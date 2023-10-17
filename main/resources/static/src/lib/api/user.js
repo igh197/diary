@@ -9,11 +9,16 @@ export const getUser = async (account) => {
   return { userImage, userTheme };
 };
 
-// 로그아웃 하기 전에
-export const postUser = async (account, imagePath, theme) => {
+// 프로필 사진 전송
+export const postUserImage = async (account, imagePath) => {
   const userImage = await client.post(`api/image/${account}.json`, {
     imagePath,
   });
+  return userImage;
+};
+
+// 테마 전송 (로그아웃 시)
+export const postUser = async (account, theme) => {
   const userTheme = await client.post(`api/user/${account}.json`, { theme });
-  return { userImage, userTheme };
+  return userTheme;
 };
