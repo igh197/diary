@@ -1,37 +1,32 @@
-import styled, { css } from 'styled-components';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import styled, { css } from 'styled-components';
 import palette from '../../lib/styles/palette';
 import Button from '../common/Button';
-import { useState } from 'react';
 
-/**
- * 회원가입 또는 로그인 폼을 보여줍니다.
- */
-
-const AuthFormBlock = styled.div`
-  h3 {
-    margin: 0;
-    color: ${palette.gray[0]};
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-  }
-`;
+const AuthFormBlock = styled.div``;
 
 const InputDiv = styled.div`
-  width: 502px;
-  height: 57px;
+  width: 31rem;
+  height: 3.6rem;
+  margin: 0 auto;
+  padding: 0 25px 0 35px;
   border-radius: 39px;
-  background: ${(props) => props.theme.inputBackground};
-  padding-left: 1rem;
-  display: flex;
-  justify-content: left;
-  align-items: center;
+  background: ${(props) => props.theme.content};
   z-index: 1;
-  opacity: 1;
-  padding-right: 1rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  img {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 
   & + & {
-    margin-top: 1rem;
+    margin-top: 20px;
   }
 
   &:hover {
@@ -39,71 +34,66 @@ const InputDiv = styled.div`
   }
 
   ${(props) =>
-    props.select &&
+    props.$select &&
     css`
-      border: 2px solid #79317a;
+      border: 2px solid ${(props) => props.theme.text};
     `}
-
-  .icon {
-    width: 2rem;
-    height: 2rem;
-    color: ${palette.gray[0]};
-    ${(props) =>
-      props.select &&
-      css`
-        color: black;
-      `}
-  }
 `;
 
 const StyledInput = styled.input`
-  font-size: 16px;
-  text-align: left;
-  color: #c1c1c1;
-  border: none;
-  background: none;
-
   width: 90%;
   height: 90%;
-  margin-left: 1rem;
+  border: none;
+  background: none;
   overflow: auto;
-
   outline: none;
 
+  font-size: 1rem;
+  text-align: left;
+  color: ${(props) => props.theme.subtext};
+
+  ::placeholder {
+    color: ${(props) => props.theme.placeholder};
+  }
+
   &:focus {
-    color: #0ca678;
+    color: ${(props) => props.theme.text};
   }
 `;
 
 const ButtonAuth = styled(Button)`
-  margin-top: 2.5rem;
-  font-size: 22px;
+  width: 31rem;
+  height: 3.6rem;
+  border-radius: 39px;
+  background: ${(props) => props.theme.text};
+
+  font-size: 1.3rem;
   font-weight: 700;
   text-align: center;
-  color: #fff;
-  width: 502px;
-  height: 57px;
-  border-radius: 39px;
-  background: #79317a;
+  color: ${(props) => props.theme.titleButton};
 
   &:hover {
     background: ${palette.gray[0]};
+    color: ${(props) => props.theme.titleButton};
   }
+
+  ${(props) =>
+    props.$error &&
+    css`
+      margin: 40px 0 0 0;
+    `}
 `;
 
-/**
- * 폼 하단에 로그인 혹은 회원가입 링크를 보여 줌
- */
 const Footer = styled.div`
+  margin: 35px 0 0 0;
+
   display: flex;
   justify-content: center;
-  postion: absolute;
-  left: 991px;
-  top: 740px;
-  font-size: 16px;
+
+  font-size: 1rem;
   text-align: left;
-  color: #c1c1c1;
-  margin-top: 2rem;
+  color: ${(props) => props.theme.placeholder};
+
   &:hover {
     color: ${palette.gray[0]};
   }
@@ -114,12 +104,13 @@ const textMap = {
   register: 'JOIN',
 };
 
-/* 에러 */
 const ErrorMessage = styled.div`
-  color: red;
-  text-align: center;
+  margin: 20px 0 20px 0;
+  z-index: 100;
+
   font-size: 0.875rem;
-  margin-top: 1rem;
+  text-align: center;
+  color: red; // 수정
 `;
 
 export default function AuthForm({ type, form, onChange, onSubmit, error }) {
@@ -129,8 +120,7 @@ export default function AuthForm({ type, form, onChange, onSubmit, error }) {
   return (
     <AuthFormBlock>
       <form onSubmit={onSubmit} action="../login" method="POST">
-        <InputDiv select={select === 'login' ? true : false}>
-          {/* <MdPersonOutline className="icon" /> */}
+        <InputDiv $select={select === 'login' ? true : false}>
           <StyledInput
             autoComplete="account"
             name="account"
@@ -139,11 +129,10 @@ export default function AuthForm({ type, form, onChange, onSubmit, error }) {
             value={form.account}
             onFocus={() => setSelect('login')}
           />
-          {select === 'login' ? <img src="/images/Login/Eye.png" alt="" /> : ''}
+          {select === 'login' ? <img src="/images/Login/Eye.svg" alt="" /> : ''}
         </InputDiv>
 
-        <InputDiv select={select === 'password' ? true : false}>
-          {/* <MdLockOutline className="icon" /> */}
+        <InputDiv $select={select === 'password' ? true : false}>
           <StyledInput
             autoComplete="new-password"
             name="password"
@@ -154,14 +143,13 @@ export default function AuthForm({ type, form, onChange, onSubmit, error }) {
             onFocus={() => setSelect('password')}
           />
           {select === 'password' ? (
-            <img src="/images/Login/Eye.png" alt="" />
+            <img src="/images/Login/Eye.svg" alt="" />
           ) : (
             ''
           )}
         </InputDiv>
         {type === 'register' && (
-          <InputDiv select={select === 'passwordConfirm' ? true : false}>
-            {/* <MdLockOpen className="icon" /> */}
+          <InputDiv $select={select === 'passwordConfirm' ? true : false}>
             <StyledInput
               autoComplete="new-password"
               name="passwordConfirm"
@@ -172,14 +160,14 @@ export default function AuthForm({ type, form, onChange, onSubmit, error }) {
               onFocus={() => setSelect('passwordConfirm')}
             />
             {select === 'passwordConfirm' ? (
-              <img src="/images/Login/Eye.png" alt="" />
+              <img src="/images/Login/Eye.svg" alt="" />
             ) : (
               ''
             )}
           </InputDiv>
         )}
         {error && <ErrorMessage>{error}</ErrorMessage>}
-        <ButtonAuth>{text}</ButtonAuth>
+        <ButtonAuth $error={error ? false : true}>{text}</ButtonAuth>
       </form>
 
       <Footer>
