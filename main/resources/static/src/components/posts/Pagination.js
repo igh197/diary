@@ -9,6 +9,7 @@ const PaginationBlock = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 3rem;
+  background: ${(props) => props.theme.background};
 `;
 
 const PageNumber = styled.div``;

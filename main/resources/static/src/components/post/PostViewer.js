@@ -3,7 +3,7 @@ import palette from '../../lib/styles/palette';
 import SubInfo from '../common/SubInfo';
 import Tags from '../common/Tags';
 import Responsive from '../common/Responsive';
-import UserImage from '../common/userImage/UserImage';
+import UserImage from '../common/userInfo/UserInfo';
 
 // 테마 담는 공간 일단은 div로 놓고 나중에 image로 바꾸자
 const PostViewerBlock = styled(Responsive)`

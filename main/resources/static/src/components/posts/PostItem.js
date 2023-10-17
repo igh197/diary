@@ -4,7 +4,8 @@ import palette from '../../lib/styles/palette';
 const PostItemBlock = styled.div`
   width: 100%;
   height: 6rem;
-  background-image: url('/images/Posts/ContentBlock.svg');
+  background: ${(props) => props.theme.listBlock};
+  backdrop-filter: blur(3px);
   background-size: cover;
   border-radius: 7px;
   margin-bottom: 1rem;
@@ -17,7 +18,7 @@ const PostContentBlock = styled.div`
   height: 100%;
 
   span {
-    color: white;
+    color: ${(props) => props.theme.subtext};
     font-size: 1rem;
     margin-right: 0.5rem;
     &:hover {
@@ -43,24 +44,24 @@ const PostContentBlock = styled.div`
 `;
 
 export default function PostItem({ post }) {
-  const { title, body, publishedDate } = post;
+  const { title, content, createAt } = post;
 
   return (
     <PostItemBlock>
       <PostContentBlock>
         <div className="title">
           <span>{title}</span>
-          {publishedDate}
+          {createAt}
         </div>
-        {body}
+        {content}
       </PostContentBlock>
 
       {/* <h2>
         <Link to={`/@${user.account}/${_id}`}>{title}</Link>
       </h2>
-      <SubInfo account={user.account} publishedDate={new Date(publishedDate)} />
+      <SubInfo account={user.account} createAt={new Date(createAt)} />
       <Tags tags={tags} />
-      <p>{body}</p> */}
+      <p>{content}</p> */}
     </PostItemBlock>
   );
 }
