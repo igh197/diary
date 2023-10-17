@@ -1,78 +1,113 @@
+import styled, { css } from 'styled-components';
+import Button from '../common/Button';
 import palette from '../../lib/styles/palette';
-import styled from 'styled-components';
 
 const ThemeBlock = styled.div`
   width: 100%;
-  padding: 2rem 1rem;
+  padding: 60px;
+
   display: flex;
   flex-direction: column;
-  align-items: center;
-
-  .radio {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-  }
-`;
-
-const ThemeRadioBox = styled.div`
-  input {
-    vertical-align: middle;
-    appearance: none;
-    background: white;
-    box-shadow: 0 0 0 1px ${palette.gray[0]};
-    border-radius: 50%;
-    width: 1rem;
-    height: 1rem;
-    margin-bottom: 2rem;
-
-    &:checked {
-      background: black;
-      border: 3.5px solid white;
-      box-shadow: 0 0 0 1px ${palette.gray[0]};
-    }
-  }
+  align-items: left;
 `;
 
 const ImageBlock = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
+
+  img {
+    width: 12rem;
+    height: 18rem;
+    margin: 12px 15px;
+    border-radius: 16px;
+    object-fit: cover;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:focus {
+      border: 4px solid blue;
+    }
+  }
+
+  .check {
+    width: 24px;
+    height: 24px;
+    margin: 0;
+
+    z-index: 2;
+
+    position: fixed;
+
+    ${(props) => {
+      if (props.theme === 'basicTheme') {
+        return css`
+          transform: translate(-500%, 5%);
+        `;
+      } else if (props.theme === 'greenTheme') {
+        return css`
+          transform: translate(-100%, 5%);
+        `;
+      } else if (props.theme === 'darkTheme') {
+        return css`
+          transform: translate(500%, 5%);
+        `;
+      }
+    }}
+  }
 `;
 
-const ImagePut = styled(ImageBlock)`
-  width: 10rem;
-  height: 15rem;
-  margin-left: 1.5rem;
-  margin-right: 1.5rem;
-  background: ${palette.gray[0]};
-  margin-bottom: 2rem;
+const Footer = styled.div`
+  width: 100%;
+  height: 5rem;
+  padding: 40px 0 0 0;
+
+  text-align: right;
 `;
 
-export default function Theme({ tempTheme, onChange, onSubmit }) {
-  const themesInput = ['pinkTheme', 'purpleTheme', 'darkTheme'];
+const Save = styled(Button)`
+  width: 9rem;
+  height: 3rem;
+  border-radius: 16px;
+  box-shadow: 0 3px 2px ${palette.gray[0]};
+  background: ${(props) => props.theme.text};
+
+  color: white;
+`;
+
+export default function Theme({ tempTheme, onClick, handleCheck }) {
+  const themesInput = ['basicTheme', 'greenTheme', 'darkTheme'];
 
   return (
     <ThemeBlock>
-      <form className="radio" onSubmit={onSubmit}>
-        {themesInput.map((theme, index) => (
-          <ThemeRadioBox key={index}>
-            <input
-              type="radio"
-              name="theme"
-              value={theme}
-              checked={tempTheme === theme}
-              onChange={onChange}
-            />
-          </ThemeRadioBox>
-        ))}
-      </form>
+      <span>테마 선택</span>
       <ImageBlock>
-        <ImagePut />
-        <ImagePut />
-        <ImagePut />
+        {themesInput.map((theme, index) => {
+          return (
+            <div key={theme}>
+              {/* {check === tempTheme ? (
+                <img
+                  src="/images/User/Check.svg"
+                  alt="check"
+                  className="check"
+                />
+              ) : null} */}
+              <img
+                name={theme}
+                src={`/images/Background/Login${index + 1}.png`}
+                alt="theme"
+                tabIndex="0"
+                onFocus={handleCheck}
+              />
+            </div>
+          );
+        })}
       </ImageBlock>
+      <Footer>
+        <Save onClick={onClick}>수정하기</Save>
+      </Footer>
     </ThemeBlock>
   );
 }
