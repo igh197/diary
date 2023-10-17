@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import AuthForm from '../../components/auth/AuthForm';
 import { loginState } from '../../State/authState';
-import { useRecoilState, useRecoilValue } from 'recoil';
 import { userState } from '../../State/userState';
 import { login, check } from '../../lib/api/auth';
+import { getUser } from '../../lib/api/user';
 
 export default function LoginForm() {
-  const [errorText, setErrorText] = useState('');
   const [userLogin, setUserLogin] = useRecoilState(loginState);
   const userInfo = useRecoilValue(userState);
   const { form, auth, authError } = userLogin;
+  const [errorText, setErrorText] = useState('');
   const navigate = useNavigate();
 
   const onChange = (e) => {
@@ -21,7 +22,7 @@ export default function LoginForm() {
     });
   };
 
-  // 폼 등록 이벤트 핸들러 - 백엔드 물어보고 수정
+  // 폼 등록
   const onSubmit = (e) => {
     setUserLogin(form);
     e.preventDefault();
@@ -30,9 +31,8 @@ export default function LoginForm() {
       return;
     }
     login({ account: form.account, password: form.password });
-    console.log('login 후에');
     check();
-    console.log('check후에');
+
     // 수정
     try {
       setUserLogin({
@@ -49,6 +49,7 @@ export default function LoginForm() {
     }
   };
 
+  // 에러 핸들링
   useEffect(() => {
     if (authError) {
       setErrorText('로그인 실패');
@@ -58,12 +59,8 @@ export default function LoginForm() {
     }
     if (auth) {
       console.log('로그인 성공');
-    }
-  }, [auth, authError]);
-
-  useEffect(() => {
-    if (auth) {
-      navigate('/');
+      getUser(form.account);
+      navigate('/postsample');
       try {
         localStorage.setItem('account', JSON.stringify(userInfo.account));
         localStorage.setItem('user-image', JSON.stringify(userInfo.userImage));
@@ -72,7 +69,7 @@ export default function LoginForm() {
         console.log('localStorage is not working');
       }
     }
-  }, [navigate, auth, userInfo]);
+  }, [auth, authError, form.account, navigate, userInfo]);
 
   return (
     <AuthForm
