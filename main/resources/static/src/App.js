@@ -11,6 +11,8 @@ import { ThemeProvider } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { themeState } from './State/userState';
 import { themes } from './lib/styles/theme';
+import PasswordContainer from './containers/settings/PasswordContainer';
+import ThemeContainer from './containers/settings/ThemeContainer';
 
 export default function App() {
   const currentTheme = useRecoilValue(themeState);
@@ -21,10 +23,13 @@ export default function App() {
         <Routes>
           <Route element={<RegisterPage />} path="/register" />
           <Route element={<LoginPage />} path="/" />
-          <Route element={<SettingsPage />} path="/settings" />
-          <Route element={<PostListPage />} path="/@:account" exact />
+          <Route element={<SettingsPage />} path="/user">
+            <Route element={<PasswordContainer />} path="/user/" />
+            <Route element={<ThemeContainer />} path="/user/theme" />
+          </Route>
+          {/* <Route element={<PostListPage />} path="/@:account" exact /> */}
           <Route element={<WritePage />} path="/write" />
-          <Route element={<PostPage />} path="/@:account/:postId" />
+          {/* <Route element={<PostPage />} path="/@:account/:postId" /> */}
           {/* 임시 */}
           <Route element={<PostPage />} path="/account/:postId" />
           <Route element={<PostSamplePage />} path="/postsample" />

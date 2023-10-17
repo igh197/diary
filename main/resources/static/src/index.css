@@ -10,6 +10,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box; /*엘리먼트의 box-sizing 값을 border-box로 설정*/
   min-height: 100%;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-use-select: none;
+  user-select: none;
 }
 
 #root {
