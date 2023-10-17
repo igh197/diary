@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 
 const ResponsiveBlock = styled.div`
+  position: relative;
+  top: 4.5rem;
   background: ${(props) => props.theme.background};
   width: 100vw;
-  margin: 0 auto; /* 중앙 정렬 -> 얘 때문ㅇ에 자꾸 벗어나... */
-  font-family: ${(props) => props.theme.fontFamily}};
+  margin: 0;
 
   /* 브라우저 크기에 따라 가로 크기 변경 */
   @media (max-width: 1024px) {
@@ -13,8 +14,6 @@ const ResponsiveBlock = styled.div`
   @media (max-width: 768px) {
     width: 100%;
   }
-
-
 `;
 
 export default function Responsive({ children, ...rest }) {
