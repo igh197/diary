@@ -56,3 +56,24 @@ export const registerState = selector({
     }));
   },
 });
+
+export const passwordState = selector({
+  key: 'passwordState',
+  get: ({ get }) => {
+    const auth = get(authState);
+    return {
+      form: {
+        password: auth.register.password,
+        passwordConfirm: auth.register.passwordConfirm,
+      },
+      auth: auth.auth,
+      authError: auth.authError,
+    };
+  },
+  set: ({ set }, newValue) => {
+    set(authState, (oldValue) => ({
+      ...oldValue,
+      register: newValue,
+    }));
+  },
+});

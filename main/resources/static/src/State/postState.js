@@ -1,33 +1,20 @@
 import { atom, selector } from 'recoil';
-import { userState } from './userState';
 
 export const postState = atom({
   key: 'postState',
   default: {
-    postContent: {
+    postInfo: {
       id: 0,
       title: '',
-      body: '',
+      content: '',
       emoji: '',
       tags: [],
-      publishedDate: null,
+      createdAt: null,
+      updatedAt: null,
+      deletedAt: null,
     },
     post: null,
     postError: null,
-  },
-});
-
-export const postListState = selector({
-  key: 'postListState',
-  get: ({ get }) => {
-    const userName = get(userState);
-    const post = get(postState);
-    return {
-      userName: userName.account,
-      postContent: post.postContent,
-      post: post.post,
-      postError: post.postError,
-    };
   },
 });
 
@@ -35,7 +22,7 @@ export const writeState = selector({
   key: 'writeState',
   get: ({ get }) => {
     const post = get(postState);
-    return post.postContent;
+    return post.postInfo;
   },
   set: ({ set, get }, newValue) => {
     const post = get(postState);

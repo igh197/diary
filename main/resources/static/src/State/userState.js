@@ -1,34 +1,33 @@
 import { atom, selector } from 'recoil';
 import { getUser } from '../lib/api/user';
 
+// RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false;
+
 export const userState = atom({
   key: 'userState',
   default: {
     account: 'account',
-    userImage: '/images/User/Profile.png',
-    userTheme: 'pinkTheme',
+    userImage: '/images/User/Profile.svg',
+    userTheme: 'basicTheme',
   },
 });
 
-// 이거 지금은 안 쓴다. 확인!
 export const userProfileState = selector({
   key: 'userProfileState',
   get: ({ get }) => {
-    const localStorageAccount = localStorage.getItem('account');
-    const localStorageImage = localStorage.getItem('user-image');
+    const user = get(userState);
+    localStorage.setItem('account', user.account);
+    localStorage.setItem('user-image', user.userImage);
     return {
-      account: localStorageAccount
-        ? JSON.parse(localStorageAccount)
-        : 'account',
-      userImage: localStorageImage ? JSON.parse(localStorageImage) : '',
+      account: user.account,
+      userImage: user.userImage,
     };
     // 나중에는 api로 끌고 오기 callback!!
   },
   set: ({ set }, newValue) => {
-    localStorage.setItem('account', JSON.stringify(newValue));
     set(userState, (oldValue) => ({
       ...oldValue,
-      account: newValue,
+      userImage: newValue,
     }));
   },
 });
@@ -37,7 +36,11 @@ export const themeState = selector({
   key: 'themeState',
   get: async ({ get }) => {
     const localStorageTheme = localStorage.getItem('theme');
-    return localStorageTheme ? JSON.parse(localStorageTheme) : 'pinkTheme';
+    // 처음 실행했을 때 버그 잡기 setItem!! 수정
+    if (['basicTheme', 'greenTheme', 'darkTheme'].includes(localStorageTheme)) {
+      localStorage.setItem('theme', JSON.stringify('basicTheme'));
+    }
+    return localStorageTheme ? JSON.parse(localStorageTheme) : 'basicTheme';
     // recoil callback 함수 활용해서 사용하자. (맨처음에만 실행되는 함수)
     // try {
     //   const response = await getTheme(userState.account);
@@ -57,6 +60,7 @@ export const themeState = selector({
   },
 });
 
+// 아직 사용하지 않음 수정
 export const userImageState = selector({
   key: 'userImageState',
   get: async ({ get }) => {
