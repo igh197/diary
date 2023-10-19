@@ -1,41 +1,30 @@
 // import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-// import { readPost, unloadPost } from '../../modules/post';
+import { readPost } from '../../lib/api/posts';
 import PostViewer from '../../components/post/PostViewer';
 import PostActionButtons from '../../components/post/PostActionButtons';
 // import { removePost } from '../../lib/api/posts';
-// import { useRecoilState, useRecoilValue } from 'recoil';
-// import { postState } from '../../State/postState';
+import { useRecoilValue } from 'recoil';
+import { userAccount } from '../../State/userState';
 
-//http://localhost:3000/account/1
-const postIdData = {
-  1: {
-    post: {
-      category: '카테고리1',
-      title: '제목',
-      body: '내용',
-      account: 'account',
-      publishedDate: '2021-08-18T11:22:01.000Z',
-      tags: ['태그1', '태그2', '태그3'],
-      emotions: '기쁨',
-    },
+//http://localhost:3000/account/0
 
-    error: null,
-  },
-};
-
-// 여기에 이미지도 추가해야해 (사용자 프로필 사진)
-export default function PostViewerContainer({ match }) {
-  // Sample
+export default function PostViewerContainer() {
   const { postId } = useParams();
-  const posting = postIdData[postId];
+  const account = useRecoilValue(userAccount);
+  // reset도 할 것 수정
+  const navigate = useNavigate();
 
   // 처음 마운트될 때 포스트 읽기 API 요청
-  // 다시 보자!!
-  // const { postId } = match.params;/
-  const navigate = useNavigate();
-  // const [postInfo, setPostInfo] = useRecoilState(postState);
-  // const { post, error } = postInfo;
+
+  const readPost = async () => {
+    try {
+      const response = await readPost(postId);
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   // useEffect(() => {
   //   readPost(postId);
@@ -66,8 +55,7 @@ export default function PostViewerContainer({ match }) {
     <PostViewer
       // post={post}
       // error={error}
-      post={posting.post}
-      error={posting.error}
+      post={readPost}
       // actionButtons={ownPost && <PostActionButtons onEdit={onEdit} />}
       actionButtons={<PostActionButtons onEdit={onEdit} />}
       onRemove={onRemove}

@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
-import SubInfo from '../common/SubInfo';
-import Tags from '../common/Tags';
 import Responsive from '../common/Responsive';
-import UserImage from '../common/userInfo/UserInfo';
 
 // 테마 담는 공간 일단은 div로 놓고 나중에 image로 바꾸자
 const PostViewerBlock = styled(Responsive)`
@@ -49,46 +46,38 @@ const PostContent = styled.div`
   font-size: 1.3125rem;
 `;
 
-export default function PostViewer({
-  userImage,
-  post,
-  error,
-  loading,
-  actionButtons,
-}) {
-  // 에러 발생 시
-  if (error) {
-    if (error.response && error.response.status === 404) {
-      return <PostViewerBlock>존재하지 않는 포스트입니다.</PostViewerBlock>;
-    }
-    return <PostViewerBlock>오류 발생!</PostViewerBlock>;
-  }
+export default function PostViewer({ post, actionButtons, onRemove }) {
+  //error
+  // // 에러 발생 시
+  // if (error) {
+  //   if (error.response && error.response.status === 404) {
+  //     return <PostViewerBlock>존재하지 않는 포스트입니다.</PostViewerBlock>;
+  //   }
+  //   return <PostViewerBlock>오류 발생!</PostViewerBlock>;
+  // }
 
-  // 로딩 중이거나 아직 포스트 데이터가 없을 때
-  if (loading || !post) {
-    return null;
-  }
+  // // 로딩 중이거나 아직 포스트 데이터가 없을 때
+  // if (loading || !post) {
+  //   return null;
+  // }
 
-  const { category, title, body, account, publishedDate, tags, emotions } =
+  const { id, title, content, emoji, tags, createdAt, updatedAt, deletedAt } =
     post;
   return (
     <PostViewerBlock>
+      {console.log(post)}
       <Contents>
         <PostHead>
           <div className="info">
-            <UserImage value={userImage} shrink={true} />
-            {new Date(publishedDate).toLocaleDateString()}
+            <div>{createdAt}</div>
+            <div>
+              님의 마음구슬을 <span>{emoji}</span>구슬이에요.
+            </div>
           </div>
-          {category} : <span>{title}</span>
-          {/* <SubInfo account={account}>
-            <span>
-              <b>{account}</b>
-            </span>
-          </SubInfo> */}
-          <Tags tags={tags} />
+          <span>{title}</span>
         </PostHead>
         {actionButtons}
-        <PostContent dangerouslySetInnerHTML={{ __html: body }} />
+        <PostContent dangerouslySetInnerHTML={{ __html: content }} />
       </Contents>
     </PostViewerBlock>
   );

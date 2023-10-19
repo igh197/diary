@@ -14,6 +14,8 @@ const Wrapper = styled.div`
   background: ${(props) => props.theme.background};
 
   position: fixed;
+  top: 0;
+  left: 0;
   z-index: 100;
   transition: all 0.2s ease-in-out;
 

@@ -14,8 +14,7 @@ export default function EditorContainer() {
   const reset = useResetRecoilState(writeState);
   const [write, setWrite] = useRecoilState(postState);
   const { postInfo, post, postError } = write;
-  const { id, title, content, emoji, tags, createdAt, updatedAt, deletedAt } =
-    postInfo;
+  const { id, title, content, emoji, tags, createdAt, updatedAt } = postInfo;
   const navigate = useNavigate();
 
   const onChangeField = (e) => {
@@ -23,6 +22,7 @@ export default function EditorContainer() {
       ...write,
       [e.key]: e.value,
     });
+    console.log(write);
   };
 
   // 포스트 등록
@@ -30,15 +30,35 @@ export default function EditorContainer() {
     if (createdAt) {
       updatePost({ id, title, content, emoji, tags, updatedAt });
       return;
+    } else {
+      setWrite({
+        ...write,
+        createdAt: new Date(),
+      });
+      writePost({
+        id,
+        title,
+        content,
+        emoji,
+        tags,
+        createdAt,
+      });
     }
-    writePost({
-      id,
-      title,
-      content,
-      emoji,
-      tags,
-      createdAt,
-    });
+
+    try {
+      setWrite({
+        ...write,
+        post: true,
+        postError: false,
+      });
+      console.log(postInfo);
+    } catch (e) {
+      setWrite({
+        ...write,
+        post: false,
+        postError: true,
+      });
+    }
   };
 
   // 취소
@@ -47,14 +67,14 @@ export default function EditorContainer() {
   };
 
   // 성공 혹은 실패 시 할 작업
-  // useEffect(() => {
-  //   if (post) {
-  //     navigate(`/@${user.account}/${id}`);
-  //   }
-  //   if (postError) {
-  //     console.log(postError);
-  //   }
-  // }, [navigate, post, postError, user, id]);
+  useEffect(() => {
+    if (post) {
+      navigate(`/${user.account}/${postInfo.id}`); // 나중에 ${user.account} 앞에 @추가
+    }
+    if (postError) {
+      console.log(postError);
+    }
+  }, [navigate, post, postError, postInfo.id, user.account]);
 
   // 언마운트될 때 초기화
   useEffect(() => {
@@ -66,11 +86,8 @@ export default function EditorContainer() {
   return (
     <WriteForm
       onChangeField={onChangeField}
-      title={title}
-      content={content}
       onPublish={onPublish}
       onCancel={onCancel}
-      isEdit={id}
     />
   );
 }
