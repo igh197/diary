@@ -17,7 +17,7 @@ export default function PostViewerContainer() {
 
   // 처음 마운트될 때 포스트 읽기 API 요청
 
-  const readPost = async () => {
+  const viewPost = async () => {
     try {
       const response = await readPost(postId);
       return response;
@@ -55,7 +55,7 @@ export default function PostViewerContainer() {
     <PostViewer
       // post={post}
       // error={error}
-      post={readPost}
+      post={viewPost}
       // actionButtons={ownPost && <PostActionButtons onEdit={onEdit} />}
       actionButtons={<PostActionButtons onEdit={onEdit} />}
       onRemove={onRemove}
