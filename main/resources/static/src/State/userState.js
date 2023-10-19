@@ -12,6 +12,14 @@ export const userState = atom({
   },
 });
 
+export const userAccount = selector({
+  key: 'userAccount',
+  get: ({ get }) => {
+    const user = get(userState);
+    return user.account;
+  },
+});
+
 export const userProfileState = selector({
   key: 'userProfileState',
   get: ({ get }) => {

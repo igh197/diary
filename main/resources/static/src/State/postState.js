@@ -29,3 +29,11 @@ export const writeState = selector({
     set(postState, { ...post, post: newValue });
   },
 });
+
+export const readState = selector({
+  key: 'readState',
+  get: ({ get }) => {
+    const post = get(postState);
+    return post.postInfo;
+  },
+});

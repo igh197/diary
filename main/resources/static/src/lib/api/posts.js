@@ -1,46 +1,39 @@
 import qs from 'qs';
 import client from './client';
 
-export const writePost = ({ id, title, body, emoji, tags, publishedDate }) =>
+export const writePost = ({ id, title, content, emoji, tags, createdAt }) =>
   client.post('/api/diary/new', {
     id,
     title,
-    body,
+    content,
     emoji,
     tags,
-    publishedDate,
+    createdAt,
   });
 
 export const readPost = (id) => client.get(`/api/diary/${id}`);
 
 // 조금만 더 알아보자.
-export const listPosts = ({ page, account, emoji, tags, publishedDate }) => {
+export const listPosts = ({ page, account, emoji, tags, createdAt }) => {
   const queryString = qs.stringify({
     page,
     account,
     emoji,
     tags,
-    publishedDate,
+    createdAt,
   });
   return client.get(`/api/diarys?${queryString}`);
 };
 
-export const updatePost = ({
-  id,
-  category,
-  title,
-  body,
-  emoji,
-  tags,
-  publishedDate,
-}) =>
+export const updatePost = ({ id, title, body, emoji, tags, createdAt }) =>
   client.put(`/api/diary/${id}`, {
-    category,
     title,
     body,
     emoji,
     tags,
-    publishedDate,
+    createdAt,
   });
 
 export const removePost = (id) => client.delete(`/api/diary/${id}`);
+
+// unloadPost가 왜 있었지?
