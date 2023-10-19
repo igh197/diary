@@ -1,12 +1,16 @@
 export const themes = {
   basicTheme: {
     src: 'images/Background/Login1.png',
+    title: 'images/Logo/basicTheme.svg',
+    header: 'images/Logo/basicTheme.svg',
     text: '#79317A',
     titleBackground: '#FCF4FF',
     titleButton: '#FFFFFF',
     background: '#FCF4FF',
     listBlock: 'rgba(0, 0, 0, 0.5)',
     content: '#FFFFFF',
+    writeContent: '#FFFFFF',
+    writeToTop: 'images/Write/ToTop.svg',
     placeholder: '#c1c1c1',
     subtext: '#404040',
     settingContent: '#FFFFFF',
@@ -16,12 +20,16 @@ export const themes = {
 
   greenTheme: {
     src: 'images/Background/Login2.png',
+    title: 'images/Logo/greenTheme.svg',
+    header: 'images/Logo/greenTheme1.svg',
     text: '#5B64CB',
     titleBackground: '#FFFFFF',
     titleButton: '#FFFFFF',
     background: '#E8EFF9',
     listBlock: 'rgba(255, 255, 255, 0.5)',
     content: '#F6F6F6', // #F6F6F6
+    writeContent: '#FFFFFF',
+    writeToTop: 'images/Write/ToTop.svg',
     placeholder: '#C1C1C1',
     subtext: '#2E336C',
     settingContent: '#FFFFFF',
@@ -31,12 +39,16 @@ export const themes = {
 
   darkTheme: {
     src: 'images/Background/Login3.png',
+    title: 'images/Logo/darkTheme.svg',
+    header: 'images/Logo/darkTheme.svg',
     text: '#F2D54B',
     titleBackground: '#212224',
     titleButton: '#343434',
     background: '#212224',
     listBlock: 'rgba(255, 255, 255, 0.5)',
     content: '#343434',
+    writeContent: '#343434',
+    writeToTop: 'images/Write/ToTopDark.svg',
     placeholder: '#ffffff',
     subtext: '#E7E7E7',
     settingContent: '#343434',

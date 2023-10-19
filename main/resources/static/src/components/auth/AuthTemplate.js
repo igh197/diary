@@ -35,22 +35,24 @@ const InnerBox = styled.div`
 
   .logo-area {
     margin-bottom: 50px;
-  }
 
-  img {
-    width: 17rem;
-    height: 7rem;
+    div {
+      width: 17rem;
+      height: 7rem;
+      background-image: url(${(props) => props.theme.title});
+      background-size: cover;
+    }
   }
 `;
 
 export default function AuthTemplate({ children }) {
   return (
     <AuthTemplateBlock>
-      <ImageBlock src="images/Background/Login2.png" alt="images" />
+      <ImageBlock />
       <InnerBox>
         <div className="logo-area">
           <Link to="/">
-            <img src="images/Logo/Logo1.svg" alt="logo" />
+            <div />
           </Link>
         </div>
         {children}

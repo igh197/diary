@@ -49,14 +49,6 @@ const ProfileBlock = styled.div`
       font-size: 1.3rem;
     }
   }
-
-  &.profile {
-    width: 746px;
-
-    span {
-      font-size: 1.5rem;
-    }
-  }
 `;
 
 export default function UserTemplate({ children }) {
@@ -65,7 +57,7 @@ export default function UserTemplate({ children }) {
       <Header />
       <SettingsPageBlock>
         <ProfileBlock className="category">
-          <span>정보 수정</span>
+          <span>마이페이지</span>
           <SettingButton to="/user">내 정보 수정</SettingButton>
           <SettingButton to="/user/theme">테마 설정</SettingButton>
         </ProfileBlock>

@@ -6,12 +6,13 @@ const Wrapper = styled.div`
   margin: 0 10px;
 
   .button-wrapper {
+    margin: 0 0 2rem 0;
+    padding: 0 0.5rem 0 1rem;
+
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin-bottom: 2rem;
-    padding-left: 1rem;
-    padding-right: 0.5rem;
+
     font-size: 1rem;
   }
 `;
@@ -29,8 +30,9 @@ const PostListBlock = styled.div`
   background-size: cover;
   background-position: bottom;
   border-radius: 13px;
-  color: white;
   padding: 1rem 1.5rem;
+
+  color: white;
 
   p {
     font-size: 1.2rem;

@@ -45,6 +45,13 @@ const HeaderBlock = styled.div`
 const LogoButton = styled(Button)`
   position: absolute;
   left: 3rem;
+
+  div {
+    width: 105.16px;
+    height: 44px;
+    background-image: url(${(props) => props.theme.header});
+    background-size: cover;
+  }
 `;
 
 export default function Header() {
@@ -85,12 +92,7 @@ export default function Header() {
     <Wrapper $scroll={scroll}>
       <HeaderBlock>
         <LogoButton to="/">
-          <img
-            src="/images/Logo/Logo1.svg"
-            alt="logo"
-            width={105.16}
-            height={39}
-          />
+          <div />
         </LogoButton>
         <UserInfo
           account={account}

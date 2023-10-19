@@ -5,7 +5,7 @@ const ToTopBlock = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 100%;
-  background-image: url('images/Write/ToTop.svg');
+  background-image: url(${(props) => props.theme.writeToTop});
   background-size: cover;
 
   position: fixed;
