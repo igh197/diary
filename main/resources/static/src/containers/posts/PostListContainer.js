@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
+import { useRecoilState, useRecoilValue } from 'recoil';
 // import { Link } from 'react-router-dom';
 import Responsive from '../../components/common/Responsive';
 import PostsAlign from '../../components/posts/PostsAlign';
 import MonthlyCalendar from '../../components/posts/MonthlyCalendar';
 import { postState } from '../../State/postState';
 import { userState } from '../../State/userState';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { listPosts } from '../../lib/api/posts';
 
 const PostListBlock = styled(Responsive)`
   width: 100%;
@@ -71,21 +72,36 @@ const postsExample = [
 ];
 
 export default function PostListContainer() {
-  // const account = useRecoilValue(userState).account;
-  // const [posts, setPosts] = useRecoilState(postState).posts;
-  // const [error, setError] = useRecoilState(postState).error;
+  const account = useRecoilValue(userState).account;
+  const [posts, setPosts] = useRecoilState(postState).postInfo;
+  const [error, setError] = useRecoilState(postState).error;
   // const [loading, setLoading] = useRecoilState(postState).loading;
 
   // 포스트 목록 불러오기
+  useEffect(() => {
+    const getPosts = async () => {
+      try {
+        // 로딩 시작
+        // setLoading(true);
+        // 포스트 목록 불러오기
+        const response = await listPosts(account);
+        setPosts(response.data);
+      } catch (e) {
+        setError(e);
+      }
+      // setLoading(false);
+    };
+    getPosts();
+  }, [account, setPosts, setError]);
 
   // 에러 발생 시
-  // if (error) {
-  //   return <PostListBlock>에러가 발생했습니다.</PostListBlock>;
-  // }
+  if (error) {
+    return <PostListBlock>에러가 발생했습니다.</PostListBlock>;
+  }
   return (
     <PostListBlock>
-      <MonthlyCalendar posts={postsExample} />
-      <PostsAlign posts={postsExample} />
+      <MonthlyCalendar posts={posts} />
+      <PostsAlign posts={posts} />
     </PostListBlock>
   );
 }
