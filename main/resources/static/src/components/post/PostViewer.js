@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 import Responsive from '../common/Responsive';
+import ToTop from '../write/ToTop';
 
 // 테마 담는 공간 일단은 div로 놓고 나중에 image로 바꾸자
 const PostViewerBlock = styled(Responsive)`
@@ -16,7 +17,6 @@ const Contents = styled.div`
   z-index: 10;
   width: 66%;
   height: 100vh;
-  overflow-y: auto;
   padding: 1rem 3rem;
   background-color: ${(props) => props.theme.content};
   color: ${(props) => props.theme.text3};
@@ -65,20 +65,23 @@ export default function PostViewer({ post, actionButtons, onRemove }) {
     post;
   return (
     <PostViewerBlock>
-      {console.log(post)}
       <Contents>
         <PostHead>
-          <div className="info">
-            <div>{createdAt}</div>
-            <div>
-              님의 마음구슬을 <span>{emoji}</span>구슬이에요.
+          <div>
+            <div className="info">
+              <div>{createdAt}</div>
+              <div>
+                님의 마음구슬을 <span>{emoji}</span>구슬이에요.
+              </div>
             </div>
+            <div className="Updates">{updatedAt}</div>
           </div>
           <span>{title}</span>
         </PostHead>
         {actionButtons}
         <PostContent dangerouslySetInnerHTML={{ __html: content }} />
       </Contents>
+      <ToTop />
     </PostViewerBlock>
   );
 }
