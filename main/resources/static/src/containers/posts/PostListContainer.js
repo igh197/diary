@@ -5,9 +5,9 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import Responsive from '../../components/common/Responsive';
 import PostsAlign from '../../components/posts/PostsAlign';
 import MonthlyCalendar from '../../components/posts/MonthlyCalendar';
-import { postState } from '../../State/postState';
+import { postListState } from '../../State/postState';
 import { userState } from '../../State/userState';
-import { listPosts } from '../../lib/api/posts';
+// import { listPosts } from '../../lib/api/posts';
 
 const PostListBlock = styled(Responsive)`
   width: 100%;
@@ -73,8 +73,8 @@ const postsExample = [
 
 export default function PostListContainer() {
   const account = useRecoilValue(userState).account;
-  const [posts, setPosts] = useRecoilState(postState).postInfo;
-  const [error, setError] = useRecoilState(postState).error;
+  const [postList, setPostList] = useRecoilState(postListState);
+  const { postsInfo, posts, postsError } = postList;
   // const [loading, setLoading] = useRecoilState(postState).loading;
 
   // 포스트 목록 불러오기
@@ -84,24 +84,25 @@ export default function PostListContainer() {
         // 로딩 시작
         // setLoading(true);
         // 포스트 목록 불러오기
-        const response = await listPosts(account);
-        setPosts(response.data);
-      } catch (e) {
-        setError(e);
-      }
+        // const response = await listPosts(account);
+        // setPostList({
+        //   ...posts,
+        //   postInfo: response.data,
+        // });
+      } catch (e) {}
       // setLoading(false);
     };
     getPosts();
-  }, [account, setPosts, setError]);
+  }, [account, posts, setPostList]);
 
   // 에러 발생 시
-  if (error) {
+  if (postsError) {
     return <PostListBlock>에러가 발생했습니다.</PostListBlock>;
   }
   return (
     <PostListBlock>
-      <MonthlyCalendar posts={posts} />
-      <PostsAlign posts={posts} />
+      <MonthlyCalendar posts={postsExample} />
+      <PostsAlign posts={postsExample} />
     </PostListBlock>
   );
 }

@@ -1,5 +1,14 @@
 import { atom, selector } from 'recoil';
 
+export const postListState = atom({
+  key: 'postListState',
+  default: {
+    postsInfo: [],
+    posts: null,
+    postsError: null,
+  },
+});
+
 export const postState = atom({
   key: 'postState',
   default: {

@@ -27,7 +27,7 @@ export default function App() {
             <Route element={<PasswordContainer />} path="/user/" />
             <Route element={<ThemeContainer />} path="/user/theme" />
           </Route>
-          {/* <Route element={<PostListPage />} path="/@:account" exact /> */}
+          <Route element={<PostListPage />} path="/@:account" exact />
           <Route element={<WritePage />} path="/write" />
           {/* <Route element={<PostPage />} path="/@:account/:postId" /> */}
           {/* 임시 */}

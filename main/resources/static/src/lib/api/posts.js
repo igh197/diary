@@ -13,25 +13,22 @@ export const writePost = ({ id, title, content, emoji, tags, createdAt }) =>
 
 export const readPost = (id) => client.get(`/api/diary/${id}`);
 
+// 리스트를 어떻게 작성하셨는지 모르겠다. 질문
+// export const listPosts = ({account}) => {
+
+// }
+
 // 조금만 더 알아보자.
-export const listPosts = ({
-  page,
-  account,
-  emoji,
-  tags,
-  createdAt,
-  updatedAt,
-}) => {
-  const queryString = qs.stringify({
-    page,
-    account,
-    emoji,
-    tags,
-    createdAt,
-    updatedAt,
-  });
-  return client.get(`/api/diarys?${queryString}`);
-};
+// export const listPosts = ({ account, emoji, tags, createdAt, updatedAt }) => {
+//   const queryString = qs.stringify({
+//     account,
+//     emoji,
+//     tags,
+//     createdAt,
+//     updatedAt,
+//   });
+//   return client.get(`/api/diarys?${queryString}`);
+// };
 
 export const updatePost = ({
   id,
