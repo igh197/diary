@@ -2,7 +2,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { readPost } from '../../lib/api/posts';
 import PostViewer from '../../components/post/PostViewer';
-import PostActionButtons from '../../components/post/PostActionButtons';
 // import { removePost } from '../../lib/api/posts';
 import { useRecoilValue } from 'recoil';
 import { userAccount } from '../../State/userState';
@@ -43,9 +42,14 @@ export default function PostViewerContainer() {
   // const ownPost = (account && account._id) === (post && post._id);
 
   const onRemove = async () => {
-    try {
+    if (window.confirm('정말로 삭제하시겠습니까?')) {
       // await removePost(postId);
-      navigate('/'); // 홈으로 이동
+    } else {
+      return;
+    }
+    try {
+      navigate('/postsample'); // 홈으로 이동
+      // navigate(`/@${account.account}`); // 메인화면으로 이동
     } catch (e) {
       console.log(e);
     }
@@ -56,8 +60,8 @@ export default function PostViewerContainer() {
       // post={post}
       // error={error}
       post={viewPost}
+      onEdit={onEdit}
       // actionButtons={ownPost && <PostActionButtons onEdit={onEdit} />}
-      actionButtons={<PostActionButtons onEdit={onEdit} />}
       onRemove={onRemove}
     />
   );

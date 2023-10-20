@@ -1,52 +1,79 @@
 import styled from 'styled-components';
-import palette from '../../lib/styles/palette';
 import Responsive from '../common/Responsive';
-import ToTop from '../write/ToTop';
+import ToTop from '../common/ToTop';
+import Updates from './modal/Updates';
+import palette from '../../lib/styles/palette';
 
-// 테마 담는 공간 일단은 div로 놓고 나중에 image로 바꾸자
 const PostViewerBlock = styled(Responsive)`
+  width: 100%;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 1;
-  width: 100%;
-`;
-
-const Contents = styled.div`
-  z-index: 10;
-  width: 66%;
-  height: 100vh;
-  padding: 1rem 3rem;
-  background-color: ${(props) => props.theme.content};
-  color: ${(props) => props.theme.text3};
 `;
 
 const PostHead = styled.div`
-  border-bottom: 1px solid ${palette.gray[0]};
-  padding-bottom: 2rem;
-  margin-bottom: 2rem;
+  width: 100%;
+  height: 120px;
+  padding: 30px 65px 20px 65px;
+  background: ${(props) => props.theme.background};
+  box-shadow: 0px 23px 6px 0 rgba(0, 0, 0, 0),
+    0px 14px 6px 0 rgba(0, 0, 0, 0.01), 0px 8px 5px 0 rgba(0, 0, 0, 0.05),
+    0px 4px 4px 0 rgba(0, 0, 0, 0.09), 0px 1px 2px 0 rgba(0, 0, 0, 0.1);
+  z-index: 1;
 
-  span {
-    font-size: 3rem;
-    line-height: 1.5;
-    margin: 0 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  .category {
+    padding: 0 0 5px 0;
+
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: ${(props) => props.theme.text};
   }
 
-  .info {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content: flex-start;
-    margin-bottom: 3rem;
+  .subtitles {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: ${(props) => props.theme.subtext};
+  }
+`;
+
+const Contents = styled.div`
+  width: 66%;
+  height: 100vh;
+  margin: 3rem;
+  padding: 1rem 3rem;
+  border-radius: 16px;
+
+  color: ${(props) => props.theme.subtext};
+
+  .title {
+    padding: 3rem 0 1.5rem 0;
+    border-bottom: 1px solid ${palette.gray[0]};
+  }
+
+  span {
+    font-size: 1.5rem;
   }
 `;
 
 const PostContent = styled.div`
-  font-size: 1.3125rem;
+  padding: 1rem;
+  // font-size: 1.3125rem;
 `;
 
-export default function PostViewer({ post, actionButtons, onRemove }) {
+const postInfo = {
+  backgroundImage: '/images/Background/Login2.png',
+  contentColor: '#F2F2F2',
+};
+
+export default function PostViewer({ post, onEdit, onRemove }) {
+  const { backgroundImage, contentColor } = postInfo;
   //error
   // // 에러 발생 시
   // if (error) {
@@ -64,21 +91,20 @@ export default function PostViewer({ post, actionButtons, onRemove }) {
   const { id, title, content, emoji, tags, createdAt, updatedAt, deletedAt } =
     post;
   return (
-    <PostViewerBlock>
-      <Contents>
-        <PostHead>
-          <div>
-            <div className="info">
-              <div>{createdAt}</div>
-              <div>
-                님의 마음구슬을 <span>{emoji}</span>구슬이에요.
-              </div>
-            </div>
-            <div className="Updates">{updatedAt}</div>
+    <PostViewerBlock style={{ backgroundImage: `url(${backgroundImage})` }}>
+      <PostHead>
+        <div>
+          <div className="category">가나다라마바사{createdAt}</div>
+          <div className="subtitles">
+            님의 마음구슬을 <span>{emoji}</span>구슬이에요.
           </div>
-          <span>{title}</span>
-        </PostHead>
-        {actionButtons}
+        </div>
+        <Updates onEdit={onEdit} onRemove={onRemove} />
+      </PostHead>
+      <Contents style={{ background: `${contentColor}` }}>
+        <div className="title">
+          <span>{title}제목입니다</span>
+        </div>
         <PostContent dangerouslySetInnerHTML={{ __html: content }} />
       </Contents>
       <ToTop />
