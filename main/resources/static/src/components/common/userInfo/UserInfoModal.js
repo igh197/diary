@@ -1,11 +1,13 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import Button from '../Button';
 import palette from '../../../lib/styles/palette';
-import { logout } from '../../../lib/api/auth';
 
 const Wrapper = styled.div``;
 
 const Overlay = styled.div`
+  width: 100%;
+  height: 100vh;
   background: none;
 
   position: fixed;
@@ -71,7 +73,14 @@ const LinkButton = styled(Button)`
   }
 `;
 
-export default function UserInfoModal({ account, userImage, close, onClick }) {
+export default function UserInfoModal({ account, userImage, close, onLogout }) {
+  useEffect(() => {
+    window.addEventListener('scroll', close);
+    return () => {
+      window.removeEventListener('scroll', close);
+    };
+  });
+
   return (
     <Wrapper>
       <Overlay onClick={close}></Overlay>
@@ -81,7 +90,7 @@ export default function UserInfoModal({ account, userImage, close, onClick }) {
           <p>{account}</p>
         </div>
         <LinkButton to="/user">My Page</LinkButton>
-        <LinkButton to="/" onClick={onClick}>
+        <LinkButton to="/" onClick={onLogout}>
           Logout
         </LinkButton>
       </Content>

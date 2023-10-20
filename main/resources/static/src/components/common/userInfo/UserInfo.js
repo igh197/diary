@@ -15,7 +15,7 @@ const UserImageButton = styled.img`
   border: 3px solid ${(props) => props.theme.text};
 `;
 
-export default function UserInfo({ account, userImage, onClick }) {
+export default function UserInfo({ account, userImage, onLogout }) {
   const { isOpen, open, close } = useModal();
 
   return (
@@ -31,7 +31,7 @@ export default function UserInfo({ account, userImage, onClick }) {
           account={account}
           userImage={userImage}
           close={close}
-          onClick={onClick}
+          onClick={onLogout}
         />
       )}
     </>
