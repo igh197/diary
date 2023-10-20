@@ -1,10 +1,10 @@
 import { Outlet } from 'react-router-dom';
-import Header from '../components/common/Header';
+import HeaderContainer from '../containers/header/HeaderContainer';
 
 export default function SettingsPage() {
   return (
     <>
-      <Header />
+      <HeaderContainer />
       <Outlet />
     </>
   );

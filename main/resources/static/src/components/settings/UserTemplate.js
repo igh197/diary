@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import Responsive from '../common/Responsive';
 import Button from '../common/Button';
-import Header from '../common/Header';
 
 const SettingsPageBlock = styled(Responsive)`
   width: 100%;
@@ -54,7 +53,6 @@ const ProfileBlock = styled.div`
 export default function UserTemplate({ children }) {
   return (
     <>
-      <Header />
       <SettingsPageBlock>
         <ProfileBlock className="category">
           <span>마이페이지</span>

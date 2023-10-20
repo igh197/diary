@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Responsive from '../common/Responsive';
 import Edit from './Edit';
 import ModalContainer from './Modals/ModalContainer';
-import ToTop from './ToTop';
+import ToTop from '../common/ToTop';
 
 const WriteBlock = styled(Responsive)`
   width: 100%;

@@ -20,7 +20,6 @@ export default function RegisterForm() {
     });
   };
 
-  // 폼 등록 이벤트 핸들러
   const onSubmit = (e) => {
     e.preventDefault();
     const { account, password, passwordConfirm } = form;
@@ -40,6 +39,7 @@ export default function RegisterForm() {
         authError: null,
       });
     } catch (e) {
+      console.log(e);
       setUser({
         ...form,
         auth: null,
@@ -53,29 +53,18 @@ export default function RegisterForm() {
       // 계정명이 이미 존재할 때
       if (authError.response.status === 409) {
         setError('이미 존재하는 계정명입니다.');
-        resetState();
-        return;
+      } else {
+        // 기타 이유
+        setError('회원가입 실패');
       }
-      // 기타 이유
-      setError('회원가입 실패');
-      resetState();
-      return;
     }
-    if (auth) {
-      console.log('회원가입 성공');
-      console.log(auth);
-    }
-  }, [auth, authError, resetState]);
-
-  // 에러 핸들링
-  useEffect(() => {
     if (auth) {
       console.log('check API 성공');
-      console.log(user.account);
       alert('회원가입 성공');
       navigate('/');
     }
-  }, [navigate, user.account, auth]);
+    resetState();
+  }, [auth, authError, resetState, navigate]);
 
   return (
     <AuthForm

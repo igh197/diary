@@ -1,12 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { useRecoilValue, useResetRecoilState } from 'recoil';
 import Button from './Button';
 import UserInfo from './userInfo/UserInfo';
-import { userState } from '../../State/userState';
-import { postUser } from '../../lib/api/user';
-import { logout } from '../../lib/api/auth';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -23,7 +18,7 @@ const Wrapper = styled.div`
     props.$scroll &&
     css`
     padding 1rem 4rem 1rem 2rem;
-    opacity: 0.95;
+    opacity: 0.99;
     backdrop-filter: blur(3px);
     box-shadow: 0 3px 3px rgba(0,0,0,0.1), 0 1px 1px rgba(0,0,0,0.1);
     `}
@@ -54,23 +49,8 @@ const LogoButton = styled(Button)`
   }
 `;
 
-export default function Header() {
-  const user = useRecoilValue(userState);
-  const resetUser = useResetRecoilState(userState);
-  const { account, userImage, userTheme } = user;
+export default function Header({ account, userImage, onLogout }) {
   const [scroll, setScroll] = useState(false);
-  const navigate = useNavigate();
-
-  // 에러 처리 추가 수정
-  const handleLogout = () => {
-    postUser(account, userImage, userTheme);
-    localStorage.removeItem('account');
-    localStorage.removeItem('theme');
-    localStorage.removeItem('user-image');
-    resetUser();
-    logout();
-    navigate('/');
-  };
 
   // 좀 더 효율적인 방법 없을까??? 수정
   useEffect(() => {
@@ -94,11 +74,7 @@ export default function Header() {
         <LogoButton to="/">
           <div />
         </LogoButton>
-        <UserInfo
-          account={account}
-          userImage={userImage}
-          onClick={() => handleLogout}
-        />
+        <UserInfo account={account} userImage={userImage} onLogout={onLogout} />
       </HeaderBlock>
     </Wrapper>
   );

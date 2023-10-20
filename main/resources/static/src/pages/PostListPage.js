@@ -1,11 +1,11 @@
 import PostListContainer from '../containers/posts/PostListContainer';
 import PaginationContainer from '../containers/posts/PaginationContainer';
-import Header from '../components/common/Header';
+import HeaderContainer from '../containers/header/HeaderContainer';
 
 export default function PostListPage() {
   return (
     <>
-      <Header />
+      <HeaderContainer />
       <PostListContainer />
       <PaginationContainer />
     </>

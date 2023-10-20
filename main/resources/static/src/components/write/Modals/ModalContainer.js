@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import ImageModal from './ImageModal';
 import Button from '../../common/Button';
-import Header from '../../common/Header';
+import HeaderContainer from '../../../containers/header/HeaderContainer';
 
 const SaveButton = styled(Button)`
   width: 80px;
@@ -24,7 +24,7 @@ export default function ModalContainer({ onPublish, isEdit }) {
 
   return (
     <>
-      <Header />
+      <HeaderContainer />
       <SaveButton onClick={handleFirstModal}>저장</SaveButton>
       {firstModal && <ImageModal onPublish={onPublish} />}
     </>

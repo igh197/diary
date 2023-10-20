@@ -7,7 +7,6 @@ import { userState } from '../../State/userState';
 import { writePost, updatePost } from '../../lib/api/posts';
 
 // 모달 구현!
-// header로 따라서 모달 구현하자
 
 export default function EditorContainer() {
   const user = useRecoilValue(userState);
