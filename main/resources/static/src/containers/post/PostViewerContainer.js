@@ -6,6 +6,9 @@ import PostViewer from '../../components/post/PostViewer';
 import { useRecoilValue } from 'recoil';
 import { userAccount } from '../../State/userState';
 
+// 임시
+import { postsExample } from '../posts/PostListContainer';
+
 //http://localhost:3000/account/0
 
 export default function PostViewerContainer() {
@@ -59,7 +62,8 @@ export default function PostViewerContainer() {
     <PostViewer
       // post={post}
       // error={error}
-      post={viewPost}
+      // post={viewPost} 나중에 사용
+      post={postsExample[postId].post}
       onEdit={onEdit}
       // actionButtons={ownPost && <PostActionButtons onEdit={onEdit} />}
       onRemove={onRemove}

@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import Responsive from '../common/Responsive';
 import ToTop from '../common/ToTop';
 import Updates from './modal/Updates';
-import palette from '../../lib/styles/palette';
 
 const PostViewerBlock = styled(Responsive)`
   width: 100%;
@@ -49,12 +48,12 @@ const Contents = styled.div`
   margin: 3rem;
   padding: 1rem 3rem;
   border-radius: 16px;
+  background: #fafafa;
 
   color: ${(props) => props.theme.subtext};
 
   .title {
     padding: 3rem 0 1.5rem 0;
-    border-bottom: 1px solid ${palette.gray[0]};
   }
 
   span {
@@ -74,6 +73,7 @@ const postInfo = {
 
 export default function PostViewer({ post, onEdit, onRemove }) {
   const { backgroundImage, contentColor } = postInfo;
+  window.scrollTo({ top: 0 });
   //error
   // // 에러 발생 시
   // if (error) {
@@ -91,21 +91,35 @@ export default function PostViewer({ post, onEdit, onRemove }) {
   const { id, title, content, emoji, tags, createdAt, updatedAt, deletedAt } =
     post;
   return (
-    <PostViewerBlock style={{ backgroundImage: `url(${backgroundImage})` }}>
+    <PostViewerBlock
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundRepeat: 'round',
+        backgroundSize: '25% 25%',
+      }}
+    >
       <PostHead>
+        {console.log('post', post)}
         <div>
-          <div className="category">가나다라마바사{createdAt}</div>
+          <div className="category">
+            {createdAt.slice(0, 4)}년 {createdAt.slice(5, 7)}월{' '}
+            {createdAt.slice(8, 10)}일
+          </div>
           <div className="subtitles">
             님의 마음구슬을 <span>{emoji}</span>구슬이에요.
           </div>
         </div>
         <Updates onEdit={onEdit} onRemove={onRemove} />
       </PostHead>
-      <Contents style={{ background: `${contentColor}` }}>
-        <div className="title">
-          <span>{title}제목입니다</span>
+      <Contents>
+        <div
+          className="title"
+          style={{ borderBottom: `2px solid ${contentColor}` }}
+        >
+          <span>{title}</span>
         </div>
-        <PostContent dangerouslySetInnerHTML={{ __html: content }} />
+        {/* <PostContent dangerouslySetInnerHTML={{ __html: content }} /> */}
+        <PostContent>{content}</PostContent>
       </Contents>
       <ToTop />
     </PostViewerBlock>
