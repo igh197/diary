@@ -4,15 +4,15 @@ import client from './client';
 
 // 로그인 확인 후에
 export const getUser = async (account) => {
-  const userImage = await client.get(`api/image/${account}.json`);
+  const userImage = await client.get(`api/userimage/${account}.json`);
   const userTheme = await client.get(`api/user/${account}.json`);
   return { userImage, userTheme };
 };
 
 // 프로필 사진 전송
-export const postUserImage = async (account, imagePath) => {
-  const userImage = await client.post(`api/image/${account}.json`, {
-    imagePath,
+export const postUserImage = async (account, storedFilePath) => {
+  const userImage = await client.post(`api/userimage/${account}.json`, {
+    storedFilePath,
   });
   return userImage;
 };
