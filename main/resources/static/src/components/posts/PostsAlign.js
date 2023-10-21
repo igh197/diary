@@ -31,18 +31,20 @@ const PostListBlock = styled.div`
   background-position: bottom;
   border-radius: 13px;
   padding: 1rem 1.5rem;
+  // border: 1px solid rgba(0, 0, 0, 0.1);
 
   color: white;
 
   p {
+    margin-bottom: 1.5rem;
+
     font-size: 1.2rem;
     font-weight: bold;
     text-align: center;
-    margin-bottom: 1.5rem;
   }
 `;
 
-export default function PostsAlign({ posts }) {
+export default function PostsAlign({ account, posts }) {
   return (
     <Wrapper>
       <div className="button-wrapper">
@@ -51,7 +53,7 @@ export default function PostsAlign({ posts }) {
       <PostListBlock>
         <p>내 일기</p>
         {posts.map((info) => (
-          <PostItem key={info.id} post={info.post} />
+          <PostItem key={info.post.id} post={info.post} account={account} />
         ))}
       </PostListBlock>
     </Wrapper>

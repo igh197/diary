@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
-// import { Link } from 'react-router-dom';
 import Responsive from '../../components/common/Responsive';
 import PostsAlign from '../../components/posts/PostsAlign';
 import MonthlyCalendar from '../../components/posts/MonthlyCalendar';
@@ -18,55 +18,76 @@ const PostListBlock = styled(Responsive)`
   justify-content: space-between;
 `;
 
-const postsExample = [
+// id, title, content, emoji, tags, createdAt, updatedAt, deletedAt
+export const postsExample = [
   {
-    id: 1,
+    postId: 0,
     post: {
+      id: 0,
       title: '우오와아',
       content:
         '가나다라마바사아자차카타파하어느정도적어야이길이가끝이나는것일까알아맞혀보자이정도로썼는데도아직도안넘어갔다면그럴때는다시생각해보자답이나올것이다',
-      emoji: 'BlackFace',
-      createAt: '2023-10-11T22:46:17.348',
+      emoji: 'Love',
+      tags: '',
+      createdAt: '2023-10-11T22:46:17.348',
+      updatedAt: '',
+      deletedAt: '',
     },
   },
   {
-    id: 2,
+    postId: 1,
     post: {
+      id: 1,
       title: '가을이다',
       content:
         '선선한가을날씨와함께부는싱그러운바람이얼마나좋은지모른다이래서가을인가너무너무좋다',
-      emoji: 'BlackFace',
-      createAt: '2023-10-12T22:46:17.348',
+      emoji: 'PokerFace',
+      tags: '',
+      createdAt: '2023-10-12T22:46:17.348',
+      updatedAt: '',
+      deletedAt: '',
     },
   },
   {
-    id: 3,
+    postId: 2,
     post: {
+      id: 2,
       title: '가을이다',
       content:
         '선선한가을날씨와함께부는싱그러운바람이얼마나좋은지모른다이래서가을인가너무너무좋다',
-      emoji: 'BlackFace',
-      createAt: '2023-10-13T22:46:17.348',
+      emoji: 'Fear',
+      tags: '',
+      createdAt: '2023-10-13T22:46:17.348',
+      updatedAt: '',
+      deletedAt: '',
     },
   },
   {
-    id: 4,
+    postId: 3,
     post: {
+      id: 3,
       title: '가을이다',
       content:
         '선선한가을날씨와함께부는싱그러운바람이얼마나좋은지모른다이래서가을인가너무너무좋다',
-      emoji: 'BlackFace',
-      createAt: '2023-10-14T22:46:17.348',
+      emoji: 'Sad',
+      tags: '',
+      createdAt: '2023-10-14T22:46:17.348',
+      updatedAt: '',
+      deletedAt: '',
     },
   },
   {
-    id: 5,
+    postId: 4,
     post: {
+      id: 4,
       title: '가을이다',
       content:
         '선선한가을날씨와함께부는싱그러운바람이얼마나좋은지모른다이래서가을인가너무너무좋다',
-      emoji: 'BlackFace',
-      createAt: '2023-10-15T22:46:17.348',
+      emoji: 'Happy',
+      tags: '',
+      createdAt: '2023-10-15T22:46:17.348',
+      updatedAt: '',
+      deletedAt: '',
     },
   },
 ];
@@ -76,6 +97,7 @@ export default function PostListContainer() {
   const [postList, setPostList] = useRecoilState(postListState);
   const { postsInfo, posts, postsError } = postList;
   // const [loading, setLoading] = useRecoilState(postState).loading;
+  const navigate = useNavigate();
 
   // 포스트 목록 불러오기
   useEffect(() => {
@@ -101,8 +123,8 @@ export default function PostListContainer() {
   }
   return (
     <PostListBlock>
-      <MonthlyCalendar posts={postsExample} />
-      <PostsAlign posts={postsExample} />
+      <MonthlyCalendar account={account} posts={postsExample} />
+      <PostsAlign account={account} posts={postsExample} />
     </PostListBlock>
   );
 }

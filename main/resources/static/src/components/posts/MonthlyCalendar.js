@@ -1,8 +1,8 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-// import { Link } from "react-router-dom";
 
 const MonthlyCalendarBlock = styled.div`
   margin: 0 10px;
@@ -63,8 +63,9 @@ const CalendarBlock = styled.div`
 
     // 수정
     &:enabled:focus {
-      background: pink;
-      border-radius: 16px;
+      background: none;
+      // background: pink;
+      // border-radius: 16px;
 
       color: ${(props) => props.theme.subtext};
     }
@@ -149,10 +150,11 @@ const CalendarBlock = styled.div`
   }
 `;
 
-const EmojiBlock = styled.div`
-  width: 50px;
-  height: 50px;
-  margin: 7px auto;
+const EmojiBlock = styled(Link)`
+  width: 45px;
+  height: 45px;
+  margin: 10px 0 0 0;
+  background: ${palette.gray[0]};
   border-radius: 100%;
 
   &:hover {
@@ -160,19 +162,35 @@ const EmojiBlock = styled.div`
   }
 `;
 
-export default function MonthlyCalendar({ posts }) {
+const DayBlock = styled.div`
+  width: 45px;
+  height: 45px;
+  margin: 10px 0 0 0;
+  background: ${palette.gray[0]};
+  border-radius: 100%;
+
+  &:hover {
+    border: 1px solid ${palette.gray[0]};
+  }
+`;
+
+export default function MonthlyCalendar({ account, posts }) {
   const addContent = ({ date }) => {
+    const day = String(parseInt(date.toISOString().slice(8, 10)) + 1);
     const emoji = posts.map((post) => {
-      if (post.post.createAt.slice(0, 10) === date.toISOString().slice(0, 10)) {
+      if (
+        post.post.createdAt.slice(0, 7) === date.toISOString().slice(0, 7) &&
+        post.post.createdAt.slice(8, 10) === day
+      ) {
         return (
-          <EmojiBlock key={post.post.createAt}>
-            <img
-              src={`/images/Emoji/${post.post.emoji}.png`}
-              alt="emoji"
-              width="50"
-              height="50"
-            />
-          </EmojiBlock>
+          <EmojiBlock
+            key={post.postId}
+            to={`/${account}/${post.post.id}`}
+            style={{
+              backgroundImage: `url('/images/Emoji/${post.post.emoji}.svg')`,
+              backgroundSize: 'cover',
+            }}
+          />
         );
       }
       return null;
