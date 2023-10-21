@@ -48,13 +48,13 @@ export default function EditorContainer() {
       setWrite({
         ...write,
         post: true,
-        postError: false,
+        postError: null,
       });
       console.log(postInfo);
     } catch (e) {
       setWrite({
         ...write,
-        post: false,
+        post: null,
         postError: true,
       });
     }
@@ -68,19 +68,13 @@ export default function EditorContainer() {
   // 성공 혹은 실패 시 할 작업
   useEffect(() => {
     if (post) {
+      reset();
       navigate(`/${user.account}/${postInfo.id}`); // 나중에 ${user.account} 앞에 @추가
     }
     if (postError) {
       console.log(postError);
     }
-  }, [navigate, post, postError, postInfo.id, user.account]);
-
-  // 언마운트될 때 초기화
-  useEffect(() => {
-    return () => {
-      reset();
-    };
-  }, [reset]);
+  }, [navigate, post, postError, postInfo.id, user.account, reset]);
 
   return (
     <WriteForm

@@ -18,7 +18,7 @@ const Wrapper = styled.div`
     props.$scroll &&
     css`
     padding 1rem 4rem 1rem 2rem;
-    opacity: 0.99;
+    opacity: 0.95;
     backdrop-filter: blur(3px);
     box-shadow: 0 3px 3px rgba(0,0,0,0.1), 0 1px 1px rgba(0,0,0,0.1);
     `}
@@ -71,7 +71,7 @@ export default function Header({ account, userImage, onLogout }) {
   return (
     <Wrapper $scroll={scroll}>
       <HeaderBlock>
-        <LogoButton to="/">
+        <LogoButton to="/postsample">
           <div />
         </LogoButton>
         <UserInfo account={account} userImage={userImage} onLogout={onLogout} />

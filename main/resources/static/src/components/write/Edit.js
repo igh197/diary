@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-balloon';
-// import { Link } from 'react-router-dom';
 
 const editorConfiguration = {
   language: 'ko',

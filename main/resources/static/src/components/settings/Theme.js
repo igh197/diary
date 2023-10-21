@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import Button from '../common/Button';
 import palette from '../../lib/styles/palette';
 
@@ -28,7 +28,7 @@ const ImageBlock = styled.div`
     }
 
     &:focus {
-      border: 4px solid blue;
+      border: 5px solid blue;
     }
   }
 
@@ -40,22 +40,7 @@ const ImageBlock = styled.div`
     z-index: 2;
 
     position: fixed;
-
-    ${(props) => {
-      if (props.theme === 'basicTheme') {
-        return css`
-          transform: translate(-500%, 5%);
-        `;
-      } else if (props.theme === 'greenTheme') {
-        return css`
-          transform: translate(-100%, 5%);
-        `;
-      } else if (props.theme === 'darkTheme') {
-        return css`
-          transform: translate(500%, 5%);
-        `;
-      }
-    }}
+    transform: translate(790%, 10%);
   }
 `;
 
@@ -79,6 +64,7 @@ const Save = styled(Button)`
 
 export default function Theme({ tempTheme, onClick, handleCheck }) {
   const themesInput = ['basicTheme', 'greenTheme', 'darkTheme'];
+  const check = document.activeElement.name;
 
   return (
     <ThemeBlock>
@@ -87,13 +73,13 @@ export default function Theme({ tempTheme, onClick, handleCheck }) {
         {themesInput.map((theme, index) => {
           return (
             <div key={theme}>
-              {/* {check === tempTheme ? (
+              {check === theme ? (
                 <img
                   src="/images/User/Check.svg"
                   alt="check"
                   className="check"
                 />
-              ) : null} */}
+              ) : null}
               <img
                 name={theme}
                 src={`/images/Background/Login${index + 1}.png`}
