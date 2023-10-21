@@ -1,10 +1,7 @@
 package computer.seoultech.diary.service;
 
 import computer.seoultech.diary.entity.User;
-import computer.seoultech.diary.network.Header;
-import computer.seoultech.diary.network.Pagination;
-import computer.seoultech.diary.network.UserRequest;
-import computer.seoultech.diary.network.UserResponse;
+import computer.seoultech.diary.network.*;
 import computer.seoultech.diary.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cglib.core.Local;
@@ -33,15 +30,14 @@ public class UserService  implements UserDetailsService {  //spring security는 
         //계정으로 사용자 정보 검사
     }
 
-    public void save(UserRequest userRequest) {   //회원가입을 위한 실질적인 기능을 하는 함수
-            userRepository.save(User.builder()  //save는 JpaRepository가 내장한 함수, chain 기능 사용
+    public User save(UserRequest userRequest) {   //회원가입을 위한 실질적인 기능을 하는 함수
+            return userRepository.save(User.builder()  //save는 JpaRepository가 내장한 함수, chain 기능 사용
                 .account(userRequest.getAccount()) //계정 입력
                            .auth("ROLE_USER") //대부분의 사용자는 ROLE_USER이기 때문
-                            .theme(userRequest.getTheme())
+
                            .createdAt(LocalDateTime.now())  //계정 생성 시간
                            .updatedAt(LocalDateTime.now()) //update 시간은 default로 지금
-                           .name(userRequest.getName())  //사용자 이름
-                           .email(userRequest.getEmail()) //사용자 이메일
+
                            .password(passwordEncoder.encode(userRequest.getPassword())) //비밀번호 암호화
                             //사용자 비밀번호를 암호화해서 저장
                    .build());
@@ -66,27 +62,20 @@ public class UserService  implements UserDetailsService {  //spring security는 
     private UserResponse response(User user) {   //user 객체를 UserResponse 객체로 바꾸어 주는 함수
         UserResponse userResponse = UserResponse.builder()
                 .account(user.getAccount())
-                .email(user.getEmail())
                 .theme(user.getTheme())
                 .build();
 
         return userResponse;
     }
 
-    public Header<UserResponse> myPage(Long id) {   //계정으로 내 페이지 찾기
-        Optional<User> userOptional = userRepository.findUserById(id);
-        //없을 수도 있는 경우를 대비해 Optional class로 생성
-        return Header.OK(userOptional.map(user -> response(user)).orElseThrow());
-    }
 
-    public void update(Long id,UserRequest userRequest) {
-        Optional<User> userOptional = userRepository.findUserById(id);  //내용 수정할 사용자 찾기
+
+    public void update(String account,UserRequest userRequest) {
+        Optional<User> userOptional = userRepository.findUserByAccount(account);  //내용 수정할 사용자 찾기
         User nUser = User.builder()
                 .account(userRequest.getAccount())
                 .password(passwordEncoder.encode(userRequest.getPassword())) //찾아서 내용 수정
                 .theme(userRequest.getTheme())
-                .name(userRequest.getName())
-                .email(userRequest.getEmail())
                 .build();
         userOptional.map(user->response(nUser)).orElseThrow();
 
@@ -96,9 +85,9 @@ public class UserService  implements UserDetailsService {  //spring security는 
         userRepository.deleteById(id);
     }  //사용자 탈퇴 및 개인정보 삭제
 
-    public User login(UserRequest userRequest) {
-        User user = userRepository.findUserByAccount(userRequest.getAccount()).orElseThrow();
-        if(user.getPassword().equals(passwordEncoder.encode(userRequest.getPassword()))) {
+    public User login(LoginDto loginDto) {
+        User user = userRepository.findUserByAccount(loginDto.getAccount()).orElseThrow();
+        if(user.getPassword().equals(passwordEncoder.encode(loginDto.getPassword()))) {
             return user;
         }
         else{
