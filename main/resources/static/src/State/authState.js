@@ -1,9 +1,5 @@
 import { atom, selector } from 'recoil';
 
-// 굳이 따로 만들어야 하나?
-// 그냥 passwordConfirm은 확인할 때에만 필요하니까 상태관리보다는 그저 변수로만 쓰는게 나을 거 같다
-// 그리고 passwordConfirm은 그냥 프론트 내에서 확인하는 용도로만 사용하자.
-
 export const authState = atom({
   key: 'authState',
   default: {
