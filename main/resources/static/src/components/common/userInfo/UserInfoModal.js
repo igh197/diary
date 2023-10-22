@@ -22,7 +22,7 @@ const Content = styled.div`
   width: 224px;
   height: 298px;
   padding: 40px 5px 25px 5px;
-  background-image: url('/images/User/UserInfoBox.svg');
+  background-image: url(${(props) => props.theme.settingModal});
   background-size: cover;
   filter: drop-shadow(0px 86px 24px rgba(0, 0, 0, 0))
     drop-shadow(0px 55px 22px rgba(0, 0, 0, 0.01))
