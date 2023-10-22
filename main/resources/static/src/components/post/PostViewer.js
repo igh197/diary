@@ -48,7 +48,7 @@ const Contents = styled.div`
   margin: 3rem;
   padding: 1rem 3rem;
   border-radius: 16px;
-  background: #fafafa;
+  background: ${(props) => props.theme.postContent}};
 
   color: ${(props) => props.theme.subtext};
 

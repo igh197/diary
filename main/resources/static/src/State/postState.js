@@ -3,9 +3,11 @@ import { atom, selector } from 'recoil';
 export const postListState = atom({
   key: 'postListState',
   default: {
-    postsInfo: [],
-    posts: null,
-    postsError: null,
+    totalPages: null,
+    totalElements: null,
+    currentPage: null,
+    currentElements: null,
+    postInfo: null,
   },
 });
 
@@ -15,12 +17,10 @@ export const postState = atom({
     postInfo: {
       id: 0,
       title: '',
-      content: '',
+      body: '',
       emoji: '',
       tags: [],
       createdAt: null,
-      updatedAt: null,
-      deletedAt: null,
     },
     post: null,
     postError: null,

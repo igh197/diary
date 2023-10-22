@@ -22,7 +22,7 @@ const PostContentBlock = styled.div`
   span {
     margin: 0 0.5rem 0 0;
 
-    color: ${(props) => props.theme.subtext};
+    color: ${(props) => props.theme.listTitle};
     font-size: 1rem;
 
     &:hover {
@@ -34,7 +34,7 @@ const PostContentBlock = styled.div`
     margin-bottom: 0.5rem;
   }
 
-  color: ${palette.gray[0]};
+  color: ${(props) => props.theme.listSubtitle};
   font-size: 0.8rem;
   font-weight: bold;
   padding-right: 3rem;
@@ -48,7 +48,7 @@ const PostContentBlock = styled.div`
 `;
 
 export default function PostItem({ account, post }) {
-  const { title, content, createAt } = post;
+  const { title, body, createAt } = post;
 
   return (
     <PostItemBlock>
@@ -57,18 +57,10 @@ export default function PostItem({ account, post }) {
           <Link to={`/${account}/${post.id}`}>
             <span>{title}</span>
           </Link>
-
           {createAt}
         </div>
-        {content}
+        {body}
       </PostContentBlock>
-
-      {/* <h2>
-        <Link to={`/@${user.account}/${_id}`}>{title}</Link>
-      </h2>
-      <SubInfo account={user.account} createAt={new Date(createAt)} />
-      <Tags tags={tags} />
-      <p>{content}</p> */}
     </PostItemBlock>
   );
 }

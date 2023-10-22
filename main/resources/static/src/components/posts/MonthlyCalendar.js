@@ -29,7 +29,6 @@ const MonthlyCalendarBlock = styled.div`
 `;
 
 const CalendarBlock = styled.div`
-  background: white;
   border-radius: 13px;
   overflow: hidden;
 
@@ -37,7 +36,7 @@ const CalendarBlock = styled.div`
     width: 880px;
     height: 753px;
     padding: 20px 40px;
-    background: none;
+    background: ${(props) => props.theme.calendarBackground};
     border: 0;
 
     display: flex;
@@ -47,13 +46,13 @@ const CalendarBlock = styled.div`
   .react-calendar button {
     height: 6.5rem;
     padding: 10px 0;
+    background: none;
+    // border: 1px solid ${palette.gray[0]};
 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-
-    border: 5px solid white; // 수정
 
     &:enabled:hover {
       background: none;
@@ -74,7 +73,8 @@ const CalendarBlock = styled.div`
   .react-calendar__navigation {
     width: 100%;
     height: 4.5rem;
-    margin: 0 0 60px 0;
+    margin: 10px 0 60px 0;
+    padding: 13px 0 0 0;
     border-bottom: 1px solid ${palette.gray[0]};
 
     .react-calendar__navigation__label {
@@ -104,7 +104,7 @@ const CalendarBlock = styled.div`
       font-weight: 700;
       text-decoration: none;
       letter-spacing: -0.025rem;
-      color: black;
+      color: ${(props) => props.theme.weekdayColor};
     }
   }
 
@@ -162,21 +162,22 @@ const EmojiBlock = styled(Link)`
   }
 `;
 
-const DayBlock = styled.div`
-  width: 45px;
-  height: 45px;
-  margin: 10px 0 0 0;
-  background: ${palette.gray[0]};
-  border-radius: 100%;
+// 수정 이모티콘이 없을 때 나타나는 블록
+// const DayBlock = styled.div`
+//   width: 45px;
+//   height: 45px;
+//   margin: 10px 0 0 0;
+//   background: ${palette.gray[0]};
+//   border-radius: 100%;
 
-  &:hover {
-    border: 1px solid ${palette.gray[0]};
-  }
-`;
+//   &:hover {
+//     border: 1px solid ${palette.gray[0]};
+//   }
+// `;
 
 export default function MonthlyCalendar({ account, posts }) {
   const addContent = ({ date }) => {
-    const day = String(parseInt(date.toISOString().slice(8, 10)) + 1);
+    const day = String(Number(date.toISOString().slice(8, 10)) + 1);
     const emoji = posts.map((post) => {
       if (
         post.post.createdAt.slice(0, 7) === date.toISOString().slice(0, 7) &&

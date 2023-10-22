@@ -31,9 +31,8 @@ const PostListBlock = styled.div`
   background-position: bottom;
   border-radius: 13px;
   padding: 1rem 1.5rem;
-  // border: 1px solid rgba(0, 0, 0, 0.1);
 
-  color: white;
+  color: ${(props) => props.theme.listTitle};
 
   p {
     margin-bottom: 1.5rem;

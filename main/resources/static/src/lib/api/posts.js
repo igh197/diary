@@ -1,11 +1,11 @@
 import qs from 'qs';
 import client from './client';
 
-export const writePost = ({ id, title, content, emoji, tags, createdAt }) =>
+export const writePost = ({ id, title, body, emoji, tags, createdAt }) =>
   client.post('/api/diary/new', {
     id,
     title,
-    content,
+    body,
     emoji,
     tags,
     createdAt,
@@ -13,10 +13,10 @@ export const writePost = ({ id, title, content, emoji, tags, createdAt }) =>
 
 export const readPost = (id) => client.get(`/api/diary/${id}`);
 
-// 리스트를 어떻게 작성하셨는지 모르겠다. 질문
-// export const listPosts = ({account}) => {
-
-// }
+// 글리스트 불러오는 API
+export const listPosts = ({ account }) => {
+  client.get(`/api/diarys?${account}`);
+};
 
 // 조금만 더 알아보자.
 // export const listPosts = ({ account, emoji, tags, createdAt, updatedAt }) => {
@@ -30,22 +30,13 @@ export const readPost = (id) => client.get(`/api/diary/${id}`);
 //   return client.get(`/api/diarys?${queryString}`);
 // };
 
-export const updatePost = ({
-  id,
-  title,
-  body,
-  emoji,
-  tags,
-  createdAt,
-  updatedAt,
-}) =>
+export const updatePost = ({ id, title, body, emoji, tags, createdAt }) =>
   client.put(`/api/diary/${id}`, {
     title,
     body,
     emoji,
     tags,
     createdAt,
-    updatedAt,
   });
 
 export const removePost = (id) => client.delete(`/api/diary/${id}`);
