@@ -126,7 +126,7 @@ export default function AuthForm({ type, form, onChange, onSubmit, error }) {
             name="account"
             placeholder="아이디를 입력해주세요"
             onChange={onChange}
-            value={form.account}
+            defaultValue={form.account}
             onFocus={() => setSelect('login')}
           />
           {select === 'login' ? <img src="/images/Login/Eye.svg" alt="" /> : ''}
@@ -139,7 +139,7 @@ export default function AuthForm({ type, form, onChange, onSubmit, error }) {
             placeholder="비밀번호를 입력해주세요"
             type="password"
             onChange={onChange}
-            value={form.password}
+            defaultValue={form.password}
             onFocus={() => setSelect('password')}
           />
           {select === 'password' ? (
@@ -156,7 +156,7 @@ export default function AuthForm({ type, form, onChange, onSubmit, error }) {
               placeholder="비밀번호 확인"
               type="password"
               onChange={onChange}
-              value={form.passwordConfirm}
+              defaultValue={form.passwordConfirm}
               onFocus={() => setSelect('passwordConfirm')}
             />
             {select === 'passwordConfirm' ? (

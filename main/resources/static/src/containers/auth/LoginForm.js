@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import AuthForm from '../../components/auth/AuthForm';
 import { loginState } from '../../State/authState';
-import { login, check } from '../../lib/api/auth';
+import { login } from '../../lib/api/auth';
 import { getUser } from '../../lib/api/user';
 
 export default function LoginForm() {
@@ -28,7 +28,6 @@ export default function LoginForm() {
       return;
     }
     login({ account: form.account, password: form.password });
-    check();
 
     try {
       setUser({

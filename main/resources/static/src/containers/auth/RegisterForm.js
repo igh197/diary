@@ -18,6 +18,7 @@ export default function RegisterForm() {
       ...form,
       [name]: value,
     });
+    console.log(form);
   };
 
   const onSubmit = (e) => {
