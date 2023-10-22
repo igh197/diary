@@ -1,7 +1,7 @@
-import { atom, selector } from 'recoil';
+import { atom, selector, RecoilEnv } from 'recoil';
 import { getUser } from '../lib/api/user';
 
-// RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false;
+RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false;
 
 export const userState = atom({
   key: 'userState',
@@ -24,8 +24,8 @@ export const userProfileState = selector({
   key: 'userProfileState',
   get: ({ get }) => {
     const user = get(userState);
-    localStorage.setItem('account', user.account);
-    localStorage.setItem('user-image', user.userImage);
+    localStorage.getItem('account');
+    localStorage.getItem('user-image');
     return {
       account: user.account,
       userImage: user.userImage,

@@ -39,7 +39,7 @@ const ImageBlock = styled.div`
 
     z-index: 2;
 
-    position: fixed;
+    position: absolute;
     transform: translate(790%, 10%);
   }
 `;

@@ -27,10 +27,8 @@ const ContentBlock = styled.div`
 export default function ThemeContainer() {
   const [theme, setTheme] = useRecoilState(themeState);
   const [tempTheme, setTempTheme] = useState(theme);
-  const [check, setCheck] = useState(tempTheme);
 
   const handleCheck = (e) => {
-    setCheck(e.target.name);
     setTempTheme(e.target.name);
   };
 

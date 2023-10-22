@@ -16,26 +16,70 @@ const Fullscreen = styled.div`
 `;
 
 const AskModalBlock = styled.div`
-  width: 320px;
-  height: 200px;
+  width: 500px;
+  height: 500px;
   background: ${(props) => props.theme.content};
-  padding: 1.5rem;
+  padding: 5px;
   border-radius: 16px;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.125);
-
   z-index: 999;
-  transform: translate(-150%, 70%);
 
-  h2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  transform: translate(-80%, 70%);
+
+  h3 {
     margin-top: 0;
     margin-bottom: 1rem;
   }
+
   p {
     margin-bottom: 3rem;
   }
+
   .buttons {
     display: flex;
     justify-content: flex-end;
+  }
+
+  .header {
+    width: 80%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .content {
+    width: 80%;
+    height: 40%;
+    margin: 0 auto;
+    padding: 10px;
+    background: ${(props) => props.theme.background};
+    border-radius: 16px;
+  }
+
+  .emoji {
+  }
+
+  .theme {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    div {
+      &:hover {
+        cursor: pointer;
+      }
+
+      &:focus {
+        border: 5px solid blue;
+      }
+    }
   }
 `;
 
@@ -46,21 +90,43 @@ const StyledButton = styled(Button)`
 export function AskModal({
   visible,
   title,
-  description,
   confirmText = '확인',
-  cancelText = '취소',
   onConfirm,
   onCancel,
+  theme,
 }) {
   if (!visible) return null;
   return (
     <>
       <Fullscreen onClick={onCancel} />
       <AskModalBlock>
-        <h2>{title}</h2>
-        <p>{description}</p>
+        <div className="header">
+          <h3>{title}</h3>
+          <Button onClick={onCancel}>x</Button>
+        </div>
+        <div className="content">
+          <span>감정 구슬</span>
+        </div>
+        <div className="content">
+          <span>오늘의 테마</span>
+          <div className="theme">
+            {theme.map((theme) => {
+              return (
+                <div
+                  key={theme}
+                  style={{
+                    backgroundImage: 'url(/images/User/Profile.svg)',
+                    backgroundSize: 'cover',
+                    width: 50,
+                    height: 50,
+                  }}
+                  value={theme}
+                />
+              );
+            })}
+          </div>
+        </div>
         <div className="buttons">
-          <StyledButton onClick={onCancel}>{cancelText}</StyledButton>
           <StyledButton onClick={onConfirm}>{confirmText}</StyledButton>
         </div>
       </AskModalBlock>
@@ -70,6 +136,7 @@ export function AskModal({
 
 export default function ImageModal({ onPublish }) {
   const [open, setOpen] = useState(true);
+  const theme = ['Love', 'PokerFace', 'Fear', 'Sad'];
 
   const onConfirm = () => {
     setOpen(false);
@@ -82,12 +149,11 @@ export default function ImageModal({ onPublish }) {
   return (
     <AskModal
       visible={open}
-      title={'이미지'}
-      description={'Dinary가 감정과 테마를 분석했어요!'}
+      title={'Dinary가 감정과 테마를 분석했어요!'}
       confirmText="확인"
-      cancelText="취소"
       onConfirm={onPublish}
       onCancel={onCancel}
+      theme={theme}
     />
   );
 }

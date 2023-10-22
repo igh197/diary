@@ -97,9 +97,10 @@ export default function PasswordContainer() {
       // 여기에서 막힌다.
       // 원래는 selector에 적어야 하는데 오류 생겨서 여기에 저장 확인 후 수정
       localStorage.setItem('user-image', imageUrl);
+      console.log(profile.userImage);
+      window.location.reload();
     } catch (e) {
       console.log('localStorage is not working');
-      window.location.reload();
     }
   };
 
