@@ -10,6 +10,9 @@ const SaveButton = styled(Button)`
   background: ${(props) => props.theme.text};
   border-radius: 56px;
 
+  position: absolute;
+  right: 70px;
+
   font-size: 1rem;
   font-weight: bold;
   color: white;

@@ -13,7 +13,7 @@ export default function EditorContainer() {
   const reset = useResetRecoilState(writeState);
   const [write, setWrite] = useRecoilState(postState);
   const { postInfo, post, postError } = write;
-  const { id, title, content, emoji, tags, createdAt, updatedAt } = postInfo;
+  const { id, title, body, emoji, tags, createdAt } = postInfo;
   const navigate = useNavigate();
 
   const onChangeField = (e) => {
@@ -27,7 +27,7 @@ export default function EditorContainer() {
   // 포스트 등록
   const onPublish = () => {
     if (createdAt) {
-      updatePost({ id, title, content, emoji, tags, updatedAt });
+      updatePost({ id, title, body, emoji, tags, createdAt });
       return;
     } else {
       setWrite({
@@ -37,7 +37,7 @@ export default function EditorContainer() {
       writePost({
         id,
         title,
-        content,
+        body,
         emoji,
         tags,
         createdAt,
