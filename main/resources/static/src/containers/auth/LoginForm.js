@@ -9,7 +9,6 @@ import { getUser } from '../../lib/api/user';
 export default function LoginForm() {
   const [user, setUser] = useRecoilState(loginState);
   const { form, auth, authError } = user;
-  const resetUser = useResetRecoilState(loginState);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -61,8 +60,7 @@ export default function LoginForm() {
         console.log(e);
       }
     }
-    resetUser();
-  }, [auth, authError, form.account, navigate, resetUser]);
+  }, [auth, authError, form.account, navigate]);
 
   return (
     <AuthForm
