@@ -1,93 +1,73 @@
-import { useState } from 'react';
 import styled from 'styled-components';
+import { emojiList } from '../../lib/styles/constants';
 
 const EmojiBlock = styled.div`
   width: 100%;
-  padding: 60px;
+  margin: 0 0 0 70px;
+  padding: 30px 10px;
+  background: none;
 
   display: flex;
   flex-direction: row;
   align-items: center;
 
   .checked-emoji {
-    width: 100px;
-    height: 100px;
+    width: 60px;
+    height: 60px;
   }
 
-  .others {
-    width: 50px;
-    height: 50px;
+  .explain {
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  button {
+    width: 24px;
+    height: 24px;
+    border: none;
+    border-radius: 100%;
+    margin: 2px;
+
+    :hover {
+      cursor: pointer;
+    }
+  }
+
+  .row {
+    margin: 0 0 0 10px;
+
+    display: flex;
+    flex-direction: row;
+  }
+
+  .span-block {
+    width: auto;
+    background: white;
+    padding: 0 10px;
+    border-radius: 20px;
+
+    font-size: 1rem;
+    font-weight: 800;
   }
 `;
 
-const emojiSrcList = [
-  {
-    emojiId: 0,
-    angry: {
-      url: 'images/Emoji/Angry.svg',
-      text1: '화난 구슬이에요',
-      text2: '오늘은 너무 화가 나요!',
-    },
-  },
-  {
-    emojiId: 1,
-    fear: {
-      url: 'images/Emoji/Fear.svg',
-      text1: '공포 구슬이에요',
-      text2: '저는 공포에 떨고있어요',
-    },
-  },
-  {
-    emojiId: 2,
-    happy: {
-      url: 'images/Emoji/Happy.svg',
-      text1: '행복한 구슬이에요',
-      text2: '저는 신날 때 나타나요!',
-    },
-  },
-  {
-    emojiId: 3,
-    love: {
-      url: 'images/Emoji/Love.svg',
-      text1: '사랑 구슬이에요',
-      text2: '저는 사랑에 빠졌어요!',
-    },
-  },
-  {
-    emojiId: 4,
-    sad: {
-      url: 'images/Emoji/Sad.svg',
-      text1: '슬픈 구슬이에요',
-      text2: '저는 슬퍼요',
-    },
-  },
-  {
-    emojiId: 5,
-    pokerface: {
-      url: 'images/Emoji/PokerFace.svg',
-      text1: '무표정 구슬이에요',
-      text2: '저는 아무 생각이 없어요',
-    },
-  },
-];
+export default function Emoji({ tempEmoji, onClick }) {
+  // 배열로 저장
+  const checkedEmoji = emojiList.filter((name) => name.emojiId === tempEmoji);
 
-export default function Emoji({ tempEmoji }) {
-  const [checkedEmoji, setCheckedEmoji] = useState(tempEmoji);
-
-  const onFocus = (e) => {
-    setCheckedEmoji(e.target.style.backgroundImage);
-  };
-
-  const others = emojiSrcList.map((emojiId, name) => {
-    if (checkedEmoji !== name) {
+  const others = emojiList.map((name) => {
+    if (checkedEmoji[0].emojiId !== name.emojiId) {
       return (
-        <div
-          key={emojiId}
-          className="others"
+        <button
+          key={name.emojiId}
+          value={name.emojiId}
           style={{
             backgroundImage: `url(${name.url})`,
             backgroundSize: 'cover',
           }}
+          onClick={onClick}
         />
       );
     }
@@ -98,9 +78,16 @@ export default function Emoji({ tempEmoji }) {
     <EmojiBlock>
       <div
         className="checked-emoji"
-        style={{ backgroundImage: `url(${checkedEmoji})` }}
+        style={{
+          backgroundImage: `url(${checkedEmoji[0].url})`,
+          backgroundSize: 'cover',
+        }}
       />
-      <div className="others">{others}</div>
+      <div className="explain">
+        <div className="span-block">{checkedEmoji[0].text1}</div>
+        <div className="span-block">{checkedEmoji[0].text2}</div>
+        <div className="row">{others}</div>
+      </div>
     </EmojiBlock>
   );
 }

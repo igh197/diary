@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../../common/Button';
+import Emoji from '../../common/Emoji';
 
 const Fullscreen = styled.div`
   position: fixed;
@@ -19,7 +20,7 @@ const AskModalBlock = styled.div`
   width: 500px;
   height: 500px;
   background: ${(props) => props.theme.content};
-  padding: 5px;
+  padding: 15px;
   border-radius: 16px;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.125);
   z-index: 999;
@@ -28,11 +29,13 @@ const AskModalBlock = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  transform: translate(-80%, 70%);
+  transform: translate(80%, 50%);
 
-  h3 {
-    margin-top: 0;
-    margin-bottom: 1rem;
+  position: fixed;
+
+  h4 {
+    color: #666666;
+    margin: 5px;
   }
 
   p {
@@ -45,7 +48,8 @@ const AskModalBlock = styled.div`
   }
 
   .header {
-    width: 80%;
+    width: 100%;
+    padding: 0 10px;
 
     display: flex;
     flex-direction: row;
@@ -54,45 +58,63 @@ const AskModalBlock = styled.div`
   }
 
   .content {
-    width: 80%;
-    height: 40%;
-    margin: 0 auto;
-    padding: 10px;
+    width: 100%;
+    height: 35%;
+    padding: 5x 10px;
     background: ${(props) => props.theme.background};
     border-radius: 16px;
+    box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, 0.25);
+
+    // width: 715px;
+    // height: 292px;
   }
 
   .emoji {
   }
 
   .theme {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    padding: 5px 0 0 0;
 
-    div {
+    display: block;
+
+    overflow-x: auto;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+
+    button {
+      width: 80px;
+      height: 80px;
+      margin: 7px 3px;
+      border: 5px solid ${(props) => props.theme.background};
+
+      display: inline-block;
+
       &:hover {
         cursor: pointer;
       }
 
       &:focus {
-        border: 5px solid blue;
+        border: 5px solid ${(props) => props.theme.text};
       }
     }
   }
 `;
 
-const StyledButton = styled(Button)`
-  height: 2rem;
+const XButton = styled(Button)`
+  width: 15px;
+  height: 15px;
+  background-image: url(/images/Write/XButton.svg);
+  background-size: cover;
 `;
 
 export function AskModal({
+  tempEmoji,
   visible,
   title,
   confirmText = '확인',
   onConfirm,
   onCancel,
+  onClick,
   theme,
 }) {
   if (!visible) return null;
@@ -101,24 +123,23 @@ export function AskModal({
       <Fullscreen onClick={onCancel} />
       <AskModalBlock>
         <div className="header">
-          <h3>{title}</h3>
-          <Button onClick={onCancel}>x</Button>
+          <h4>{title}</h4>
+          <XButton onClick={onCancel} />
         </div>
         <div className="content">
-          <span>감정 구슬</span>
+          <h4>감정 구슬</h4>
+          <Emoji tempEmoji={tempEmoji} onClick={onClick} />
         </div>
         <div className="content">
-          <span>오늘의 테마</span>
+          <h4>오늘의 테마</h4>
           <div className="theme">
             {theme.map((theme) => {
               return (
-                <div
+                <button
                   key={theme}
                   style={{
                     backgroundImage: 'url(/images/User/Profile.svg)',
                     backgroundSize: 'cover',
-                    width: 50,
-                    height: 50,
                   }}
                   value={theme}
                 />
@@ -127,16 +148,18 @@ export function AskModal({
           </div>
         </div>
         <div className="buttons">
-          <StyledButton onClick={onConfirm}>{confirmText}</StyledButton>
+          <Button $done="true" onClick={onConfirm}>
+            {confirmText}
+          </Button>
         </div>
       </AskModalBlock>
     </>
   );
 }
 
-export default function ImageModal({ onPublish }) {
+export default function ImageModal({ onPublish, onChange, tempEmoji }) {
   const [open, setOpen] = useState(true);
-  const theme = ['Love', 'PokerFace', 'Fear', 'Sad'];
+  const theme = ['Love', 'PokerFace', 'Fear'];
 
   const onConfirm = () => {
     setOpen(false);
@@ -148,11 +171,13 @@ export default function ImageModal({ onPublish }) {
 
   return (
     <AskModal
+      tempEmoji={tempEmoji}
       visible={open}
       title={'Dinary가 감정과 테마를 분석했어요!'}
-      confirmText="확인"
+      confirmText="완료"
       onConfirm={onPublish}
       onCancel={onCancel}
+      onClick={onChange}
       theme={theme}
     />
   );

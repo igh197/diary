@@ -1,24 +1,13 @@
 import { useState } from 'react';
-import styled from 'styled-components';
 import ImageModal from './ImageModal';
 import Button from '../../common/Button';
 import HeaderContainer from '../../../containers/header/HeaderContainer';
 
-const SaveButton = styled(Button)`
-  width: 80px;
-  height: 40px;
-  background: ${(props) => props.theme.text};
-  border-radius: 56px;
-
-  position: absolute;
-  right: 70px;
-
-  font-size: 1rem;
-  font-weight: bold;
-  color: white;
-`;
-
-export default function ModalContainer({ onPublish, isEdit }) {
+export default function ModalContainer({
+  onPublish,
+  onChangeEmoji,
+  tempEmoji,
+}) {
   const [firstModal, setFirstModal] = useState(false);
 
   const handleFirstModal = () => {
@@ -28,8 +17,16 @@ export default function ModalContainer({ onPublish, isEdit }) {
   return (
     <>
       <HeaderContainer />
-      <SaveButton onClick={handleFirstModal}>저장</SaveButton>
-      {firstModal && <ImageModal onPublish={onPublish} />}
+      <Button $done="true" onClick={handleFirstModal}>
+        저장
+      </Button>
+      {firstModal && (
+        <ImageModal
+          onPublish={onPublish}
+          onChange={onChangeEmoji}
+          tempEmoji={tempEmoji}
+        />
+      )}
     </>
   );
 }

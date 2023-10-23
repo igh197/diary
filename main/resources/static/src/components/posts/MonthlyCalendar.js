@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import EmojiExplain from './modal/EmojiExplain';
 
 const MonthlyCalendarBlock = styled.div`
   margin: 0 10px;
@@ -10,21 +11,21 @@ const MonthlyCalendarBlock = styled.div`
   color: ${(props) => props.theme.text};
 
   .main-header {
+    width: 50%;
     margin: 0 0 30px 0;
     padding: 0 0 0 15px;
-
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
 
     font-size: 1rem;
   }
 
-  .main-header > div:first-child {
+  .main-header > span {
     margin: 0 20px 0 0;
 
     font-weight: bold;
+  }
+
+  .explain {
+    z-index: 5;
   }
 `;
 
@@ -203,8 +204,7 @@ export default function MonthlyCalendar({ account, posts }) {
   return (
     <MonthlyCalendarBlock>
       <div className="main-header">
-        <div>감정달력</div>
-        <div>일기를 쓰고 기분구슬을 모아보세요!</div>
+        <span>감정달력</span> 일기를 쓰고 <EmojiExplain />을 모아보세요!
       </div>
       <CalendarBlock>
         <Calendar
