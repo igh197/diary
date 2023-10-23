@@ -18,7 +18,7 @@ const PostListBlock = styled(Responsive)`
   justify-body: space-between;
 `;
 
-// id, title, body, emoji, tags, createdAt, updatedAt, deletedAt
+// id, title, body, emoji, summed, createdAt
 export const postsExample = [
   {
     postId: 0,
@@ -27,7 +27,7 @@ export const postsExample = [
       title: '우오와아',
       body: '가나다라마바사아자차카타파하어느정도적어야이길이가끝이나는것일까알아맞혀보자이정도로썼는데도아직도안넘어갔다면그럴때는다시생각해보자답이나올것이다',
       emoji: 'Love',
-      tags: '',
+      summed: '',
       createdAt: '2023-10-11T22:46:17.348',
     },
   },
@@ -38,7 +38,7 @@ export const postsExample = [
       title: '가을이다',
       body: '선선한가을날씨와함께부는싱그러운바람이얼마나좋은지모른다이래서가을인가너무너무좋다',
       emoji: 'PokerFace',
-      tags: '',
+      summed: '',
       createdAt: '2023-10-12T22:46:17.348',
     },
   },
@@ -49,7 +49,7 @@ export const postsExample = [
       title: '가을이다',
       body: '선선한가을날씨와함께부는싱그러운바람이얼마나좋은지모른다이래서가을인가너무너무좋다',
       emoji: 'Fear',
-      tags: '',
+      summed: '',
       createdAt: '2023-10-13T22:46:17.348',
     },
   },
@@ -60,7 +60,7 @@ export const postsExample = [
       title: '가을이다',
       body: '선선한가을날씨와함께부는싱그러운바람이얼마나좋은지모른다이래서가을인가너무너무좋다',
       emoji: 'Sad',
-      tags: '',
+      summed: '',
       createdAt: '2023-10-14T22:46:17.348',
     },
   },
@@ -71,7 +71,7 @@ export const postsExample = [
       title: '가을이다',
       body: '선선한가을날씨와함께부는싱그러운바람이얼마나좋은지모른다이래서가을인가너무너무좋다',
       emoji: 'Happy',
-      tags: '',
+      summed: '',
       createdAt: '2023-10-15T22:46:17.348',
       updatedAt: '',
       deletedAt: '',

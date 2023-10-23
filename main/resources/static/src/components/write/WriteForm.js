@@ -42,17 +42,22 @@ const WriteBlock = styled(Responsive)`
   }
 `;
 
-export default function WriteForm({ onChangeField, onPublish }) {
+export default function WriteForm({ onChangeField, onPublish, tempEmoji }) {
   return (
     <WriteBlock>
       <div className="explain-bar">
         <div>
           <div className="category">일기 작성</div>
           <div className="subtitles">
-            Dinary가 일기를 기반으로 감정을 분석해드릴게요!
+            {/* Dinary가 일기를 기반으로 감정을 분석해드릴게요! - 수정 선택에 대한 설명 필요 */}
+            오늘 하루, 어떤 감정이 제일 기억에 남나요?
           </div>
         </div>
-        <ModalContainer onPublish={onPublish} />
+        <ModalContainer
+          onPublish={onPublish}
+          onChangeEmoji={onChangeField}
+          tempEmoji={tempEmoji}
+        />
       </div>
       <Edit onChangeField={onChangeField} />
       <ToTop />

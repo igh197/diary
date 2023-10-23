@@ -17,11 +17,17 @@ export default function EditorContainer() {
   const navigate = useNavigate();
 
   const onChangeField = (e) => {
+    if (e.target.value) {
+      setWrite({
+        ...write,
+        emoji: e.target.value,
+      });
+      return;
+    }
     setWrite({
       ...write,
       [e.key]: e.value,
     });
-    console.log(write);
   };
 
   // 포스트 등록
@@ -81,6 +87,7 @@ export default function EditorContainer() {
       onChangeField={onChangeField}
       onPublish={onPublish}
       onCancel={onCancel}
+      tempEmoji={emoji}
     />
   );
 }

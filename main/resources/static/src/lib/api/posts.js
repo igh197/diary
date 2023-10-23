@@ -1,13 +1,13 @@
 import qs from 'qs';
 import client from './client';
 
-export const writePost = ({ id, title, body, emoji, tags, createdAt }) =>
+export const writePost = ({ id, title, body, emoji, summed, createdAt }) =>
   client.post('/api/diary/new', {
     id,
     title,
     body,
     emoji,
-    tags,
+    summed,
     createdAt,
   });
 
@@ -30,12 +30,12 @@ export const listPosts = ({ account }) => {
 //   return client.get(`/api/diarys?${queryString}`);
 // };
 
-export const updatePost = ({ id, title, body, emoji, tags, createdAt }) =>
+export const updatePost = ({ id, title, body, emoji, summed, createdAt }) =>
   client.put(`/api/diary/${id}`, {
     title,
     body,
     emoji,
-    tags,
+    summed,
     createdAt,
   });
 

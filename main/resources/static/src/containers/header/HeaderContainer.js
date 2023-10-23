@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { userState } from '../../State/userState';
 import { postUser } from '../../lib/api/user';
 import { logout } from '../../lib/api/auth';
-import Header from '../../components/common/Header';
+import Header from '../../components/common/header/Header';
 
 export default function HeaderContainer() {
   const user = useRecoilValue(userState);
