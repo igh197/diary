@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import AuthForm from '../../components/auth/AuthForm';
 import { loginState } from '../../State/authState';
 import { login } from '../../lib/api/auth';
@@ -51,7 +51,7 @@ export default function LoginForm() {
     if (auth) {
       const userInfo = getUser(form.account);
       localStorage.setItem('account', JSON.stringify(form.account));
-      localStorage.setItem('user-image', JSON.stringify(userInfo.userImage));
+      // localStorage.setItem('user-image', JSON.stringify(userInfo.userImage));
       localStorage.setItem('theme', JSON.stringify(userInfo.userTheme));
       try {
         console.log('로그인 성공');

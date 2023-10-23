@@ -4,9 +4,10 @@ import client from './client';
 
 // 로그인 확인 후에
 export const getUser = async (account) => {
-  const userImage = await client.get(`api/userimage/${account}.json`);
+  // const userImage = await client.get(`api/userimage/${account}.json`);
   const userTheme = await client.get(`api/user/${account}.json`);
-  return { userImage, userTheme };
+
+  return { userTheme };
 };
 
 // 프로필 사진 전송
