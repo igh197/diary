@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const ProfileContent = styled.div`
+const ProfileContent = styled.input`
   width: 100%;
   margin: 20px 10px;
 
@@ -33,25 +33,23 @@ const ProfileContent = styled.div`
   font-size: 1.5rem;
   color: ${(props) => props.theme.text};
 
-  input {
-    width: 100%;
-    height: 3.5rem;
-    padding: 0 0 0 20px;
-    background: ${(props) => props.theme.settingPassword};
-    border-radius: 16px;
-    border: 1px solid #d6d6d6;
+  width: 100%;
+  height: 3.5rem;
+  padding: 0 0 0 20px;
+  background: ${(props) => props.theme.settingPassword};
+  border-radius: 16px;
+  border: 1px solid #d6d6d6;
 
-    font-size: 1rem;
+  font-size: 1rem;
 
-    ::placeholder {
-      color: ${(props) => props.theme.placeholder};
-    }
+  ::placeholder {
+    color: ${(props) => props.theme.placeholder};
+  }
 
-    &:focus {
-      outline: none;
-      border: 2px solid ${palette.gray[0]};
-      color: ${(props) => props.theme.text};
-    }
+  &:focus {
+    outline: none;
+    border: 2px solid ${palette.gray[0]};
+    color: ${(props) => props.theme.text};
   }
 
   ${(props) =>
@@ -77,16 +75,7 @@ const Footer = styled.div`
   text-align: right;
 `;
 
-const Save = styled(Button)`
-  width: 9rem;
-  height: 3rem;
-  border-radius: 16px;
-  box-shadow: 0 3px 2px ${palette.gray[0]};
-  background: ${(props) => props.theme.text};
-
-  color: white;
-`;
-
+// 리팩토링 컴포넌트 하나 더 만들어서 Upload파일이랑 깊이 같게 만들자
 export default function PasswordChange({
   profile,
   form,
@@ -101,31 +90,30 @@ export default function PasswordChange({
       <UploadFile profile={profile} onUpload={onUpload} />
       <form onSubmit={onSubmit}>
         <p>비밀번호 :</p>
-        <ProfileContent>
-          <input
-            name="password"
-            autoComplete="password"
-            placeholder="변경할 비밀번호를 입력해 주세요."
-            onChange={onChange}
-            value={form.password}
-            type="password"
-          />
-        </ProfileContent>
+        <ProfileContent
+          name="password"
+          autoComplete="password"
+          placeholder="변경할 비밀번호를 입력해 주세요."
+          onChange={onChange}
+          value={form.password}
+          type="password"
+        />
         <p>비밀번호 확인 :</p>
-        <ProfileContent $error={error || null}>
-          <input
-            name="passwordConfirm"
-            autoComplete="new-password"
-            placeholder="변경할 비밀번호를 한번 더 입력해 주세요."
-            onChange={onChange}
-            value={form.passwordConfirm}
-            type="password"
-          />
-        </ProfileContent>
+        <ProfileContent
+          $error={error || null}
+          name="passwordConfirm"
+          autoComplete="new-password"
+          placeholder="변경할 비밀번호를 한번 더 입력해 주세요."
+          onChange={onChange}
+          value={form.passwordConfirm}
+          type="password"
+        />
       </form>
       {error && <ErrorBlock>{error}</ErrorBlock>}
       <Footer>
-        <Save onClick={onSubmit}>수정하기</Save>
+        <Button $save="true" onClick={onSubmit}>
+          수정하기
+        </Button>
       </Footer>
     </Wrapper>
   );

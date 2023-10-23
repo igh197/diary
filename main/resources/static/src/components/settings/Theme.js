@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import Button from '../common/Button';
-import palette from '../../lib/styles/palette';
 
 const ThemeBlock = styled.div`
   width: 100%;
@@ -52,16 +51,6 @@ const Footer = styled.div`
   text-align: right;
 `;
 
-const Save = styled(Button)`
-  width: 9rem;
-  height: 3rem;
-  border-radius: 16px;
-  box-shadow: 0 3px 2px ${palette.gray[0]};
-  background: ${(props) => props.theme.text};
-
-  color: white;
-`;
-
 export default function Theme({ tempTheme, onClick, handleCheck }) {
   const themesInput = ['basicTheme', 'greenTheme', 'darkTheme'];
   const check = document.activeElement.name;
@@ -92,7 +81,9 @@ export default function Theme({ tempTheme, onClick, handleCheck }) {
         })}
       </ImageBlock>
       <Footer>
-        <Save onClick={onClick}>수정하기</Save>
+        <Button $save="true" onClick={onClick}>
+          수정하기
+        </Button>
       </Footer>
     </ThemeBlock>
   );
