@@ -68,11 +68,11 @@ const PostContent = styled.div`
 
 const postInfo = {
   backgroundImage: '/images/Background/Login2.png',
-  contentColor: '#F2F2F2',
+  bodyColor: '#F2F2F2',
 };
 
 export default function PostViewer({ post, onEdit, onRemove }) {
-  const { backgroundImage, contentColor } = postInfo;
+  const { backgroundImage, bodyColor } = postInfo;
   window.scrollTo({ top: 0 });
   //error
   // // 에러 발생 시
@@ -88,8 +88,7 @@ export default function PostViewer({ post, onEdit, onRemove }) {
   //   return null;
   // }
 
-  const { id, title, content, emoji, tags, createdAt, updatedAt, deletedAt } =
-    post;
+  const { id, title, body, emoji, summed, createdAt } = post;
   return (
     <PostViewerBlock
       style={{
@@ -114,12 +113,12 @@ export default function PostViewer({ post, onEdit, onRemove }) {
       <Contents>
         <div
           className="title"
-          style={{ borderBottom: `2px solid ${contentColor}` }}
+          style={{ borderBottom: `2px solid ${bodyColor}` }}
         >
           <span>{title}</span>
         </div>
         {/* <PostContent dangerouslySetInnerHTML={{ __html: content }} /> */}
-        <PostContent>{content}</PostContent>
+        <PostContent>{body}</PostContent>
       </Contents>
       <ToTop />
     </PostViewerBlock>

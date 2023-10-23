@@ -1,45 +1,33 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import Button from '../Button';
+import Modal from '../Modal';
 import palette from '../../../lib/styles/palette';
-
-const Wrapper = styled.div``;
-
-const Overlay = styled.div`
-  width: 100%;
-  height: 100vh;
-  background: none;
-
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 999;
-`;
 
 const Content = styled.div`
   width: 224px;
   height: 298px;
-  padding: 40px 5px 25px 5px;
+  padding: 13px 5px;
   background-image: url(${(props) => props.theme.settingModal});
   background-size: cover;
   filter: drop-shadow(0px 86px 24px rgba(0, 0, 0, 0))
     drop-shadow(0px 55px 22px rgba(0, 0, 0, 0.01))
     drop-shadow(0px 31px 19px rgba(0, 0, 0, 0.05))
     drop-shadow(0px 14px 14px rgba(0, 0, 0, 0.09))
-    drop-shadow(0px 3px 8px rgba(0, 0, 0, 0.1));
+    drop-shadow(0px 3px 8px rgba(0, 0, 0, 0.1));s
 
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-evenly;
   transform: translate(-94%, 13%);
 
   position: fixed;
   z-index: 999;
 
   .profile {
-    margin: 10px 0;
+    margin: 0 0 5px 0;
+    padding: 25px 0 10px 0;
     border-radius: 25px;
 
     display: flex;
@@ -60,8 +48,10 @@ const UserImageButton = styled.img`
 
 const LinkButton = styled(Button)`
   width: 80%;
-  height: 4rem;
+  height: 3rem;
   border-radius: 25px;
+  margin: 0 20px 5px;
+  padding: 10px;
 
   display: flex;
   align-items: center;
@@ -82,8 +72,7 @@ export default function UserInfoModal({ account, userImage, close, onLogout }) {
   });
 
   return (
-    <Wrapper>
-      <Overlay onClick={close}></Overlay>
+    <Modal close={close}>
       <Content>
         <div className="profile">
           <UserImageButton src={userImage} alt="Profile" />
@@ -94,6 +83,6 @@ export default function UserInfoModal({ account, userImage, close, onLogout }) {
           Logout
         </LinkButton>
       </Content>
-    </Wrapper>
+    </Modal>
   );
 }

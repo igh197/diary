@@ -13,40 +13,35 @@ const buttonStyle = css`
   cursor: pointer;
   background: none;
   letter-spacing: 1px;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
 
   &:hover {
     color: ${palette.gray[0]};
   }
 
   ${(props) =>
-    props.$fullWidth &&
+    props.$save &&
     css`
-      padding-top: 0.75rem;
-      padding-bottom: 0.75rem;
-      width: 100%;
-      font-size: 1.125rem;
+      width: 9rem;
+      height: 3rem;
+      border-radius: 16px;
+      box-shadow: 0 3px 2px ${palette.gray[0]};
+      background: ${(props) => props.theme.text};
+
+      color: white;
     `}
 
   ${(props) =>
-    props.$circle &&
+    props.$done &&
     css`
-      background: white;
-      height: 5rem;
-      width: 5rem;
-      border-radius: 100%;
-      border-bottom: 2px solid ${palette.gray[0]};
-      color: ${(props) => props.theme.text};
-      font-size: 3rem;
-      margin: 5rem;
+      width: 80px;
+      height: 40px;
+      background: ${(props) => props.theme.text};
+      border-radius: 56px;
+
+      font-size: 1rem;
+      font-weight: bold;
+      color: white;
     `}
-
-    &:disabled {
-      background: ${palette.gray[0]};
-      color: ${palette.gray[0]};
-      cursor: not-allowed;
-
 `;
 
 const StyledButton = styled.button`

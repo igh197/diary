@@ -1,22 +1,8 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import Button from '../../common/Button';
+import Modal from '../../common/Modal';
 import palette from '../../../lib/styles/palette';
-
-const Wrapper = styled.div``;
-
-const Overlay = styled.div`
-  width: 100%;
-  height: 100vh;
-  background: none;
-
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 990;
-`;
 
 const Content = styled.div`
   width: 150px;
@@ -67,12 +53,11 @@ export default function UpdatesModal({ close, onEdit, onRemove }) {
   });
 
   return (
-    <Wrapper>
-      <Overlay onClick={close}></Overlay>
+    <Modal close={close}>
       <Content>
         <ActionButton onClick={onEdit}>수정</ActionButton>
         <ActionButton onClick={onRemove}>삭제</ActionButton>
       </Content>
-    </Wrapper>
+    </Modal>
   );
 }

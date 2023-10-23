@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import Button from './Button';
-import UserInfo from './userInfo/UserInfo';
+import Button from '../Button';
+import UserInfo from './UserInfo';
 
 const Wrapper = styled.div`
   width: 100%;
