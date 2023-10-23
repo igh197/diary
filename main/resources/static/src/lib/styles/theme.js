@@ -10,6 +10,7 @@ export const themes = {
     listBlock: 'rgba(0, 0, 0, 0.5)',
     listTitle: '#FFFFFF',
     listSubtitle: 'rgba(255, 255, 255, 0.5)',
+    listEmojiBlock: 'images/Posts/EmojiBlock.svg',
     content: '#FFFFFF',
     writeContent: '#FFFFFF',
     writeToTop: 'images/Write/ToTop.svg',
@@ -35,6 +36,7 @@ export const themes = {
     listBlock: 'rgba(255, 255, 255, 0.5)',
     listTitle: 'rgba(0, 0, 0, 0.9)',
     listSubtitle: 'rgba(0, 0, 0, 0.5)',
+    listEmojiBlock: 'images/Posts/EmojiBlock.svg',
     content: '#F6F6F6', // #F6F6F6
     writeContent: '#FFFFFF',
     writeToTop: 'images/Write/ToTop.svg',
@@ -60,6 +62,7 @@ export const themes = {
     listBlock: 'rgba(255, 255, 255, 0.5)',
     listTitle: '#FFFFFF',
     listSubtitle: 'rgba(0, 0, 0, 0.5)',
+    listEmojiBlock: 'images/Posts/EmojiBlockDark.svg',
     content: '#343434',
     writeContent: '#343434',
     writeToTop: 'images/Write/ToTopDark.svg',
