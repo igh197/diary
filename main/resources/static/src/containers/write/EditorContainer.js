@@ -2,18 +2,19 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useResetRecoilState, useRecoilValue } from 'recoil';
 import WriteForm from '../../components/write/WriteForm';
-import { postState, writeState } from '../../State/postState';
-import { userState } from '../../State/userState';
+import { postState, postErrorState } from '../../State/postState';
+import { userAccount } from '../../State/userState';
 import { writePost, updatePost } from '../../lib/api/posts';
 
 // 모달 구현!
 
 export default function EditorContainer() {
-  const user = useRecoilValue(userState);
-  const reset = useResetRecoilState(writeState);
+  const user = useRecoilValue(userAccount);
   const [write, setWrite] = useRecoilState(postState);
-  const { postInfo, post, postError } = write;
-  const { id, title, body, emoji, tags, createdAt } = postInfo;
+  const [post, setPost] = useRecoilState(postErrorState);
+  const reset = useResetRecoilState(postState);
+
+  const { id, title, body, emoji, tags, createdAt } = write;
   const navigate = useNavigate();
 
   const onChangeField = (e) => {
@@ -51,18 +52,9 @@ export default function EditorContainer() {
     }
 
     try {
-      setWrite({
-        ...write,
-        post: true,
-        postError: null,
-      });
-      console.log(postInfo);
+      setPost({ error: false });
     } catch (e) {
-      setWrite({
-        ...write,
-        post: null,
-        postError: true,
-      });
+      setPost({ error: true });
     }
   };
 
@@ -73,14 +65,15 @@ export default function EditorContainer() {
 
   // 성공 혹은 실패 시 할 작업
   useEffect(() => {
-    if (post) {
+    if (post.error) {
+      console.log(post.error);
+    }
+    if (post.error === false) {
+      navigate(`/${user.account}/${id}`);
       reset();
-      navigate(`/${user.account}/${postInfo.id}`); // 나중에 ${user.account} 앞에 @추가
     }
-    if (postError) {
-      console.log(postError);
-    }
-  }, [navigate, post, postError, postInfo.id, user.account, reset]);
+    setPost({ error: null });
+  }, [post.error, navigate, user.account, id, reset, setPost]);
 
   return (
     <WriteForm

@@ -6,7 +6,7 @@ import Responsive from '../../components/common/Responsive';
 import PostsAlign from '../../components/posts/PostsAlign';
 import MonthlyCalendar from '../../components/posts/MonthlyCalendar';
 import { postListState } from '../../State/postState';
-import { userState } from '../../State/userState';
+import { userAccount } from '../../State/userState';
 import { listPosts } from '../../lib/api/posts';
 
 const PostListBlock = styled(Responsive)`
@@ -19,7 +19,7 @@ const PostListBlock = styled(Responsive)`
 `;
 
 export default function PostListContainer() {
-  const account = useRecoilValue(userState).account;
+  const account = useRecoilValue(userAccount);
   const [postList, setPostList] = useRecoilState(postListState);
   const [error, setError] = useState('');
   // const [loading, setLoading] = useRecoilState(postState).loading;
@@ -46,12 +46,15 @@ export default function PostListContainer() {
       // setLoading(false);
     };
     getPosts();
+    console.log(postList);
   }, [account, setPostList, postList]);
 
-  // 에러 발생 시
-  if (error) {
-    return <PostListBlock>에러가 발생했습니다.</PostListBlock>;
-  }
+  // // 에러 발생 시
+  // if (error) {
+  //   console.log(error);
+  //   return <PostListBlock>에러가 발생했습니다.</PostListBlock>;
+  // }
+
   return (
     <PostListBlock>
       <MonthlyCalendar account={account} posts={postList} />
