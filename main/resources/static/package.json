@@ -8,7 +8,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
-    "axios": "^1.4.0",
+    "axios": "^1.5.1",
     "immer": "^10.0.1",
     "qs": "^6.11.2",
     "react": "^18.2.0",
@@ -47,5 +47,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://10.50.46.73:8080"
+  "proxy": "http://ec2-13-209-22-152.ap-northeast-2.compute.amazonaws.com:8080"
 }
