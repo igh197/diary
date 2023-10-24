@@ -120,14 +120,14 @@ export default function AuthForm({ type, form, onChange, onSubmit, error }) {
   return (
     <AuthFormBlock>
       <form onSubmit={onSubmit} action="../login" method="POST">
-        <InputDiv $select={select === 'login' ? true : false}>
+        <InputDiv $select={select === 'account' ? true : false}>
           <StyledInput
             autoComplete="account"
             name="account"
             placeholder="아이디를 입력해주세요"
             onChange={onChange}
             defaultValue={form.account}
-            onFocus={() => setSelect('login')}
+            onFocus={() => setSelect('account')}
           />
           {select === 'login' ? <img src="/images/Login/Eye.svg" alt="" /> : ''}
         </InputDiv>

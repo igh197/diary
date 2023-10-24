@@ -47,7 +47,6 @@ const CalendarBlock = styled.div`
   .react-calendar button {
     height: 6.5rem;
     padding: 10px 0;
-    background: none;
     // border: 1px solid ${palette.gray[0]};
 
     display: flex;
@@ -131,12 +130,12 @@ const CalendarBlock = styled.div`
   }
 
   .react-calendar__tile:disabled {
-    background-color: #f0f0f0;
+    background: #f0f0f0;
   }
 
   .react-calendar__tile:enabled:hover,
   .react-calendar__tile:enabled:focus {
-    background-color: none;
+    background: none;
   }
 
   // 수정
@@ -179,25 +178,28 @@ const EmojiBlock = styled(Link)`
 export default function MonthlyCalendar({ account, posts }) {
   const addContent = ({ date }) => {
     const day = String(Number(date.toISOString().slice(8, 10)) + 1);
-    const emoji = posts.map((post) => {
-      if (
-        post.post.createdAt.slice(0, 7) === date.toISOString().slice(0, 7) &&
-        post.post.createdAt.slice(8, 10) === day
-      ) {
-        return (
-          <EmojiBlock
-            key={post.postId}
-            to={`/${account}/${post.post.id}`}
-            style={{
-              backgroundImage: `url('/images/Emoji/${post.post.emoji}.svg')`,
-              backgroundSize: 'cover',
-            }}
-          />
-        );
-      }
-      return null;
-    });
-    return emoji;
+    if (posts.totalElements !== 0) {
+      const emoji = posts.map((post) => {
+        if (
+          post.createdAt.slice(0, 7) === date.toISOString().slice(0, 7) &&
+          post.createdAt.slice(8, 10) === day
+        ) {
+          return (
+            <EmojiBlock
+              key={post.id}
+              to={`/${account}/${post.id}`}
+              style={{
+                backgroundImage: `url('/images/Emoji/${post.emoji}.svg')`,
+                backgroundSize: 'cover',
+              }}
+            />
+          );
+        }
+        return null;
+      });
+      return emoji;
+    }
+    return null;
   };
 
   // locale="ko-KR" // 한국어로 설정
