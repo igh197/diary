@@ -1,13 +1,10 @@
-// import { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { readPost } from '../../lib/api/posts';
 import PostViewer from '../../components/post/PostViewer';
-// import { removePost } from '../../lib/api/posts';
+import { removePost } from '../../lib/api/posts';
 import { useRecoilValue } from 'recoil';
 import { userAccount } from '../../State/userState';
-
-// 임시
-import { postsExample } from '../posts/PostListContainer';
 
 //http://localhost:3000/account/0
 
@@ -28,13 +25,13 @@ export default function PostViewerContainer() {
     }
   };
 
-  // useEffect(() => {
-  //   readPost(postId);
-  //   // 언마운트될 때 리덕스에서 포스트 데이터 없애기
-  //   return () => {
-  //     unloadPost();
-  //   };
-  // }, [postId]);
+  useEffect(() => {
+    readPost(postId);
+    // 언마운트될 때 리덕스에서 포스트 데이터 없애기
+    return () => {
+      // unloadPost();
+    };
+  }, [postId]);
 
   const onEdit = () => {
     // setPostInfo({ ...postInfo, originalPostId: post._id });
@@ -46,13 +43,12 @@ export default function PostViewerContainer() {
 
   const onRemove = async () => {
     if (window.confirm('정말로 삭제하시겠습니까?')) {
-      // await removePost(postId);
+      await removePost(postId);
     } else {
       return;
     }
     try {
-      navigate('/postsample'); // 홈으로 이동
-      // navigate(`/@${account.account}`); // 메인화면으로 이동
+      navigate(`/@${account.account}`); // 메인화면으로 이동
     } catch (e) {
       console.log(e);
     }
@@ -62,8 +58,7 @@ export default function PostViewerContainer() {
     <PostViewer
       // post={post}
       // error={error}
-      // post={viewPost} 나중에 사용
-      post={postsExample[postId].post}
+      post={viewPost}
       onEdit={onEdit}
       // actionButtons={ownPost && <PostActionButtons onEdit={onEdit} />}
       onRemove={onRemove}
