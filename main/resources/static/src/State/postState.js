@@ -3,10 +3,10 @@ import { atom, selector } from 'recoil';
 export const postListState = atom({
   key: 'postListState',
   default: {
-    totalPages: null,
-    totalElements: null,
-    currentPage: null,
-    currentElements: null,
+    totalPages: 0,
+    totalElements: 0,
+    currentPage: 0,
+    currentElements: 0,
     postInfo: null,
   },
 });
@@ -14,35 +14,18 @@ export const postListState = atom({
 export const postState = atom({
   key: 'postState',
   default: {
-    postInfo: {
-      id: 0,
-      title: '',
-      body: '',
-      emoji: 'Happy',
-      summed: '',
-      createdAt: null,
-    },
-    post: null,
-    postError: null,
+    id: 0,
+    title: '',
+    body: '',
+    emoji: 'Happy',
+    summed: '',
+    createdAt: null,
   },
 });
 
-export const writeState = selector({
-  key: 'writeState',
-  get: ({ get }) => {
-    const post = get(postState);
-    return post.postInfo;
-  },
-  set: ({ set, get }, newValue) => {
-    const post = get(postState);
-    set(postState, { ...post, post: newValue });
-  },
-});
-
-export const readState = selector({
-  key: 'readState',
-  get: ({ get }) => {
-    const post = get(postState);
-    return post.postInfo;
+export const postErrorState = atom({
+  key: 'postErrorState',
+  default: {
+    error: null,
   },
 });
