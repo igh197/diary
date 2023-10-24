@@ -2,7 +2,7 @@ import qs from 'qs';
 import client from './client';
 
 export const writePost = ({ id, title, body, emoji, summed, createdAt }) =>
-  client.post('/api/diary/new', {
+  client.post('/diary/new', {
     id,
     title,
     body,
@@ -11,11 +11,12 @@ export const writePost = ({ id, title, body, emoji, summed, createdAt }) =>
     createdAt,
   });
 
-export const readPost = (id) => client.get(`/api/diary/${id}`);
+export const readPost = (id) => client.get(`/diary/${id}`);
 
 // 글리스트 불러오는 API
 export const listPosts = ({ account }) => {
-  client.get(`/api/diarys?${account}`);
+  const response = client.get(`/diarys/${account}`);
+  return response;
 };
 
 // 조금만 더 알아보자.
@@ -31,7 +32,7 @@ export const listPosts = ({ account }) => {
 // };
 
 export const updatePost = ({ id, title, body, emoji, summed, createdAt }) =>
-  client.put(`/api/diary/${id}`, {
+  client.put(`/diary/${id}`, {
     title,
     body,
     emoji,
@@ -39,6 +40,6 @@ export const updatePost = ({ id, title, body, emoji, summed, createdAt }) =>
     createdAt,
   });
 
-export const removePost = (id) => client.delete(`/api/diary/${id}`);
+export const removePost = (id) => client.delete(`/diary/${id}`);
 
 // unloadPost가 왜 있었지?
