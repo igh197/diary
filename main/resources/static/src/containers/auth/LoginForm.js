@@ -1,20 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import AuthForm from '../../components/auth/AuthForm';
 import { loginState } from '../../State/authState';
 import { login } from '../../lib/api/auth';
 import { getUser } from '../../lib/api/user';
+import { errorState } from '../../State/errorState';
 
 export default function LoginForm() {
-  const [user, setUser] = useRecoilState(loginState);
-  const { form, auth, authError } = user;
+  const [form, setForm] = useRecoilState(loginState);
+  const [auth, setAuth] = useRecoilState(errorState);
+  const resetError = useResetRecoilState(errorState);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const onChange = (e) => {
     const { value, name } = e.target;
-    setUser({
+    setForm({
       ...form,
       [name]: value,
     });
@@ -29,21 +31,19 @@ export default function LoginForm() {
     login({ account: form.account, password: form.password });
 
     try {
-      const userInfo = getUser(form.account);
-      localStorage.setItem('account', form.account);
-      // localStorage.setItem('user-image', JSON.stringify(userInfo.userImage));
-      localStorage.setItem('theme', JSON.stringify(userInfo.userTheme));
-      navigate(`/${form.account}`);
+      setAuth({ error: false });
     } catch (e) {
+      setAuth({ error: true });
       console.log(e);
     }
   };
 
   useEffect(() => {
-    if (authError) {
+    if (auth.error) {
       setError('로그인 실패');
+      console.log(auth.error);
     }
-    if (auth) {
+    if (auth.error === false) {
       const userInfo = getUser(form.account);
       localStorage.setItem('account', JSON.stringify(form.account));
       // localStorage.setItem('user-image', JSON.stringify(userInfo.userImage));
@@ -55,7 +55,8 @@ export default function LoginForm() {
         console.log(e);
       }
     }
-  }, [auth, authError, form.account, navigate]);
+    resetError();
+  }, [auth, setAuth, form.account, resetError, navigate]);
 
   return (
     <AuthForm
