@@ -34,18 +34,10 @@ export default function RegisterForm() {
     }
     register({ account, password });
     try {
-      setUser({
-        ...form,
-        auth: true,
-        authError: null,
-      });
+      navigate('/');
+      resetState();
     } catch (e) {
       console.log(e);
-      setUser({
-        ...form,
-        auth: null,
-        authError: true,
-      });
     }
   };
 

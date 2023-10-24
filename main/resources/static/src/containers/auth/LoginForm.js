@@ -29,9 +29,8 @@ export default function LoginForm() {
     login({ account: form.account, password: form.password });
 
     try {
-      alert('성엉공옹');
       const userInfo = getUser(form.account);
-      localStorage.setItem('account', JSON.stringify(form.account));
+      localStorage.setItem('account', form.account);
       // localStorage.setItem('user-image', JSON.stringify(userInfo.userImage));
       localStorage.setItem('theme', JSON.stringify(userInfo.userTheme));
       navigate(`/${form.account}`);
