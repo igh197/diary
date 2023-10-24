@@ -4,11 +4,11 @@ import Modal from '../../common/Modal';
 import Emoji from '../../common/Emoji';
 
 const Content = styled.div`
-  width: 360px;
-  height: 240px;
+  width: 394px;
+  height: 342px;
   padding: 25px 5px;
   background-image: url(${(props) => props.theme.listEmojiBlock});
-  background-size: cover;
+  background-size: contain;
 
   display: flex;
   flex-direction: column;

@@ -16,11 +16,12 @@ const ImageBlock = styled.div`
   justify-content: center;
 
   img {
-    width: 12rem;
-    height: 18rem;
+    width: 13rem;
+    height: 19rem;
     margin: 12px 15px;
     border-radius: 16px;
     object-fit: cover;
+    border: 5px solid transparent;
 
     &:hover {
       cursor: pointer;
@@ -32,14 +33,14 @@ const ImageBlock = styled.div`
   }
 
   .check {
-    width: 24px;
-    height: 24px;
+    width: 33px;
+    height: 33px;
     margin: 0;
 
     z-index: 2;
 
     position: absolute;
-    transform: translate(790%, 10%);
+    transform: translate(611%, 4%);
   }
 `;
 

@@ -12,8 +12,8 @@ const EmojiBlock = styled.div`
   align-items: center;
 
   .checked-emoji {
-    width: 60px;
-    height: 60px;
+    width: 100px;
+    height: 100px;
   }
 
   .explain {
@@ -58,20 +58,17 @@ export default function Emoji({ tempEmoji, onClick }) {
   const checkedEmoji = emojiList.filter((name) => name.emojiId === tempEmoji);
 
   const others = emojiList.map((name) => {
-    if (checkedEmoji[0].emojiId !== name.emojiId) {
-      return (
-        <button
-          key={name.emojiId}
-          value={name.emojiId}
-          style={{
-            backgroundImage: `url(${name.url})`,
-            backgroundSize: 'cover',
-          }}
-          onClick={onClick}
-        />
-      );
-    }
-    return null;
+    return (
+      <button
+        key={name.emojiId}
+        value={name.emojiId}
+        style={{
+          backgroundImage: `url(${name.url})`,
+          backgroundSize: 'cover',
+        }}
+        onClick={onClick}
+      />
+    );
   });
 
   return (
