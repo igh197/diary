@@ -24,8 +24,8 @@ export const userProfileState = selector({
   key: 'userProfileState',
   get: ({ get }) => {
     const user = get(userState);
-    localStorage.getItem('account');
-    localStorage.getItem('user-image');
+    // localStorage.getItem('account');
+    // localStorage.getItem('user-image');
     return {
       account: user.account,
       userImage: user.userImage,
@@ -48,7 +48,7 @@ export const themeState = selector({
     if (['basicTheme', 'greenTheme', 'darkTheme'].includes(localStorageTheme)) {
       localStorage.setItem('theme', JSON.stringify('basicTheme'));
     }
-    return localStorageTheme ? JSON.parse(localStorageTheme) : 'basicTheme';
+    return localStorageTheme ? 'basicTheme' : 'basicTheme';
     // recoil callback 함수 활용해서 사용하자. (맨처음에만 실행되는 함수)
     // try {
     //   const response = await getTheme(userState.account);

@@ -71,7 +71,7 @@ export default function Header({ account, userImage, onLogout }) {
   return (
     <Wrapper $scroll={scroll}>
       <HeaderBlock>
-        <LogoButton to="/postsample">
+        <LogoButton to={`/${account}`}>
           <div />
         </LogoButton>
         <UserInfo account={account} userImage={userImage} onLogout={onLogout} />

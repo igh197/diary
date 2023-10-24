@@ -29,18 +29,14 @@ export default function LoginForm() {
     login({ account: form.account, password: form.password });
 
     try {
-      setUser({
-        ...form,
-        auth: true,
-        authError: null,
-      });
+      alert('성엉공옹');
+      const userInfo = getUser(form.account);
+      localStorage.setItem('account', JSON.stringify(form.account));
+      // localStorage.setItem('user-image', JSON.stringify(userInfo.userImage));
+      localStorage.setItem('theme', JSON.stringify(userInfo.userTheme));
+      navigate(`/${form.account}`);
     } catch (e) {
       console.log(e);
-      setUser({
-        ...form,
-        auth: null,
-        authError: true,
-      });
     }
   };
 
