@@ -12,8 +12,6 @@ export const authState = atom({
       account: '',
       password: '',
     },
-    auth: null,
-    authError: null,
   },
 });
 
@@ -23,8 +21,6 @@ export const loginState = selector({
     const auth = get(authState);
     return {
       form: auth.login,
-      auth: auth.auth,
-      authError: auth.authError,
     };
   },
   set: ({ set }, newValue) => {
@@ -41,8 +37,6 @@ export const registerState = selector({
     const auth = get(authState);
     return {
       form: auth.register,
-      auth: auth.auth,
-      authError: auth.authError,
     };
   },
   set: ({ set }, newValue) => {
