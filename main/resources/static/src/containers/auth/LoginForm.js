@@ -28,7 +28,8 @@ export default function LoginForm() {
       setError(`아이디 또는 비밀번호를 모두 입력하세요.`);
       return;
     }
-    login({ account: form.account, password: form.password });
+    const response = login({ account: form.account, password: form.password });
+    console.log(response);
 
     try {
       setAuth({ check: true });
@@ -50,28 +51,28 @@ export default function LoginForm() {
         const userInfo = getUser(form.account);
 
         // 로컬에 저장
-        localStorage.setItem('account', JSON.stringify(form.account));
-        if (userInfo.userTheme) {
-          localStorage.setItem('theme', JSON.stringify(userInfo.userTheme));
-        } else {
-          localStorage.setItem('theme', JSON.stringify(user.userTheme));
-        }
-        if (userInfo.userImage) {
-          localStorage.setItem(
-            'user-image',
-            JSON.stringify(userInfo.userImage),
-          );
-        } else {
-          localStorage.setItem('user-image', JSON.stringify(user.userImage));
-        }
+        // localStorage.setItem('account', JSON.stringify(form.account));
+        // if (userInfo.userTheme) {
+        //   localStorage.setItem('theme', JSON.stringify(userInfo.userTheme));
+        // } else {
+        //   localStorage.setItem('theme', JSON.stringify(user.userTheme));
+        // }
+        // if (userInfo.userImage) {
+        //   localStorage.setItem(
+        //     'user-image',
+        //     JSON.stringify(userInfo.userImage),
+        //   );
+        // } else {
+        //   localStorage.setItem('user-image', JSON.stringify(user.userImage));
+        // }
 
-        const userTheme = localStorage.getItem('theme');
-        console.log(userTheme, user.userTheme);
+        // const userTheme = localStorage.getItem('theme');
+        // console.log(userTheme, user.userTheme);
 
-        setUser({
-          ...user,
-          account: form.account,
-        });
+        // setUser({
+        //   ...user,
+        //   account: form.account,
+        // });
         navigate(`/${form.account}`);
       } catch (e) {
         console.log(e);

@@ -29,7 +29,11 @@ export default function RegisterForm() {
       setError('비밀번호가 일치하지 않습니다.');
       return;
     }
-    register({ account: form.account, password: form.password });
+    const response = register({
+      account: form.account,
+      password: form.password,
+    });
+    console.log(response.data);
     try {
       setError('성공');
     } catch (e) {
