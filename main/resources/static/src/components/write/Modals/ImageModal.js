@@ -17,8 +17,8 @@ const Fullscreen = styled.div`
 `;
 
 const AskModalBlock = styled.div`
-  width: 500px;
-  height: 540.88px;
+  width: 550px;
+  height: 594.97px;
   background: ${(props) => props.theme.content};
   padding: 15px;
   border-radius: 16px;
@@ -29,13 +29,13 @@ const AskModalBlock = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  transform: translate(80%, 50%);
+  transform: translate(73%, 40%);
 
   position: fixed;
 
   h4 {
     color: #666666;
-    margin: 5px;
+    margin: 5px 5px 0 5px;
   }
 
   p {
@@ -59,7 +59,8 @@ const AskModalBlock = styled.div`
 
   .content {
     width: 100%;
-    padding: 0 20px;
+    height: 40%;
+    padding: 10px 20px;
     background: ${(props) => props.theme.background};
     border-radius: 16px;
     box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, 0.25);
@@ -69,6 +70,8 @@ const AskModalBlock = styled.div`
   }
 
   .emoji {
+    padding: none;
+    size: 90%;
   }
 
   .theme {
@@ -125,7 +128,7 @@ export function AskModal({
           <h4>{title}</h4>
           <XButton onClick={onCancel} />
         </div>
-        <div className="content">
+        <div className="content emoji">
           <h4>감정 구슬</h4>
           <Emoji tempEmoji={tempEmoji} onClick={onClick} />
         </div>
@@ -139,6 +142,8 @@ export function AskModal({
                   style={{
                     backgroundImage: 'url(/images/User/Profile.svg)',
                     backgroundSize: 'cover',
+                    width: '125px',
+                    height: '125px',
                   }}
                   value={theme}
                 />

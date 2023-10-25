@@ -11,7 +11,7 @@ const EmojiBlock = styled.div`
   align-items: center;
   justify-content: center;
 
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 800;
 
   .emoji-content {
@@ -57,7 +57,6 @@ const EmojiBlock = styled.div`
 
   .row {
     width: 100%;
-    padding: 10px 10px 0 10px;
 
     display: flex;
     flex-direction: row;
@@ -80,7 +79,7 @@ const EmojiBlock = styled.div`
 const EmojiName = styled.div`
   height: 26px;
   border-radius: 26px;
-  padding: 0 10px;
+  padding: 2px 10px 0 10px;
   box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, 0.25);
 
   text-align: center;

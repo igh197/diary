@@ -71,9 +71,10 @@ const postInfo = {
   bodyColor: '#F2F2F2',
 };
 
-export default function PostViewer({ post, onEdit, onRemove }) {
+export default function PostViewer({ account, post, onEdit, onRemove }) {
   const { backgroundImage, bodyColor } = postInfo;
   window.scrollTo({ top: 0 });
+
   //error
   // // 에러 발생 시
   // if (error) {
@@ -98,14 +99,14 @@ export default function PostViewer({ post, onEdit, onRemove }) {
       }}
     >
       <PostHead>
-        {console.log('post', post)}
+        {console.log(post)}
         <div>
           <div className="category">
-            {createdAt.slice(0, 4)}년 {createdAt.slice(5, 7)}월{' '}
-            {createdAt.slice(8, 10)}일
+            {createdAt.getFullYear()}년 {createdAt.getMonth() + 1}월{' '}
+            {createdAt.getDate()}일
           </div>
           <div className="subtitles">
-            님의 마음구슬을 <span>{emoji}</span>구슬이에요.
+            {account}님의 마음구슬은 <span>{emoji}</span>구슬이에요.
           </div>
         </div>
         <Updates onEdit={onEdit} onRemove={onRemove} />
