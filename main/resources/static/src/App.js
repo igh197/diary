@@ -29,8 +29,7 @@ export default function App() {
           </Route>
           <Route element={<PostListPage />} path="/:account" />
           <Route element={<WritePage />} path="/write" />
-          {/* <Route element={<PostPage />} path="/@:account/:postId" /> */}
-          <Route element={<PostPage />} path="/account/:postId" />
+          <Route element={<PostPage />} path="/:account/:postId" />
           <Route element={<PostSamplePage />} path="/postsample" />
         </Routes>
       </Router>
