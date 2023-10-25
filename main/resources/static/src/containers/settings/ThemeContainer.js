@@ -34,7 +34,8 @@ export default function ThemeContainer() {
 
   const onClick = () => {
     setTheme(tempTheme);
-    window.location.reload();
+    localStorage.setItem('theme', tempTheme);
+    // window.location.reload();
   };
 
   return (

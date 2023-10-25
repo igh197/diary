@@ -30,13 +30,13 @@ const ContentBlock = styled.div`
 
 export default function PasswordContainer() {
   const [profile, setProfile] = useRecoilState(userProfileState);
-  const [user, setUser] = useRecoilState(passwordState);
-  const { form, auth, authError } = user;
+  const [form, setForm] = useRecoilState(passwordState);
   const [error, setError] = useState('');
+  const [auth, setAuth] = useState('');
 
   const onChange = (e) => {
     const { value, name } = e.target;
-    setUser({
+    setForm({
       ...form,
       [name]: value,
     });
@@ -49,15 +49,10 @@ export default function PasswordContainer() {
     } else if (form.password === form.passwordConfirm) {
       changePassword(profile.account, form.password);
       try {
-        setUser({
-          ...user,
-          auth: true,
-        });
+        setAuth(true);
       } catch (e) {
-        setUser({
-          ...user,
-          authError: true,
-        });
+        setAuth(false);
+        console.log(e);
       }
     } else {
       setError('비밀번호가 일치하지 않습니다. 다시 입력해 주세요.');
@@ -65,13 +60,13 @@ export default function PasswordContainer() {
   };
 
   useEffect(() => {
-    if (auth) {
+    if (auth === true) {
       alert('비밀번호가 변경되었습니다.');
     }
-    if (authError) {
+    if (auth === false) {
       alert('비밀번호 변경에 실패했습니다.');
     }
-  }, [auth, authError]);
+  }, [auth]);
 
   const onUpload = (e) => {
     const file = e.target.files[0];
@@ -98,7 +93,7 @@ export default function PasswordContainer() {
       // 원래는 selector에 적어야 하는데 오류 생겨서 여기에 저장 확인 후 수정
       localStorage.setItem('user-image', imageUrl);
       console.log(profile.userImage);
-      window.location.reload();
+      // window.location.reload();
     } catch (e) {
       console.log('localStorage is not working');
     }
