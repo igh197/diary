@@ -18,7 +18,7 @@ const Fullscreen = styled.div`
 
 const AskModalBlock = styled.div`
   width: 500px;
-  height: 500px;
+  height: 540.88px;
   background: ${(props) => props.theme.content};
   padding: 15px;
   border-radius: 16px;
@@ -59,8 +59,7 @@ const AskModalBlock = styled.div`
 
   .content {
     width: 100%;
-    height: 35%;
-    padding: 5x 10px;
+    padding: 0 20px;
     background: ${(props) => props.theme.background};
     border-radius: 16px;
     box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, 0.25);
