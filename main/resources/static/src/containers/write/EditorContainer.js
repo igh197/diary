@@ -6,35 +6,43 @@ import { postState, postErrorState } from '../../State/postState';
 import { userAccount } from '../../State/userState';
 import { writePost, updatePost } from '../../lib/api/posts';
 
-// 모달 구현!
-
 export default function EditorContainer() {
   const user = useRecoilValue(userAccount);
   const [write, setWrite] = useRecoilState(postState);
   const [post, setPost] = useRecoilState(postErrorState);
   const reset = useResetRecoilState(postState);
 
-  const { id, title, body, emoji, tags, createdAt } = write;
+  const { id, title, body, emoji, summed, createdAt } = write;
   const navigate = useNavigate();
 
   const onChangeField = (e) => {
-    if (e.target.value) {
+    if (e.key === 'body') {
       setWrite({
         ...write,
-        emoji: e.target.value,
+        body: e.value,
+      });
+      console.log(write);
+      return;
+    }
+
+    if (e.target.name) {
+      setWrite({
+        ...write,
+        [e.target.name]: e.target.value,
       });
       return;
     }
+
     setWrite({
       ...write,
-      [e.key]: e.value,
+      emoji: e.target.value,
     });
   };
 
   // 포스트 등록
   const onPublish = () => {
     if (createdAt) {
-      updatePost({ id, title, body, emoji, tags, createdAt });
+      updatePost({ id, title, body, emoji, summed, createdAt });
       return;
     } else {
       setWrite({
@@ -46,7 +54,7 @@ export default function EditorContainer() {
         title,
         body,
         emoji,
-        tags,
+        summed,
         createdAt,
       });
     }

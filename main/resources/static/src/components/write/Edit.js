@@ -39,22 +39,24 @@ const Editor = styled(CKEditor)`
 `;
 
 export default function Edit({ onChangeField }) {
-  const onChangeTitle = (e) => {
-    onChangeField({ key: 'title', value: e.target.value });
-  };
-
   return (
     <Container>
-      <TitleInput placeholder="제목을 입력해주세요" onChange={onChangeTitle} />
-      <Editor
-        editor={ClassicEditor}
-        config={editorConfiguration}
-        data=""
-        onChange={(event, editor) => {
-          const data = editor.getData();
-          onChangeField({ key: 'content', value: data });
-        }}
-      />
+      <form name="write">
+        <TitleInput
+          placeholder="제목을 입력해주세요"
+          onChange={onChangeField}
+          name="title"
+        />
+        <Editor
+          editor={ClassicEditor}
+          config={editorConfiguration}
+          data=""
+          onChange={(event, editor) => {
+            const data = editor.getData();
+            onChangeField({ key: 'body', value: data });
+          }}
+        />
+      </form>
     </Container>
   );
 }
