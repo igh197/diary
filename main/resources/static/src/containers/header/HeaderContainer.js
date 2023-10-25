@@ -21,16 +21,12 @@ export default function HeaderContainer() {
     localStorage.removeItem('account');
     localStorage.removeItem('theme');
     localStorage.removeItem('user-image');
-    postUser(account, userImage, userTheme);
+    // postUser(account, userImage, userTheme);
     logout();
     navigate('/');
   };
 
   return (
-    <Header
-      account={account}
-      userImage={userImage}
-      onLogout={() => handleLogout}
-    />
+    <Header account={account} userImage={userImage} onLogout={handleLogout} />
   );
 }

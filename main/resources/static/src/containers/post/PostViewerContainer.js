@@ -1,16 +1,17 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { readPost } from '../../lib/api/posts';
-import PostViewer from '../../components/post/PostViewer';
-import { removePost } from '../../lib/api/posts';
 import { useRecoilValue } from 'recoil';
+import PostViewer from '../../components/post/PostViewer';
+import { removePost, readPost } from '../../lib/api/posts';
 import { userAccount } from '../../State/userState';
+import { postState } from '../../State/postState';
 
 //http://localhost:3000/account/0
 
 export default function PostViewerContainer() {
   const { postId } = useParams();
   const account = useRecoilValue(userAccount);
+  const post = useRecoilValue(postState);
   // reset도 할 것 수정
   const navigate = useNavigate();
 
@@ -56,9 +57,10 @@ export default function PostViewerContainer() {
 
   return (
     <PostViewer
-      // post={post}
       // error={error}
-      post={viewPost}
+      // post={viewPost}
+      account={account}
+      post={post}
       onEdit={onEdit}
       // actionButtons={ownPost && <PostActionButtons onEdit={onEdit} />}
       onRemove={onRemove}

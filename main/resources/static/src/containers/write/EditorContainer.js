@@ -77,8 +77,10 @@ export default function EditorContainer() {
       console.log(post.error);
     }
     if (post.error === false) {
+      console.log(write);
       navigate(`/${user.account}/${id}`);
-      reset();
+      // navigate(`/${user.account}`);
+      // reset();
     }
     setPost({ error: null });
   }, [post.error, navigate, user.account, id, reset, setPost]);

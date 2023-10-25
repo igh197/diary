@@ -7,7 +7,6 @@ import RegisterPage from './pages/RegisterPage';
 import WritePage from './pages/WritePage';
 import PostPage from './pages/PostPage';
 import SettingsPage from './pages/SettingsPage';
-import PostSamplePage from './pages/PostSamplePage';
 import { ThemeProvider } from 'styled-components';
 import { themeState } from './State/userState';
 import { themes } from './lib/styles/theme';
@@ -30,7 +29,6 @@ export default function App() {
           <Route element={<PostListPage />} path="/:account" />
           <Route element={<WritePage />} path="/write" />
           <Route element={<PostPage />} path="/:account/:postId" />
-          <Route element={<PostSamplePage />} path="/postsample" />
         </Routes>
       </Router>
     </ThemeProvider>

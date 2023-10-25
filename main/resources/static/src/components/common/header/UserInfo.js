@@ -31,7 +31,7 @@ export default function UserInfo({ account, userImage, onLogout }) {
           account={account}
           userImage={userImage}
           close={close}
-          onClick={onLogout}
+          onLogout={onLogout}
         />
       )}
     </>
