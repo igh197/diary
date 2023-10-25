@@ -1,29 +1,30 @@
 <svg
-  width="394"
-  height="342"
-  viewBox="0 0 394 342"
+  width="494"
+  height="416"
+  viewBox="0 0 494 416"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
-  style="width: 350px; height: 259.36px; filter: drop-shadow(0px 4px 4px rgba(0,0,0,0.25)) drop-shadow(0px 86px 24px rgba(0,0,0,0)) drop-shadow(0px 55px 22px rgba(0,0,0,0.01)) drop-shadow(0px 31px 19px rgba(0,0,0,0.05)) drop-shadow(0px 14px 14px rgba(0,0,0,0.09)) drop-shadow(0px 3px 8px rgba(0,0,0,0.1));"
+  class="w-[450px] h-[333.47px]"
+  style="filter: drop-shadow(0px 4px 4px rgba(0,0,0,0.25)) drop-shadow(0px 86px 24px rgba(0,0,0,0)) drop-shadow(0px 55px 22px rgba(0,0,0,0.01)) drop-shadow(0px 31px 19px rgba(0,0,0,0.05)) drop-shadow(0px 14px 14px rgba(0,0,0,0.09)) drop-shadow(0px 3px 8px rgba(0,0,0,0.1));"
   preserveAspectRatio="xMidYMid meet"
 >
-  <g filter="url(#filter0_ddddd_1178_187)">
+  <g filter="url(#filter0_ddddd_1213_196)">
     <rect
-      width="350"
-      height="252.488"
+      width="450"
+      height="324.627"
       rx="25"
-      transform="matrix(-1 0 0 1 372 11.8745)"
+      transform="matrix(-1 0 0 1 472 13.8389)"
       fill="white"
     ></rect>
-    <path d="M79.2727 5L66.5455 14.3745H92L79.2727 5Z" fill="white"></path>
+    <path d="M95.6354 5L79.2718 17.053H111.999L95.6354 5Z" fill="white"></path>
   </g>
   <defs>
     <filter
-      id="filter0_ddddd_1178_187"
+      id="filter0_ddddd_1213_196"
       x="0"
       y="0"
-      width="394"
-      height="341.362"
+      width="494"
+      height="415.466"
       filterUnits="userSpaceOnUse"
       color-interpolation-filters="sRGB"
     >
@@ -43,7 +44,7 @@
       <feBlend
         mode="normal"
         in2="BackgroundImageFix"
-        result="effect1_dropShadow_1178_187"
+        result="effect1_dropShadow_1213_196"
       ></feBlend>
       <feColorMatrix
         in="SourceAlpha"
@@ -59,8 +60,8 @@
       ></feColorMatrix>
       <feBlend
         mode="normal"
-        in2="effect1_dropShadow_1178_187"
-        result="effect2_dropShadow_1178_187"
+        in2="effect1_dropShadow_1213_196"
+        result="effect2_dropShadow_1213_196"
       ></feBlend>
       <feColorMatrix
         in="SourceAlpha"
@@ -76,8 +77,8 @@
       ></feColorMatrix>
       <feBlend
         mode="normal"
-        in2="effect2_dropShadow_1178_187"
-        result="effect3_dropShadow_1178_187"
+        in2="effect2_dropShadow_1213_196"
+        result="effect3_dropShadow_1213_196"
       ></feBlend>
       <feColorMatrix
         in="SourceAlpha"
@@ -93,8 +94,8 @@
       ></feColorMatrix>
       <feBlend
         mode="normal"
-        in2="effect3_dropShadow_1178_187"
-        result="effect4_dropShadow_1178_187"
+        in2="effect3_dropShadow_1213_196"
+        result="effect4_dropShadow_1213_196"
       ></feBlend>
       <feColorMatrix
         in="SourceAlpha"
@@ -111,13 +112,13 @@
       ></feColorMatrix>
       <feBlend
         mode="normal"
-        in2="effect4_dropShadow_1178_187"
-        result="effect5_dropShadow_1178_187"
+        in2="effect4_dropShadow_1213_196"
+        result="effect5_dropShadow_1213_196"
       ></feBlend>
       <feBlend
         mode="normal"
         in="SourceGraphic"
-        in2="effect5_dropShadow_1178_187"
+        in2="effect5_dropShadow_1213_196"
         result="shape"
       ></feBlend>
     </filter>
