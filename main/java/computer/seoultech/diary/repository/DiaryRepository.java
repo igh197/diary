@@ -11,6 +11,9 @@ import java.util.Optional;
 public interface DiaryRepository extends JpaRepository<Diary,Long> {
 
     Optional<Diary> findDiaryById(Long id);
+
     Page<Diary> findDiariesByBookmarkIsTrue(Pageable pageable);
 
+
+    void deleteDiaryById(Long id);
 }
