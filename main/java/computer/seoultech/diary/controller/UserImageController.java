@@ -9,10 +9,11 @@ import computer.seoultech.diary.service.UserImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin(origins = "*")
-@RequestMapping("/")
+@RequestMapping("/api")
 public class UserImageController {
     private final UserImageService userImageService;
     @PostMapping("/userimage/new")
@@ -20,8 +21,12 @@ public class UserImageController {
         userImageService.save(userImageDto);
 
     }
-    @PutMapping("/userimage/{id}")    //image 수정 method
-    public Header<UserImageDto> update(@RequestBody UserImageDto userImageDto, @RequestParam Long id){
-        return userImageService.update(userImageDto,id);
+    @PutMapping("/userimage/{account}")    //image 수정 method
+    public Header<UserImageDto> update(@RequestBody UserImageDto userImageDto, @PathVariable String account){
+        return userImageService.update(userImageDto,account);
+    }
+    @GetMapping("/userimage/{account}")
+    public String userImage(@PathVariable String account){
+        return userImageService.userImage(account);
     }
 }

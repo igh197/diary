@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/")
 public class UserController {
     private final UserService userService;
@@ -30,22 +29,26 @@ public class UserController {
         userService.save(userRequest);  //userService class에서 구현됨
 
     }
+
     @PostMapping("user/{account}")
-    public User myPage(@PathVariable String account){
-        return userService.loadUserByUsername(account);
+    public Header<User> getMyPage(@RequestBody UserRequest userRequest){
+        return userService.login(userRequest);
     }
 
-    @PostMapping("/user")
-    public User login(@RequestBody LoginDto loginDto){  //계정으로 마이페이지 찾기
-        return userService.login(loginDto); //userService class에 구현되어 있음
+
+    @GetMapping("user/{account}")
+    public Header<User> getMyPage2(@RequestBody UserRequest userRequest){
+        return userService.login(userRequest);
     }
+
+
     @PutMapping("/user/{account}")
     public void update(@PathVariable String account,@RequestBody UserRequest userRequest){
         userService.update(account,userRequest);   //사용자 정보 수정
     }
-    @DeleteMapping("/user/{id}")
-    public void delete(@PathVariable Long id){
-        userService.delete(id);
+    @DeleteMapping("/user/{account}")
+    public void delete(@PathVariable String account){
+        userService.delete(account);
     } //회원 탈퇴
 
 }

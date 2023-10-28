@@ -1,6 +1,7 @@
 package computer.seoultech.diary.controller;
 
 
+import computer.seoultech.diary.entity.Diary;
 import computer.seoultech.diary.network.DiaryRequest;
 import computer.seoultech.diary.network.DiaryResponse;
 import computer.seoultech.diary.network.Header;
@@ -14,25 +15,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin("http://localhost:3000")
-@RequestMapping("/")
+@RequestMapping("")
 public class DiaryController {
     private final DiaryService diaryService;
     private final DiaryRepository diaryRepository;
 
     @PostMapping("/diary/new")
-    public void save(@RequestBody DiaryRequest diaryRequest) {  //다이어리 생성
+    public void save(@RequestBody DiaryRequest diaryRequest){  //다이어리 생성
 
        diaryService.save(diaryRequest);
+
     }
 
-    @GetMapping("/diarys")
-    public Header<List<DiaryResponse>> getDiarys(@PageableDefault Pageable pageable){  //diary 리스트 , admin만 접근 가능
-        return diaryService.findAll(pageable);        //diaryService class에 구현되어 있음
+    @GetMapping("/diarys/{account}")
+    public Header<List<Diary>> getDiarys(@PathVariable String account,@PageableDefault Pageable pageable){  //diary 리스트 , admin만 접근 가능
+        return diaryService.findAll(account,pageable);        //diaryService class에 구현되어 있음
     }
     @GetMapping("/diary/{id}")
     public Header<DiaryResponse> diaryDetail(@PathVariable Long id){   //diary 1개
@@ -42,12 +44,16 @@ public class DiaryController {
 
     @PutMapping("/diary/{id}")
     public Header<DiaryResponse> update(@RequestBody DiaryRequest diaryRequest,@PathVariable Long id) { //다이어리 수정
-        return diaryService.update(id,diaryRequest);
+        return diaryService.update(diaryRequest,id);
     }
-    @GetMapping("")
-    public Header<List<DiaryResponse>> bookmarks(@PageableDefault Pageable pageable){  //북마크 표시한 다이어리
-        return diaryService.bookmarks(pageable);
+    @DeleteMapping
+    public void delete(@PathVariable Long id){
+        diaryService.delete(id);
     }
 
+    @PostMapping("/file/share")
+    public String getFile(@RequestBody File sumFile,@RequestBody File colorFile,@RequestBody File backgroundFile){
+        return diaryService.getFileToString(sumFile,colorFile,backgroundFile);
+    }
 
 }
