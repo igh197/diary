@@ -67,18 +67,18 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .authorizeHttpRequests()
                 //post request
 
-                .requestMatchers(HttpMethod.POST,"/register","/loginProc").permitAll()
-                .requestMatchers(HttpMethod.POST,"/diary/new","/image/new","/diaryfile/{id}","userimage/{id}").hasAnyRole("USER","ADMIN")
+                .requestMatchers(HttpMethod.POST,"/user/new","/user","/user/{account}").permitAll()
+                .requestMatchers(HttpMethod.POST,"/diary/new","/image/new","/diaryfile/{id}","userimage/{id}").permitAll()
                 //get request
-                .requestMatchers(HttpMethod.GET,"/user/{id}","/diarys","/diary/{id}","/","/diaryfiles","/diaryfile/{id}").hasAnyRole("USER","ADMIN")
-                .requestMatchers(HttpMethod.GET,"/users").hasAnyRole("ADMIN","USER")
+                .requestMatchers(HttpMethod.GET,"user/{account}","/user/{id}","/diarys/{account}","/diary/{id}","/","/diaryfiles","/diaryfile/{id}","/image/{id}","/image/{account}").permitAll()
+                .requestMatchers(HttpMethod.GET,"/users").permitAll()
                 //put request
-                .requestMatchers(HttpMethod.PUT,"/diary/{id}","/userimage/{id}").hasAnyRole("USER","ADMIN")
+                .requestMatchers(HttpMethod.PUT,"/diary/{id}","api/userimage/{id}","/image/{account}").permitAll()
                 .requestMatchers(HttpMethod.PUT,"/user/{id}").hasRole("ADMIN")
                 //delete request
-                .requestMatchers(HttpMethod.DELETE,"/diary/{id}").hasAnyRole("USER","ADMIN")
-                .requestMatchers(HttpMethod.DELETE,"/user/{id}").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE,"/image/{id}").hasAnyRole("USER","ADMIN")
+                .requestMatchers(HttpMethod.DELETE,"/diary/{id}").permitAll()
+                .requestMatchers(HttpMethod.DELETE,"/user/{id}").permitAll()
+                .requestMatchers(HttpMethod.DELETE,"/image/{id}").permitAll()
                 .anyRequest().permitAll()
 
                 .and()
@@ -86,7 +86,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .formLogin()
                 .usernameParameter("account") // 계정 ID
                 .passwordParameter("password") //비밀번호
-                .loginProcessingUrl("/loginProc") //스프링 시큐리티가 제공하는 로그인 인증 기능
+                .loginProcessingUrl("/login") //스프링 시큐리티가 제공하는 로그인 인증 기능
                 .defaultSuccessUrl("http://127.0.0.1:8080/")
                 .permitAll();
                  http.logout()
