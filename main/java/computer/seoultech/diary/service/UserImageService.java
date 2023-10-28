@@ -30,16 +30,18 @@ public class UserImageService {
                 .originalFileName(userImageDto.getOriginalFileName())
                 .storedFilePath(userImageDto.getStoredFilePath())
                 .fileSize(userImageDto.getFileSize())
+                .img(userImageDto.getImg())
                 .user(userRepository.findUserById(((User) principal).getId()).orElseThrow())  //이미지 내용 저장
                 .build());
     }
 
-    public Header<UserImageDto> update(UserImageDto userImageDto, Long id) {
-        Optional<UserImage> imageOptional = userImageRepository.findUserimageById(id);
+    public Header<UserImageDto> update(UserImageDto userImageDto, String account) {
+        Optional<UserImage> imageOptional = userImageRepository.findUserimageById(userRepository.findUserByAccount(account).getId());  //업;
         UserImage uImage=UserImage.builder()
                 .originalFileName(userImageDto.getOriginalFileName())
                 .storedFilePath(userImageDto.getStoredFilePath())
                 .fileSize(userImageDto.getFileSize())
+                .img(userImageDto.getImg())
                 .build();
         imageOptional.map(image -> response(uImage)).orElseThrow();
         return Header.OK(response(uImage));
@@ -50,20 +52,21 @@ public class UserImageService {
                 .originalFileName(uImage.getOriginalFileName())
                 .storedFilePath(uImage.getStoredFilePath())
                 .fileSize(uImage.getFileSize())
+                .img(uImage.getImg())
                 .build();
         return userImageDto;
     }
 
 
-    public List<String> userImage(Long id) {
+    public String userImage(String account) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<UserImage> uImages = userImageRepository.findAll();
-        List<String> userImagePaths = uImages.stream().filter(d->d.getUser().getId()==((User)principal).getId())//사용자 자신의 일기장만 볼 수 있음
-                .map(image -> image.getStoredFilePath())// 람다 함수를 이용한 반복문 대체
-                .collect(Collectors.toList());
+        Optional<UserImage> uImage = userImageRepository.findUserimageById(userRepository.findUserByAccount(account).getId());
+        String userImagePath = uImage //사용자 자신의 일기장만 볼 수 있음
+                .map(image -> image.getStoredFilePath()).orElseThrow()// 람다 함수를 이용한 반복문 대체
+                ;
 
 
 
-        return userImagePaths;
+        return userImagePath;
     }
 }
