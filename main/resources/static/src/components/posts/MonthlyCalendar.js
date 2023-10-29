@@ -178,7 +178,7 @@ const EmojiBlock = styled(Link)`
 export default function MonthlyCalendar({ account, posts }) {
   const addContent = ({ date }) => {
     const day = String(Number(date.toISOString().slice(8, 10)) + 1);
-    if (posts.totalElements !== 0) {
+    if (!posts) {
       const emoji = posts.map((post) => {
         if (
           post.createdAt.slice(0, 7) === date.toISOString().slice(0, 7) &&

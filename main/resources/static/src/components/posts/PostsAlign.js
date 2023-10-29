@@ -51,7 +51,7 @@ export default function PostsAlign({ account, posts }) {
       </div>
       <PostListBlock>
         <p>내 일기</p>
-        {posts.totalElements === 0
+        {!!posts
           ? ''
           : posts.map((info) => (
               <PostItem key={info.post.id} post={info.post} account={account} />

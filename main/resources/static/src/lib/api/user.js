@@ -4,8 +4,8 @@ import client from './client';
 
 // 로그인 확인 후에
 export const getUser = async (account) => {
-  const user = await client.get(`/user/${account}.json`);
-  const userImage = await client.put(`/image/${account}.json`);
+  const user = await client.get(`/user/${account}`);
+  const userImage = await client.put(`/image/${account}`);
   const userTheme = user.data.theme;
 
   return { userTheme, userImage };
