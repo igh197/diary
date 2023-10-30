@@ -46,7 +46,7 @@ export default function PostListContainer() {
       // setLoading(false);
     };
     getPosts();
-  }, [account, setPostList, postList]);
+  }, [setPostList]);
 
   // // 에러 발생 시
   // if (error) {

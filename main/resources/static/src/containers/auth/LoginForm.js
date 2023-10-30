@@ -30,12 +30,12 @@ export default function LoginForm() {
     }
     const response = login({ account: form.account, password: form.password });
     console.log(response);
+    const userInfo = getUser(form.account);
 
-    try {
+    if (userInfo) {
       setAuth({ check: true });
-    } catch (e) {
+    } else {
       setAuth({ check: false });
-      console.log(e);
     }
   };
 
@@ -48,7 +48,6 @@ export default function LoginForm() {
     if (auth.check === true) {
       try {
         console.log('로그인 성공');
-        const userInfo = getUser(form.account);
 
         // 로컬에 저장
         // localStorage.setItem('account', JSON.stringify(form.account));
