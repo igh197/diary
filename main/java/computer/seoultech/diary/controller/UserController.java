@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,20 +26,20 @@ public class UserController {
     private final UserRepository userRepository;
 
     @PostMapping("user/new")
-    public void userRegister(@RequestBody UserRequest userRequest){  //회원가입 controller
+    public void userRegister(@RequestBody UserRequest userRequest) throws Exception {  //회원가입 controller
         userService.save(userRequest);  //userService class에서 구현됨
 
     }
 
     @PostMapping("user/{account}")
-    public Header<User> getMyPage(@RequestBody UserRequest userRequest){
-        return userService.login(userRequest);
+    public Header<User> getMyPage(@RequestBody LoginDto loginDto)  {
+        return userService.login(loginDto);
     }
 
 
     @GetMapping("user/{account}")
-    public Header<User> getMyPage2(@RequestBody UserRequest userRequest){
-        return userService.login(userRequest);
+    public Header<User> getMyPage2(@RequestBody LoginDto loginDto)  {
+        return userService.login(loginDto);
     }
 
 
