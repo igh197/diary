@@ -2,13 +2,8 @@ package computer.seoultech.diary.service;
 
 import computer.seoultech.diary.entity.User;
 import computer.seoultech.diary.network.*;
-import computer.seoultech.diary.repository.UserImageRepository;
 import computer.seoultech.diary.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cglib.core.Local;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,15 +12,13 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class UserService  implements UserDetailsService {  //spring security는 반드시 UserDetailsService를 구현해야함
+public class UserService implements UserDetailsService {  //spring security는 반드시 UserDetailsService를 구현해야함
     private final UserRepository userRepository;  //db접근 class인 userRepository class 
     private final PasswordEncoder passwordEncoder; //비밀번호 암호화를 위한 클래스
-    private final UserImageRepository userImageRepository;
+
 
     @Override
     public User loadUserByUsername(String account) throws UsernameNotFoundException {
@@ -36,11 +29,17 @@ public class UserService  implements UserDetailsService {  //spring security는 
         //계정으로 사용자 정보 검사
     }
 
-    public User save(UserRequest userRequest) {   //회원가입을 위한 실질적인 기능을 하는 함수
+    public User save(UserRequest userRequest) throws Exception {   //회원가입을 위한 실질적인 기능을 하는 함수
+        List<User> userList=userRepository.findAll();
+        for(int i=0;i< userList.size();i++){
+            if(userList.get(i).getAccount().equals(userRequest.getAccount())){
+               throw new Exception();
+            }
+        }
         return userRepository.save(User.builder()  //save는 JpaRepository가 내장한 함수, chain 기능 사용
                 .account(userRequest.getAccount()) //계정 입력
                 .auth("ROLE_USER") //대부분의 사용자는 ROLE_USER이기 때문
-
+                        .authority("ROLE_USER")
                 .createdAt(LocalDateTime.now())  //계정 생성 시간
                 .updatedAt(LocalDateTime.now()) //update 시간은 default로 지금
 
@@ -66,6 +65,7 @@ public class UserService  implements UserDetailsService {  //spring security는 
                 .account(user.getAccount())
                 .password(passwordEncoder.encode(userRequest.getPassword())) //찾아서 내용 수정
                 .theme(userRequest.getTheme())
+                .profile(userRequest.getProfile())
                 .build();
         userRepository.save(nUser);
 
@@ -75,16 +75,15 @@ public class UserService  implements UserDetailsService {  //spring security는 
         userRepository.deleteUserByAccount(account);
     }  //사용자 탈퇴 및 개인정보 삭제
 
-    public Header<User> login(UserRequest userRequest) {
-        User user = userRepository.findUserByAccount(userRequest.getAccount());
-        try {
-            if (Objects.equals(user.getPassword(), passwordEncoder.encode(userRequest.getPassword()))) {
-                return Header.OK(user);
-            }
-        } catch (Exception e) {
-            throw new
-                    UsernameNotFoundException("User not exist with account :" + user.getAccount());
+    public Header<User> login(LoginDto loginDto) {
+
+        User user = userRepository.findUserByAccount(loginDto.getAccount());
+        if (Objects.equals(user.getPassword(), passwordEncoder.encode(loginDto.getPassword()))) {
+            user.setAuth("ROLE_USER");
+            return Header.OK(user);
+        } else {
+            user.setAuth(null);
+            return Header.OK(user);
         }
-        return Header.OK(user);
     }
 }
