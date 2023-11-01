@@ -34,7 +34,7 @@ export default function LoginForm() {
 
     if (auth) {
       setAuth({ check: true });
-    } else {
+    } else if (auth === false) {
       setAuth({ check: false });
     }
   };
