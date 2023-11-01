@@ -28,14 +28,14 @@ export default function LoginForm() {
       setError(`아이디 또는 비밀번호를 모두 입력하세요.`);
       return;
     }
-    const auth = login({ account: form.account, password: form.password });
+    const response = login({ account: form.account, password: form.password });
     const userInfo = getUser(form.account);
     console.log(userInfo);
 
-    if (auth) {
-      setAuth({ check: true });
-    } else if (auth === false) {
+    if (response === false) {
       setAuth({ check: false });
+    } else {
+      setAuth({ check: true });
     }
   };
 
