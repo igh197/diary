@@ -7,6 +7,10 @@ export const login = async ({ account, password }) => {
     .then((response) => {
       console.log('200', response.data);
 
+      if (response.data.auth === null) {
+        return false;
+      }
+
       if (response.status === 200) {
         console.log('로그인 성공');
       }

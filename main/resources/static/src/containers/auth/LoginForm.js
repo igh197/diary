@@ -28,10 +28,11 @@ export default function LoginForm() {
       setError(`아이디 또는 비밀번호를 모두 입력하세요.`);
       return;
     }
-    login({ account: form.account, password: form.password });
+    const auth = login({ account: form.account, password: form.password });
     const userInfo = getUser(form.account);
+    console.log(userInfo);
 
-    if (userInfo.userImage && userInfo.userTheme) {
+    if (auth) {
       setAuth({ check: true });
     } else {
       setAuth({ check: false });
